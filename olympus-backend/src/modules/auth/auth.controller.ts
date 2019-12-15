@@ -1,5 +1,5 @@
 import { Body, ConflictException, Controller, Post, UseGuards, Request, Get } from '@nestjs/common';
-import { CreateUserDto } from './dto/CreateUserDto';
+import { RegisterUserDto } from './dto/RegisterUserDto';
 import { ErrorCodes } from '../../constants/ErrorCodes';
 import { hashSync } from 'bcryptjs';
 import { UsersService } from '../users/users.service';
@@ -12,8 +12,8 @@ export class AuthController {
   constructor(private readonly usersService: UsersService, private readonly authService: AuthService) {}
 
   @Post('/register')
-  async register(@Body() createUserDto: CreateUserDto): Promise<void> {
-    const { firstName, lastName, email, password } = createUserDto;
+  async register(@Body() registerUserDto: RegisterUserDto): Promise<void> {
+    const { firstName, lastName, email, password } = registerUserDto;
 
     const existingUser = await this.usersService.findByEmail(email);
 
