@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { loginReducer } from './login/reducer';
+import { loginSaga } from './login/sagas';
 import { registerReducer } from './register/reducer';
 import { authFormReducer } from './auth-form/reducer';
 import { connectRouter } from 'connected-react-router';
@@ -7,6 +8,7 @@ import { History } from 'history';
 import { ILoginState } from './login/types';
 import { IAuthFormState } from './auth-form/types';
 import { IRegisterState } from './register/types';
+import { all, fork } from 'redux-saga/effects';
 
 export interface IApplicationState {
   login: ILoginState;
@@ -21,3 +23,7 @@ export const createRootReducer = (history: History) =>
     register: registerReducer,
     router: connectRouter(history),
   });
+
+export function* rootSaga() {
+  yield all([fork(loginSaga)]);
+}

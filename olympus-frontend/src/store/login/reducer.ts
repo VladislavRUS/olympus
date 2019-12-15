@@ -9,8 +9,8 @@ export const initialState: ILoginState = {
   isLoading: false,
   errorMessage: '',
   credentials: {
-    email: '',
-    password: '',
+    email: 'vlad555.95@mail.ru',
+    password: 'N19955991n',
   },
 };
 
@@ -32,6 +32,24 @@ export const loginReducer = (state: ILoginState = initialState, action: LoginAct
           ...state.credentials,
           password: action.payload,
         },
+      };
+    }
+    case LoginActionTypes.LOGIN_REQUEST: {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    case LoginActionTypes.LOGIN_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+    case LoginActionTypes.LOGIN_ERROR: {
+      return {
+        ...state,
+        isLoading: false,
       };
     }
   }

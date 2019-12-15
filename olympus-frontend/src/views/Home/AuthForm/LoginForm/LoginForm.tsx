@@ -1,6 +1,6 @@
 import React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
-import { onChangeEmail, onChangePassword } from '../../../../store/login/actions';
+import { onChangeEmail, onChangePassword, onLoginRequest } from '../../../../store/login/actions';
 import { IApplicationState } from '../../../../store';
 import { RegularInput } from '../../../../components/RegularInput';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     {
       onChangeEmail,
       onChangePassword,
+      onLoginRequest,
     },
     dispatch,
   );
@@ -20,6 +21,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 interface IMapDispatchToProps {
   onChangeEmail: typeof onChangeEmail;
   onChangePassword: typeof onChangePassword;
+  onLoginRequest: typeof onLoginRequest;
 }
 
 const mapStateToProps = (state: IApplicationState) => {
@@ -38,7 +40,7 @@ type AllProps = IMapStateToProps & IMapDispatchToProps;
 
 class LoginForm extends React.Component<AllProps> {
   render() {
-    const { email, password, onChangeEmail, onChangePassword } = this.props;
+    const { email, password, onChangeEmail, onChangePassword, onLoginRequest } = this.props;
 
     const isButtonDisabled = !email.trim() || !password.trim();
 
@@ -54,7 +56,7 @@ class LoginForm extends React.Component<AllProps> {
           name={'password'}
         />
         <Spacer height={20} />
-        <RegularButton text={'Login'} onClick={() => {}} isDisabled={isButtonDisabled} />
+        <RegularButton text={'Login'} onClick={onLoginRequest} isDisabled={isButtonDisabled} />
       </BaseForm>
     );
   }
