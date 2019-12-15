@@ -1,4 +1,4 @@
-import { Body, ConflictException, Controller, Post, UseGuards, Request, Logger, Get } from '@nestjs/common';
+import { Body, ConflictException, Controller, Post, UseGuards, Request, Get } from '@nestjs/common';
 import { CreateUserDto } from './dto/CreateUserDto';
 import { ErrorCodes } from '../../constants/ErrorCodes';
 import { hashSync } from 'bcryptjs';

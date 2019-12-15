@@ -11,6 +11,7 @@ export class AuthService {
     const user = await this.usersService.findByEmailWithPasswordHash(email);
 
     if (user && compareSync(pass, user.passwordHash)) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { passwordHash, ...result } = user;
       return result;
     }

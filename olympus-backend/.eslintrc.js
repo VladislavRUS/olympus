@@ -10,6 +10,7 @@ module.exports =  {
         sourceType:  'module',
     },
     rules:  {
+        '@typescript-eslint/no-unused-vars': ['error'],
         '@typescript-eslint/explicit-function-return-type': ['off']
     }
 };
