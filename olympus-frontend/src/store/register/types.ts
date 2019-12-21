@@ -4,6 +4,8 @@ export interface IRegisterState {
   credentials: IRegisterCredentials;
 }
 
+export type TGender = 'male' | 'female' | null;
+
 export interface IRegisterCredentials {
   firstName: string;
   lastName: string;
@@ -13,8 +15,6 @@ export interface IRegisterCredentials {
   gender: TGender;
   isTermsAccepted: boolean;
 }
-
-export type TGender = 'male' | 'female' | null;
 
 export enum RegisterActionTypes {
   CHANGE_FIRST_NAME = '@@register/CHANGE_FIRST_NAME',

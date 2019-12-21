@@ -6,6 +6,7 @@
   "home.login.emailPlaceholder": "Email",
   "home.login.passwordPlaceholder": "Password",
   "home.login.loginButtonTitle": "Login",
+  "home.login.error.invalidCredentials": "User was not found",
   "home.register.title": "Register to Olympus",
   "home.register.firstNamePlaceholder": "First Name",
   "home.register.lastNamePlaceholder": "Last Name",
@@ -15,5 +16,8 @@
   "home.register.accept": "I accept the",
   "home.register.termsAndConditionsButtonTitle": "Terms and Conditions",
   "home.register.website": "of the website",
-  "home.register.registerButtonTitle": "Complete Registration!"
+  "home.register.registerButtonTitle": "Complete Registration!",
+  "errors.unauthorized": "Invalid credentials",
+  "errors.unknown": "Unknown error",
+  "errors.networkError": "Network error. Please check connection"
 }

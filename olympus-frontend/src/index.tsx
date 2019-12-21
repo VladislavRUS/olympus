@@ -8,6 +8,15 @@ import configureStore from './configureStore';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import './translations';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
+toast.configure({
+  hideProgressBar: true,
+  draggable: false,
+  closeOnClick: false,
+  closeButton: false,
+});
 
 const history = createBrowserHistory();
 

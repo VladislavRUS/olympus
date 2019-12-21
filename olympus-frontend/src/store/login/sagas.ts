@@ -3,7 +3,7 @@ import { API } from '../../utils/api';
 import { onLoginError, onLoginSuccess } from './actions';
 import { ILoginCredentials, LoginActionTypes } from './types';
 import { IApplicationState } from '../index';
-
+import { i18n } from '../../translations';
 const getLoginCredentials = (state: IApplicationState): ILoginCredentials => state.login.credentials;
 
 function* handleLogin() {
@@ -20,7 +20,13 @@ function* handleLogin() {
 
     yield put(onLoginSuccess());
   } catch (error) {
-    yield put(onLoginError());
+    let errorMessage = '';
+
+    if (error.response && error.response.status === 401) {
+      errorMessage = i18n.t('home.login.error.invalidCredentials');
+    }
+
+    yield put(onLoginError(errorMessage));
   }
 }
 

@@ -6,6 +6,7 @@
   "home.login.emailPlaceholder": "Почта",
   "home.login.passwordPlaceholder": "Пароль",
   "home.login.loginButtonTitle": "Войти",
+  "home.login.error.invalidCredentials": "Такой пользователь не найден",
   "home.register.title": "Зарегистрироваться в Олимпусе",
   "home.register.firstNamePlaceholder": "Имя",
   "home.register.lastNamePlaceholder": "Фамилия",
@@ -15,5 +16,8 @@
   "home.register.accept": "Я принимаю",
   "home.register.termsAndConditionsButtonTitle": "Правила использования",
   "home.register.website": "сайта",
-  "home.register.registerButtonTitle": "Завершить регистрацию"
+  "home.register.registerButtonTitle": "Завершить регистрацию",
+  "errors.unauthorized": "Неправильные почта и пароль",
+  "errors.unknown": "Неизвестная ошибка",
+  "errors.networkError": "Ошибка сети. Пожалуйста, проверьте подключение"
 }

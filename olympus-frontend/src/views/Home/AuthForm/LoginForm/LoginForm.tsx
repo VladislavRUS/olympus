@@ -8,6 +8,8 @@ import { BaseForm } from '../BaseForm';
 import { RegularButton } from '../../../../components/RegularButton';
 import { Spacer } from '../../../../components/Spacer';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import { ErrorMessage } from '../../../../components/ErrorMessage';
+import { compose } from 'redux';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -26,23 +28,26 @@ interface IDispatchProps {
 }
 
 const mapStateToProps = (state: IApplicationState) => {
-  return {
+  const stateProps: IStateProps = {
     email: state.login.credentials.email,
     password: state.login.credentials.password,
-    isLoading: state.login.isLoading,
-  } as IStateProps;
+    errorMessage: state.login.errorMessage,
+  };
+
+  return stateProps;
 };
 
 interface IStateProps {
   email: string;
   password: string;
+  errorMessage: string;
 }
 
 type AllProps = IStateProps & IDispatchProps & WithTranslation;
 
 class LoginForm extends React.Component<AllProps> {
   render() {
-    const { email, password, onChangeEmail, onChangePassword, onLoginRequest, t } = this.props;
+    const { errorMessage, email, password, onChangeEmail, onChangePassword, onLoginRequest, t } = this.props;
 
     const isButtonDisabled = !email.trim() || !password.trim();
 
@@ -64,9 +69,11 @@ class LoginForm extends React.Component<AllProps> {
         />
         <Spacer height={20} />
         <RegularButton text={t('home.login.loginButtonTitle')} onClick={onLoginRequest} isDisabled={isButtonDisabled} />
+        <Spacer height={20} />
+        <ErrorMessage message={errorMessage} />
       </BaseForm>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(LoginForm));
+export default compose(withTranslation(), connect(mapStateToProps, mapDispatchToProps))(LoginForm);

@@ -6,4 +6,4 @@ export const onChangePassword = (password: string) => action(LoginActionTypes.CH
 
 export const onLoginRequest = () => action(LoginActionTypes.LOGIN_REQUEST);
 export const onLoginSuccess = () => action(LoginActionTypes.LOGIN_SUCCESS);
-export const onLoginError = () => action(LoginActionTypes.LOGIN_ERROR);
+export const onLoginError = (errorMessage: string) => action(LoginActionTypes.LOGIN_ERROR, errorMessage);

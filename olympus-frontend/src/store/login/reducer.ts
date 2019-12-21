@@ -37,6 +37,7 @@ export const loginReducer = (state: ILoginState = initialState, action: LoginAct
     case LoginActionTypes.LOGIN_REQUEST: {
       return {
         ...state,
+        errorMessage: '',
         isLoading: true,
       };
     }
@@ -49,6 +50,7 @@ export const loginReducer = (state: ILoginState = initialState, action: LoginAct
     case LoginActionTypes.LOGIN_ERROR: {
       return {
         ...state,
+        errorMessage: action.payload,
         isLoading: false,
       };
     }
