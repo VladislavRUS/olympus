@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimatedFormWrapper, FormContent, Wrapper } from './AuthForm.styles';
+import { FormWrapper, FormContent, Wrapper } from './AuthForm.styles';
 import { IApplicationState } from '../../../store';
 import { FormModeToggles } from './FormModeToggles';
 import { AuthFormModes } from '../../../store/auth-form/types';
@@ -7,33 +7,37 @@ import { LoginForm } from './LoginForm';
 import { connect } from 'react-redux';
 import { PoseGroup } from 'react-pose';
 import RegisterForm from './RegisterForm/RegisterForm';
+import { Loader } from '../../../components/Loader';
 
 interface IStateProps {
   mode: AuthFormModes;
+  isLoading: boolean;
 }
 
 const mapStateToProps = (state: IApplicationState): IStateProps => ({
   mode: state.authForm.mode,
+  isLoading: state.login.isLoading || state.register.isLoading,
 });
 
 type Props = IStateProps;
 
-const AuthForm: React.FC<Props> = ({ mode }) => (
+const AuthForm: React.FC<Props> = ({ mode, isLoading }) => (
   <Wrapper>
     <FormModeToggles />
     <FormContent>
       <PoseGroup>
         {mode === AuthFormModes.LOGIN ? (
-          <AnimatedFormWrapper key={'login'}>
+          <FormWrapper key={'login'}>
             <LoginForm />
-          </AnimatedFormWrapper>
+          </FormWrapper>
         ) : (
-          <AnimatedFormWrapper key={'register'}>
+          <FormWrapper key={'register'}>
             <RegisterForm />
-          </AnimatedFormWrapper>
+          </FormWrapper>
         )}
       </PoseGroup>
     </FormContent>
+    <Loader isVisible={isLoading} />
   </Wrapper>
 );
 

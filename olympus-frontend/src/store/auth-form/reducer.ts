@@ -6,7 +6,7 @@ import { AuthFormActionTypes, AuthFormModes, IAuthFormState } from './types';
 export type AuthFormAction = ActionType<typeof authFormActions>;
 
 export const initialState: IAuthFormState = {
-  mode: AuthFormModes.REGISTER,
+  mode: AuthFormModes.LOGIN,
 };
 
 export const authFormReducer = (state: IAuthFormState = initialState, action: AuthFormAction): IAuthFormState => {

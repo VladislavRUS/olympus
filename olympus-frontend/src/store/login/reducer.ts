@@ -9,8 +9,8 @@ export const initialState: ILoginState = {
   isLoading: false,
   errorMessage: '',
   credentials: {
-    email: 'vlad555.95@mail.ru',
-    password: 'N19955991n',
+    email: '',
+    password: '',
   },
 };
 

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import posed from 'react-pose';
 
 export const Wrapper = styled.div`
+  position: relative;
   width: 470px;
   flex-shrink: 0;
   flex-grow: 0;
@@ -12,7 +13,7 @@ export const Wrapper = styled.div`
   margin-left: 96px;
 `;
 
-export const AnimatedFormWrapper = posed.div({
+const PoseFormWrapper = posed.div({
   enter: {
     opacity: 1,
   },
@@ -21,7 +22,13 @@ export const AnimatedFormWrapper = posed.div({
   },
 });
 
+export const FormWrapper = styled(PoseFormWrapper)`
+  height: 100%;
+`;
+
 export const FormContent = styled.div`
   flex-grow: 1;
   border-left: 1px solid #e6ecf5;
+  display: flex;
+  flex-direction: column;
 `;

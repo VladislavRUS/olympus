@@ -84,6 +84,24 @@ export const registerReducer = (state: IRegisterState = initialState, action: Re
         },
       };
     }
+    case RegisterActionTypes.REGISTER_REQUEST: {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    case RegisterActionTypes.REGISTER_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+    case RegisterActionTypes.REGISTER_ERROR: {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
   }
 
   return state;

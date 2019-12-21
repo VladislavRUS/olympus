@@ -9,6 +9,7 @@ import { ILoginState } from './login/types';
 import { IAuthFormState } from './auth-form/types';
 import { IRegisterState } from './register/types';
 import { all, fork } from 'redux-saga/effects';
+import { registerSaga } from './register/sagas';
 
 export interface IApplicationState {
   login: ILoginState;
@@ -25,5 +26,5 @@ export const createRootReducer = (history: History) =>
   });
 
 export function* rootSaga() {
-  yield all([fork(loginSaga)]);
+  yield all([fork(loginSaga), fork(registerSaga)]);
 }

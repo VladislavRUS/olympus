@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { BaseForm } from '../BaseForm';
 import { RegularButton } from '../../../../components/RegularButton';
 import { Spacer } from '../../../../components/Spacer';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -18,7 +19,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     dispatch,
   );
 
-interface IMapDispatchToProps {
+interface IDispatchProps {
   onChangeEmail: typeof onChangeEmail;
   onChangePassword: typeof onChangePassword;
   onLoginRequest: typeof onLoginRequest;
@@ -28,38 +29,44 @@ const mapStateToProps = (state: IApplicationState) => {
   return {
     email: state.login.credentials.email,
     password: state.login.credentials.password,
-  } as IMapStateToProps;
+    isLoading: state.login.isLoading,
+  } as IStateProps;
 };
 
-interface IMapStateToProps {
+interface IStateProps {
   email: string;
   password: string;
 }
 
-type AllProps = IMapStateToProps & IMapDispatchToProps;
+type AllProps = IStateProps & IDispatchProps & WithTranslation;
 
 class LoginForm extends React.Component<AllProps> {
   render() {
-    const { email, password, onChangeEmail, onChangePassword, onLoginRequest } = this.props;
+    const { email, password, onChangeEmail, onChangePassword, onLoginRequest, t } = this.props;
 
     const isButtonDisabled = !email.trim() || !password.trim();
 
     return (
-      <BaseForm title={'Login to Olympus'}>
-        <RegularInput value={email} onChangeText={onChangeEmail} placeholder={'Email'} name={'email'} />
+      <BaseForm title={t('home.login.title')}>
+        <RegularInput
+          value={email}
+          onChangeText={onChangeEmail}
+          placeholder={t('home.login.emailPlaceholder')}
+          name={'email'}
+        />
         <Spacer height={20} />
         <RegularInput
           value={password}
           onChangeText={onChangePassword}
-          placeholder={'Password'}
+          placeholder={t('home.login.passwordPlaceholder')}
           type={'password'}
           name={'password'}
         />
         <Spacer height={20} />
-        <RegularButton text={'Login'} onClick={onLoginRequest} isDisabled={isButtonDisabled} />
+        <RegularButton text={t('home.login.loginButtonTitle')} onClick={onLoginRequest} isDisabled={isButtonDisabled} />
       </BaseForm>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(LoginForm));

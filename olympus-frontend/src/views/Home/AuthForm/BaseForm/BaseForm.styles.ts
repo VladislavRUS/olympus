@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
 `;
 
 export const Title = styled.div`

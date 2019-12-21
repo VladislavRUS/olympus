@@ -14,11 +14,13 @@ import {
   onChangeGender,
   onChangeLastName,
   onChangePassword,
+  onRegisterRequest,
   toggleTermsAccept,
 } from '../../../../store/register/actions';
 import { IRegisterCredentials } from '../../../../store/register/types';
 import { CheckboxRow } from '../../../../components/CheckboxRow';
 import { TextHighlight } from '../../../../components/TextHighlight';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -30,6 +32,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
       onChangeBirthday,
       onChangeGender,
       toggleTermsAccept,
+      onRegisterRequest,
     },
     dispatch,
   );
@@ -42,6 +45,7 @@ interface IDispatchProps {
   onChangeBirthday: typeof onChangeBirthday;
   onChangeGender: typeof onChangeGender;
   toggleTermsAccept: typeof toggleTermsAccept;
+  onRegisterRequest: typeof onRegisterRequest;
 }
 
 const mapStateToProps = (state: IApplicationState) => {
@@ -50,16 +54,21 @@ const mapStateToProps = (state: IApplicationState) => {
   };
 };
 
-type AllProps = IRegisterCredentials & IDispatchProps;
+type IStateProps = IRegisterCredentials;
+
+type AllProps = IStateProps & IDispatchProps & WithTranslation;
 
 class RegisterForm extends React.Component<AllProps> {
   onHighlightClick = (event?: React.MouseEvent<HTMLElement>) => {
+    const { t } = this.props;
+
     event && event.stopPropagation();
-    alert('TERMS AND CONDITIONS');
+    alert(t('home.register.termsAndConditions'));
   };
 
   render() {
     const {
+      t,
       firstName,
       lastName,
       email,
@@ -70,37 +79,58 @@ class RegisterForm extends React.Component<AllProps> {
       onChangeEmail,
       onChangePassword,
       toggleTermsAccept,
+      onRegisterRequest,
     } = this.props;
 
     const isButtonDisabled =
       !firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !isTermsAccepted;
 
     return (
-      <BaseForm title={'Register to Olympus'}>
+      <BaseForm title={t('home.register.title')}>
         <NamesWrapper>
-          <RegularInput value={firstName} onChangeText={onChangeFirstName} placeholder={'First Name'} />
+          <RegularInput
+            value={firstName}
+            onChangeText={onChangeFirstName}
+            placeholder={t('home.register.firstNamePlaceholder')}
+          />
           <Spacer width={20} />
-          <RegularInput value={lastName} onChangeText={onChangeLastName} placeholder={'Last Name'} />
+          <RegularInput
+            value={lastName}
+            onChangeText={onChangeLastName}
+            placeholder={t('home.register.lastNamePlaceholder')}
+          />
         </NamesWrapper>
         <Spacer height={20} />
-        <RegularInput value={email} onChangeText={onChangeEmail} placeholder={'Email'} />
+        <RegularInput value={email} onChangeText={onChangeEmail} placeholder={t('home.register.emailPlaceholder')} />
         <Spacer height={20} />
-        <RegularInput value={password} onChangeText={onChangePassword} placeholder={'Password'} type={'password'} />
+        <RegularInput
+          value={password}
+          onChangeText={onChangePassword}
+          placeholder={t('home.register.passwordPlaceholder')}
+          type={'password'}
+        />
         <Spacer height={20} />
         <CheckboxRow onClick={toggleTermsAccept} isActive={isTermsAccepted}>
           <TermsText>
-            I accept the <TextHighlight onClick={this.onHighlightClick}>Terms and Conditions</TextHighlight> of the
-            website
+            {t('home.register.accept')}{' '}
+            <TextHighlight onClick={this.onHighlightClick}>
+              {t('home.register.termsAndConditionsButtonTitle')}
+            </TextHighlight>{' '}
+            {t('home.register.website')}
           </TermsText>
         </CheckboxRow>
         <Spacer height={20} />
-        <RegularButton text={'Complete Registration!'} onClick={() => {}} isDisabled={isButtonDisabled} />
+        <RegularButton
+          text={t('home.register.registerButtonTitle')}
+          onClick={onRegisterRequest}
+          isDisabled={isButtonDisabled}
+        />
       </BaseForm>
     );
   }
 }
 
-export default connect<IRegisterCredentials, IDispatchProps, {}, IApplicationState>(
+export default connect<IStateProps, IDispatchProps, {}, IApplicationState>(
   mapStateToProps,
   mapDispatchToProps,
-)(RegisterForm);
+)(withTranslation()(RegisterForm));

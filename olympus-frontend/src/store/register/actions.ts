@@ -8,3 +8,6 @@ export const onChangePassword = (password: string) => action(RegisterActionTypes
 export const onChangeBirthday = (birthday: string) => action(RegisterActionTypes.CHANGE_BIRTHDAY, birthday);
 export const onChangeGender = (gender: TGender) => action(RegisterActionTypes.CHANGE_GENDER, gender);
 export const toggleTermsAccept = () => action(RegisterActionTypes.TOGGLE_TERMS_ACCEPT);
+export const onRegisterRequest = () => action(RegisterActionTypes.REGISTER_REQUEST);
+export const onRegisterSuccess = () => action(RegisterActionTypes.REGISTER_SUCCESS);
+export const onRegisterError = () => action(RegisterActionTypes.REGISTER_ERROR);

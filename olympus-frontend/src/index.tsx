@@ -7,6 +7,7 @@ import App from './views/App/App';
 import configureStore from './configureStore';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
+import './translations';
 
 const history = createBrowserHistory();
 
