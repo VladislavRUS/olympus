@@ -11,32 +11,16 @@ interface IRegularInputProps {
   isValid?: boolean;
 }
 
-interface IRegularInputState {
-  isDirty: boolean;
-}
-
-class RegularInput extends React.Component<IRegularInputProps, IRegularInputState> {
-  constructor(props: IRegularInputProps) {
-    super(props);
-
-    this.state = {
-      isDirty: false,
-    };
-  }
-
+class RegularInput extends React.Component<IRegularInputProps> {
   onChange = (event: React.FormEvent<HTMLInputElement>) => {
     this.props.onChangeText(event.currentTarget.value);
-
-    if (!this.state.isDirty) {
-      this.setState({ isDirty: true });
-    }
   };
 
   render() {
     const { value, placeholder = '', type = 'text', name = '', autocomplete = 'off', isValid = true } = this.props;
 
     return (
-      <Wrapper isValid={this.state.isDirty ? isValid : true}>
+      <Wrapper isValid={isValid}>
         {value && <PlaceholderHint>{placeholder}</PlaceholderHint>}
         <StyledInput
           onChange={this.onChange}

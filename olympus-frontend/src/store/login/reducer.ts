@@ -44,6 +44,9 @@ export const loginReducer = (state: ILoginState = initialState, action: LoginAct
     case LoginActionTypes.LOGIN_SUCCESS: {
       return {
         ...state,
+        credentials: {
+          ...initialState.credentials,
+        },
         isLoading: false,
       };
     }

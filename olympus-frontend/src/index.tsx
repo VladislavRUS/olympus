@@ -18,7 +18,7 @@ toast.configure({
   closeButton: false,
 });
 
-const history = createBrowserHistory();
+export const history = createBrowserHistory();
 
 // @ts-ignore
 const initialState = window.initialReduxState;

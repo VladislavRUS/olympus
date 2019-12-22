@@ -4,6 +4,8 @@ import { onLoginError, onLoginSuccess } from './actions';
 import { ILoginCredentials, LoginActionTypes } from './types';
 import { IApplicationState } from '../index';
 import { i18n } from '../../translations';
+import { replace } from 'connected-react-router';
+import { Routes } from '../../constants/Routes';
 const getLoginCredentials = (state: IApplicationState): ILoginCredentials => state.login.credentials;
 
 function* handleLogin() {
@@ -17,8 +19,10 @@ function* handleLogin() {
     });
 
     API.defaults.headers.Authorization = `Bearer ${data.access_token}`;
+    localStorage.setItem('access_token', data.access_token);
 
     yield put(onLoginSuccess());
+    yield put(replace(Routes.MAIN));
   } catch (error) {
     let errorMessage = '';
 

@@ -61,7 +61,7 @@ class LoginForm extends React.Component<AllProps> {
           onChangeText={onChangeEmail}
           placeholder={t('home.login.emailPlaceholder')}
           name={'email'}
-          isValid={validator.isEmail(email)}
+          isValid={email ? validator.isEmail(email) : true}
         />
         <Spacer height={20} />
         <RegularInput

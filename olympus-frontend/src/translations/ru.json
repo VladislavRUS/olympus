@@ -20,5 +20,6 @@
   "home.register.error.alreadyExists": "Такая почта уже используется",
   "errors.unauthorized": "Неправильные почта и пароль",
   "errors.unknown": "Неизвестная ошибка",
-  "errors.networkError": "Ошибка сети. Пожалуйста, проверьте подключение"
+  "errors.networkError": "Ошибка сети. Пожалуйста, проверьте подключение",
+  "main.header.searchPlaceholder": "Поиск"
 }

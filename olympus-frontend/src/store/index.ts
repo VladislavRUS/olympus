@@ -10,11 +10,15 @@ import { IAuthFormState } from './auth-form/types';
 import { IRegisterState } from './register/types';
 import { all, fork } from 'redux-saga/effects';
 import { registerSaga } from './register/sagas';
+import { profileSaga } from './profile/sagas';
+import { IProfileState } from './profile/types';
+import { profileReducer } from './profile/reducer';
 
 export interface IApplicationState {
   login: ILoginState;
   register: IRegisterState;
   authForm: IAuthFormState;
+  profile: IProfileState;
 }
 
 export const createRootReducer = (history: History) =>
@@ -22,9 +26,10 @@ export const createRootReducer = (history: History) =>
     authForm: authFormReducer,
     login: loginReducer,
     register: registerReducer,
+    profile: profileReducer,
     router: connectRouter(history),
   });
 
 export function* rootSaga() {
-  yield all([fork(loginSaga), fork(registerSaga)]);
+  yield all([fork(loginSaga), fork(registerSaga), fork(profileSaga)]);
 }

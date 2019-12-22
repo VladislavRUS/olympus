@@ -20,5 +20,6 @@
   "home.register.error.alreadyExists": "Email is already used",
   "errors.unauthorized": "Invalid credentials",
   "errors.unknown": "Unknown error",
-  "errors.networkError": "Network error. Please check connection"
+  "errors.networkError": "Network error. Please check connection",
+  "main.header.searchPlaceholder": "Search"
 }

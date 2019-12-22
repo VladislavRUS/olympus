@@ -116,7 +116,7 @@ class RegisterForm extends React.Component<AllProps> {
           value={email}
           onChangeText={onChangeEmail}
           placeholder={t('home.register.emailPlaceholder')}
-          isValid={validator.isEmail(email)}
+          isValid={email ? validator.isEmail(email) : true}
         />
         <Spacer height={20} />
         <RegularInput

@@ -19,10 +19,10 @@ function* handleRegister() {
       ...credentials,
     });
 
-    yield put(setLoginMode());
+    yield put(onRegisterSuccess());
     yield put(onChangeEmail(credentials.email));
     yield put(onChangePassword(credentials.password));
-    yield put(onRegisterSuccess());
+    yield put(setLoginMode());
   } catch (error) {
     let errorMessage = '';
 

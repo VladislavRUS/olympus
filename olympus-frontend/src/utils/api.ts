@@ -9,6 +9,12 @@ const API = axios.create({
   responseType: 'json',
 });
 
+const accessToken = localStorage.getItem('access_token');
+
+if (accessToken) {
+  API.defaults.headers.Authorization = `Bearer ${accessToken}`;
+}
+
 API.interceptors.response.use(
   response => {
     return response;
@@ -17,7 +23,7 @@ API.interceptors.response.use(
     if (!error.response) {
       toast.error(i18n.t('errors.networkError'));
     } else if (error.response && error.response.status === 401) {
-      replace(Routes.HOME);
+      window.location.reload();
     }
 
     return Promise.reject(error);
