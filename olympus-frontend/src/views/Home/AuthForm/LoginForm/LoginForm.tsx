@@ -10,6 +10,7 @@ import { Spacer } from '../../../../components/Spacer';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { ErrorMessage } from '../../../../components/ErrorMessage';
 import { compose } from 'redux';
+import validator from 'validator';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -32,6 +33,7 @@ const mapStateToProps = (state: IApplicationState) => {
     email: state.login.credentials.email,
     password: state.login.credentials.password,
     errorMessage: state.login.errorMessage,
+    isLoading: state.login.isLoading,
   };
 
   return stateProps;
@@ -41,15 +43,16 @@ interface IStateProps {
   email: string;
   password: string;
   errorMessage: string;
+  isLoading: boolean;
 }
 
 type AllProps = IStateProps & IDispatchProps & WithTranslation;
 
 class LoginForm extends React.Component<AllProps> {
   render() {
-    const { errorMessage, email, password, onChangeEmail, onChangePassword, onLoginRequest, t } = this.props;
+    const { isLoading, errorMessage, email, password, onChangeEmail, onChangePassword, onLoginRequest, t } = this.props;
 
-    const isButtonDisabled = !email.trim() || !password.trim();
+    const isButtonDisabled = !email.trim() || !password.trim() || !validator.isEmail(email);
 
     return (
       <BaseForm title={t('home.login.title')}>
@@ -58,6 +61,7 @@ class LoginForm extends React.Component<AllProps> {
           onChangeText={onChangeEmail}
           placeholder={t('home.login.emailPlaceholder')}
           name={'email'}
+          isValid={validator.isEmail(email)}
         />
         <Spacer height={20} />
         <RegularInput
@@ -68,7 +72,12 @@ class LoginForm extends React.Component<AllProps> {
           name={'password'}
         />
         <Spacer height={20} />
-        <RegularButton text={t('home.login.loginButtonTitle')} onClick={onLoginRequest} isDisabled={isButtonDisabled} />
+        <RegularButton
+          text={t('home.login.loginButtonTitle')}
+          onClick={onLoginRequest}
+          isDisabled={isButtonDisabled}
+          isLoading={isLoading}
+        />
         <Spacer height={20} />
         <ErrorMessage message={errorMessage} />
       </BaseForm>

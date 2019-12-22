@@ -7,7 +7,7 @@ import { LoginForm } from './LoginForm';
 import { connect } from 'react-redux';
 import { PoseGroup } from 'react-pose';
 import RegisterForm from './RegisterForm/RegisterForm';
-import { Loader } from '../../../components/Loader';
+import { LoadingOverlay } from '../../../components/LoadingOverlay';
 
 interface IStateProps {
   mode: AuthFormModes;
@@ -37,7 +37,7 @@ const AuthForm: React.FC<Props> = ({ mode, isLoading }) => (
         )}
       </PoseGroup>
     </FormContent>
-    <Loader isVisible={isLoading} />
+    <LoadingOverlay isLoading={isLoading} />
   </Wrapper>
 );
 

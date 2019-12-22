@@ -2,9 +2,11 @@ import styled, { css } from 'styled-components';
 
 interface IStyledButtonProps {
   isDisabled: boolean;
+  isLoading: boolean;
 }
 
 export const StyledButton = styled.button<IStyledButtonProps>`
+  position: relative;
   width: 100%;
   height: 52px;
   line-height: 52px;
@@ -23,6 +25,12 @@ export const StyledButton = styled.button<IStyledButtonProps>`
     props.isDisabled &&
     css`
       opacity: 0.5;
+      pointer-events: none;
+    `}
+
+  ${props =>
+    props.isLoading &&
+    css`
       pointer-events: none;
     `}
 

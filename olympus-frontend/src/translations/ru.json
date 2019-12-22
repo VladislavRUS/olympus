@@ -17,6 +17,7 @@
   "home.register.termsAndConditionsButtonTitle": "Правила использования",
   "home.register.website": "сайта",
   "home.register.registerButtonTitle": "Завершить регистрацию",
+  "home.register.error.alreadyExists": "Такая почта уже используется",
   "errors.unauthorized": "Неправильные почта и пароль",
   "errors.unknown": "Неизвестная ошибка",
   "errors.networkError": "Ошибка сети. Пожалуйста, проверьте подключение"

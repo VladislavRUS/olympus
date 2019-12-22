@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isValid: boolean }>`
   width: 100%;
   position: relative;
   height: 54px;
@@ -11,6 +11,12 @@ export const Wrapper = styled.div`
   flex-direction: column;
   border: 1px solid #d8dbe6;
   border-radius: 4px;
+
+  ${props =>
+    !props.isValid &&
+    css`
+      border: 1px solid red;
+    `}
 `;
 
 export const PlaceholderHint = styled.div`

@@ -10,4 +10,4 @@ export const onChangeGender = (gender: TGender) => action(RegisterActionTypes.CH
 export const toggleTermsAccept = () => action(RegisterActionTypes.TOGGLE_TERMS_ACCEPT);
 export const onRegisterRequest = () => action(RegisterActionTypes.REGISTER_REQUEST);
 export const onRegisterSuccess = () => action(RegisterActionTypes.REGISTER_SUCCESS);
-export const onRegisterError = () => action(RegisterActionTypes.REGISTER_ERROR);
+export const onRegisterError = (errorMessage: string) => action(RegisterActionTypes.REGISTER_ERROR, errorMessage);

@@ -87,18 +87,23 @@ export const registerReducer = (state: IRegisterState = initialState, action: Re
     case RegisterActionTypes.REGISTER_REQUEST: {
       return {
         ...state,
+        errorMessage: '',
         isLoading: true,
       };
     }
     case RegisterActionTypes.REGISTER_SUCCESS: {
       return {
         ...state,
+        credentials: {
+          ...initialState.credentials,
+        },
         isLoading: false,
       };
     }
     case RegisterActionTypes.REGISTER_ERROR: {
       return {
         ...state,
+        errorMessage: action.payload,
         isLoading: false,
       };
     }

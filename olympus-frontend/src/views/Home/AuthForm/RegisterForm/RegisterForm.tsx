@@ -21,6 +21,8 @@ import { IRegisterCredentials } from '../../../../store/register/types';
 import { CheckboxRow } from '../../../../components/CheckboxRow';
 import { TextHighlight } from '../../../../components/TextHighlight';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import { ErrorMessage } from '../../../../components/ErrorMessage';
+import validator from 'validator';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -49,12 +51,19 @@ interface IDispatchProps {
 }
 
 const mapStateToProps = (state: IApplicationState) => {
-  return {
+  const stateProps: IStateProps = {
     ...state.register.credentials,
+    errorMessage: state.register.errorMessage,
+    isLoading: state.register.isLoading,
   };
+
+  return stateProps;
 };
 
-type IStateProps = IRegisterCredentials;
+interface IStateProps extends IRegisterCredentials {
+  errorMessage: string;
+  isLoading: boolean;
+}
 
 type AllProps = IStateProps & IDispatchProps & WithTranslation;
 
@@ -69,6 +78,8 @@ class RegisterForm extends React.Component<AllProps> {
   render() {
     const {
       t,
+      isLoading,
+      errorMessage,
       firstName,
       lastName,
       email,
@@ -101,7 +112,12 @@ class RegisterForm extends React.Component<AllProps> {
           />
         </NamesWrapper>
         <Spacer height={20} />
-        <RegularInput value={email} onChangeText={onChangeEmail} placeholder={t('home.register.emailPlaceholder')} />
+        <RegularInput
+          value={email}
+          onChangeText={onChangeEmail}
+          placeholder={t('home.register.emailPlaceholder')}
+          isValid={validator.isEmail(email)}
+        />
         <Spacer height={20} />
         <RegularInput
           value={password}
@@ -124,7 +140,10 @@ class RegisterForm extends React.Component<AllProps> {
           text={t('home.register.registerButtonTitle')}
           onClick={onRegisterRequest}
           isDisabled={isButtonDisabled}
+          isLoading={isLoading}
         />
+        <Spacer height={20} />
+        <ErrorMessage message={errorMessage} />
       </BaseForm>
     );
   }

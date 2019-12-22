@@ -17,6 +17,7 @@
   "home.register.termsAndConditionsButtonTitle": "Terms and Conditions",
   "home.register.website": "of the website",
   "home.register.registerButtonTitle": "Complete Registration!",
+  "home.register.error.alreadyExists": "Email is already used",
   "errors.unauthorized": "Invalid credentials",
   "errors.unknown": "Unknown error",
   "errors.networkError": "Network error. Please check connection"

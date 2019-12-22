@@ -1,7 +1,7 @@
 import React from 'react';
 import { PoseGroup } from 'react-pose';
 import { Wrapper } from './Loader.styles';
-import { PropagateLoader as Spinner } from 'react-spinners';
+import { BeatLoader as Spinner } from 'react-spinners';
 
 export type Overlay = 'visible' | 'hidden';
 
@@ -14,7 +14,7 @@ const Loader: React.FC<ILoaderProps> = ({ isVisible, overlay = 'visible' }) => (
   <PoseGroup>
     {isVisible ? (
       <Wrapper overlay={overlay} key={'wrapper'}>
-        <Spinner color={'#000'} />
+        <Spinner color={'#fff'} size={6} />
       </Wrapper>
     ) : (
       <React.Fragment key={'fragment'} />
