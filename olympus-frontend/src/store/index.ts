@@ -13,6 +13,8 @@ import { registerSaga } from './register/sagas';
 import { profileSaga } from './profile/sagas';
 import { IProfileState } from './profile/types';
 import { profileReducer } from './profile/reducer';
+import { currentUserReducer } from './current-user/reducer';
+import { currentUserSaga } from './current-user/sagas';
 
 export interface IApplicationState {
   login: ILoginState;
@@ -26,10 +28,11 @@ export const createRootReducer = (history: History) =>
     authForm: authFormReducer,
     login: loginReducer,
     register: registerReducer,
+    currentUser: currentUserReducer,
     profile: profileReducer,
     router: connectRouter(history),
   });
 
 export function* rootSaga() {
-  yield all([fork(loginSaga), fork(registerSaga), fork(profileSaga)]);
+  yield all([fork(loginSaga), fork(registerSaga), fork(currentUserSaga), fork(profileSaga)]);
 }

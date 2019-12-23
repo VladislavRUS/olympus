@@ -12,4 +12,12 @@ export const Avatar = styled.img`
   height: 34px;
   background-color: #fff;
   border-radius: 50%;
+  margin-right: 8px;
+`;
+
+export const FullName = styled.div`
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 14px;
 `;

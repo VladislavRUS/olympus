@@ -149,7 +149,4 @@ class RegisterForm extends React.Component<AllProps> {
   }
 }
 
-export default connect<IStateProps, IDispatchProps, {}, IApplicationState>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(RegisterForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(RegisterForm));

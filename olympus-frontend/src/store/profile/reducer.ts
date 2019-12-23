@@ -6,10 +6,8 @@ import * as profileActions from './actions';
 export type ProfileAction = ActionType<typeof profileActions>;
 
 export const initialState: IProfileState = {
-  profile: {
-    firstName: '',
-    lastName: '',
-  },
+  firstName: '',
+  lastName: '',
   isLoading: false,
 };
 
@@ -25,7 +23,8 @@ export const profileReducer = (state: IProfileState = initialState, action: Prof
       return {
         ...state,
         isLoading: true,
-        profile: action.payload,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
       };
     }
     case ProfileActionTypes.GET_PROFILE_ERROR: {

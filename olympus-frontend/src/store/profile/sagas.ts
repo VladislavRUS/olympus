@@ -5,7 +5,7 @@ import { ProfileActionTypes } from './types';
 
 function* handleGetProfile() {
   try {
-    const { data } = yield call(API.get, '/auth/profile');
+    const { data } = yield call(API.get, '/profile');
 
     yield put(getProfileSuccess(data));
   } catch (error) {

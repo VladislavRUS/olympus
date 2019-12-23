@@ -1,5 +1,6 @@
 export interface IProfileState {
-  profile: IProfile;
+  firstName: string;
+  lastName: string;
   isLoading: boolean;
 }
 
