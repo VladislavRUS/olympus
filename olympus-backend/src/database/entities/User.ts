@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Unique, OneToOne, JoinColumn } from 'typeorm';
+import { Profile } from './Profile';
 
 @Entity()
 @Unique(['email'])
@@ -17,4 +18,8 @@ export class User {
 
   @Column({ select: false })
   passwordHash: string;
+
+  @OneToOne(() => Profile)
+  @JoinColumn()
+  profile: Profile;
 }

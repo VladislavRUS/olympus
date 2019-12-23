@@ -37,7 +37,7 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard())
-  @Get('/profile')
+  @Get('/current-user')
   async profile(@Request() req) {
     return await this.usersService.findById(req.user.id);
   }

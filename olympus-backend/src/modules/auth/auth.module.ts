@@ -8,10 +8,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { config } from '../../config';
 import { JwtStrategy } from './jwt.strategy';
 
+export const passportModule = PassportModule.register({ defaultStrategy: 'jwt' });
+
 @Module({
   imports: [
     UsersModule,
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+    passportModule,
     JwtModule.register({
       secret: config.jwtSecret,
       signOptions: { expiresIn: '24h' },
