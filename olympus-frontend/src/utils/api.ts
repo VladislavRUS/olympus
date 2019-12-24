@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { replace } from 'connected-react-router';
-import { Routes } from '../constants/Routes';
 import { toast } from 'react-toastify';
 import { i18n } from '../translations';
 

@@ -11,7 +11,7 @@ interface IRegularInputProps {
   isValid?: boolean;
 }
 
-class RegularInput extends React.Component<IRegularInputProps> {
+class RegularInput extends React.PureComponent<IRegularInputProps> {
   onChange = (event: React.FormEvent<HTMLInputElement>) => {
     this.props.onChangeText(event.currentTarget.value);
   };

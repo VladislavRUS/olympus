@@ -21,5 +21,6 @@
   "errors.unauthorized": "Invalid credentials",
   "errors.unknown": "Unknown error",
   "errors.networkError": "Network error. Please check connection",
-  "main.header.searchPlaceholder": "Search"
+  "main.header.searchPlaceholder": "Search",
+  "app.logout": "Logout"
 }

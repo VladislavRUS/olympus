@@ -5,6 +5,11 @@ export const Wrapper = styled.div`
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
 export const Avatar = styled.img`

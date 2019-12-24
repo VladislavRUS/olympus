@@ -15,11 +15,13 @@ import { IProfileState } from './profile/types';
 import { profileReducer } from './profile/reducer';
 import { currentUserReducer } from './current-user/reducer';
 import { currentUserSaga } from './current-user/sagas';
+import { ICurrentUserState } from './current-user/types';
 
 export interface IApplicationState {
   login: ILoginState;
   register: IRegisterState;
   authForm: IAuthFormState;
+  currentUser: ICurrentUserState;
   profile: IProfileState;
 }
 
