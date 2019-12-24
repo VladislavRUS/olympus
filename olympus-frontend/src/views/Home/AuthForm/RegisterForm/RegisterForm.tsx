@@ -97,7 +97,7 @@ class RegisterForm extends React.Component<AllProps> {
       !firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !isTermsAccepted;
 
     return (
-      <BaseForm title={t('home.register.title')}>
+      <BaseForm title={t('home.register.title')} onSubmit={onRegisterRequest}>
         <NamesWrapper>
           <RegularInput
             value={firstName}
@@ -137,8 +137,8 @@ class RegisterForm extends React.Component<AllProps> {
         </CheckboxRow>
         <Spacer height={20} />
         <RegularButton
+          type={'submit'}
           text={t('home.register.registerButtonTitle')}
-          onClick={onRegisterRequest}
           isDisabled={isButtonDisabled}
           isLoading={isLoading}
         />

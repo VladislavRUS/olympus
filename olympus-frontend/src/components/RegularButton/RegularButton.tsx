@@ -4,14 +4,21 @@ import { Loader } from '../Loader';
 
 interface IRegularButtonProps {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
   isDisabled?: boolean;
   isLoading?: boolean;
+  type?: 'button' | 'submit';
 }
 
-const RegularButton: React.FC<IRegularButtonProps> = ({ text, onClick, isDisabled = false, isLoading = false }) => {
+const RegularButton: React.FC<IRegularButtonProps> = ({
+  text,
+  type = 'button',
+  onClick,
+  isDisabled = false,
+  isLoading = false,
+}) => {
   return (
-    <StyledButton onClick={onClick} isDisabled={isDisabled} type={'button'} isLoading={isLoading}>
+    <StyledButton onClick={onClick} type={type} isLoading={isLoading} disabled={isDisabled}>
       {isLoading ? <Loader isVisible={true} overlay={'hidden'} /> : <React.Fragment>{text}</React.Fragment>}
     </StyledButton>
   );

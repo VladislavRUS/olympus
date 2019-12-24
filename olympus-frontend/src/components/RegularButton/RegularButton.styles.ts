@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 interface IStyledButtonProps {
-  isDisabled: boolean;
+  disabled: boolean;
   isLoading: boolean;
 }
 
@@ -22,7 +22,7 @@ export const StyledButton = styled.button<IStyledButtonProps>`
   letter-spacing: 0.28px;
   cursor: pointer;
   ${props =>
-    props.isDisabled &&
+    props.disabled &&
     css`
       opacity: 0.5;
       pointer-events: none;

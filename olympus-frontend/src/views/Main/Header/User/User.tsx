@@ -7,6 +7,7 @@ import { DropdownItem } from '../../../../components/DropdownItem';
 import { bindActionCreators, Dispatch, compose } from 'redux';
 import { onLogout } from '../../../../store/current-user/actions';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import { FiUser } from 'react-icons/fi';
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ onLogout }, dispatch);
 
@@ -63,7 +64,9 @@ class User extends React.Component<AllProps, IUserState> {
       >
         {(handleRef: (element: any) => void) => (
           <Wrapper onClick={this.onOpenDropdown} ref={handleRef}>
-            <Avatar />
+            <Avatar>
+              <FiUser size={34} color={'#fff'} />
+            </Avatar>
             <FullName>
               {firstName} {lastName}
             </FullName>

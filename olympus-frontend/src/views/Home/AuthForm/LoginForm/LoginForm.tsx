@@ -55,7 +55,7 @@ class LoginForm extends React.Component<AllProps> {
     const isButtonDisabled = !email.trim() || !password.trim() || !validator.isEmail(email);
 
     return (
-      <BaseForm title={t('home.login.title')}>
+      <BaseForm title={t('home.login.title')} onSubmit={onLoginRequest}>
         <RegularInput
           value={email}
           onChangeText={onChangeEmail}
@@ -73,8 +73,8 @@ class LoginForm extends React.Component<AllProps> {
         />
         <Spacer height={20} />
         <RegularButton
+          type={'submit'}
           text={t('home.login.loginButtonTitle')}
-          onClick={onLoginRequest}
           isDisabled={isButtonDisabled}
           isLoading={isLoading}
         />

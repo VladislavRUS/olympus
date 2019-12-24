@@ -12,11 +12,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Avatar = styled.img`
-  width: 34px;
-  height: 34px;
-  background-color: #fff;
-  border-radius: 50%;
+export const Avatar = styled.div`
   margin-right: 8px;
 `;
 
