@@ -34,4 +34,5 @@ export const Wrapper = styled(PoseWrapper)<{ left: number; top: number }>`
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 `;
