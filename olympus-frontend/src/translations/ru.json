@@ -22,5 +22,18 @@
   "errors.unknown": "Неизвестная ошибка",
   "errors.networkError": "Ошибка сети. Пожалуйста, проверьте подключение",
   "main.header.searchPlaceholder": "Поиск",
-  "app.logout": "Выйти"
+  "app.logout": "Выйти",
+  "profile.links.about": "Обо мне",
+  "profile.links.friends": "Друзья",
+  "profile.links.photos": "Фото",
+  "profile.links.videos": "Видео",
+  "profile.about.personalInfo.title": "Обо мне",
+  "profile.about.hobbies.title": "Хобби и увлечения",
+  "profile.about.career.title": "Образование и работа",
+  "profile.personalInfo.about": "Обо мне",
+  "profile.personalInfo.birthday": "Дата рождения",
+  "profile.personalInfo.birthplace": "Место рождения",
+  "profile.personalInfo.occupation": "Профессия",
+  "profile.personalInfo.gender": "Пол",
+  "profile.personalInfo.email": "Почта"
 }

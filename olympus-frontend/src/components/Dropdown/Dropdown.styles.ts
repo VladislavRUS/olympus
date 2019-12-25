@@ -9,7 +9,7 @@ const PoseWrapper = posed.div({
       ease: 'easeInOut',
       duration: 200,
     },
-    applyAtStart: {
+    applyAtEnd: {
       pointerEvents: 'auto',
     },
   },
@@ -33,6 +33,7 @@ export const Wrapper = styled(PoseWrapper)<{ left: number; top: number }>`
   width: ${props => props.width}px;
   background-color: #fff;
   border-radius: 4px;
-  box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px -2px rgba(0, 0, 0, 0.3);
+  border: 1px solid #e6ecf5;
   overflow: hidden;
 `;

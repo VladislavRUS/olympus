@@ -1,5 +1,5 @@
 import React from 'react';
-import { Content, Page, Wrapper } from './Main.styles';
+import { Page, Wrapper, Content } from './Main.styles';
 import { Header } from './Header';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
@@ -31,8 +31,8 @@ class Main extends React.Component<IDispatchProps> {
     return (
       <Wrapper>
         <Header />
+        <LeftNavigationBar />
         <Content>
-          <LeftNavigationBar />
           <Page>
             <Switch>
               <Route path={Routes.PROFILE} component={Profile} />

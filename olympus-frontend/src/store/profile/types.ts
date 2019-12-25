@@ -1,13 +1,24 @@
 export interface IProfileState {
-  firstName: string;
-  lastName: string;
+  profile: IProfile;
   isLoading: boolean;
 }
 
 export interface IProfile {
-  firstName: string;
-  lastName: string;
+  avatar: string;
+  cover: string;
+  personalInfo: IPersonalInfo;
 }
+
+export interface IPersonalInfo {
+  about: string;
+  birthday: string;
+  birthplace: string;
+  occupation: string;
+  gender: string;
+  email: string;
+}
+
+export type TPersonalInfoKey = keyof IPersonalInfo;
 
 export enum ProfileActionTypes {
   GET_PROFILE_REQUEST = '@@profile/GET_PROFILE_REQUEST',

@@ -22,5 +22,18 @@
   "errors.unknown": "Unknown error",
   "errors.networkError": "Network error. Please check connection",
   "main.header.searchPlaceholder": "Search",
-  "app.logout": "Logout"
+  "app.logout": "Logout",
+  "profile.links.about": "About",
+  "profile.links.friends": "Friends",
+  "profile.links.photos": "Photos",
+  "profile.links.videos": "Videos",
+  "profile.about.personalInfo.title": "Personal Info",
+  "profile.about.hobbies.title": "Hobbies and Interests",
+  "profile.about.career.title": "Education and Employment",
+  "profile.personalInfo.about": "About",
+  "profile.personalInfo.birthday": "Birthday",
+  "profile.personalInfo.birthplace": "Birthplace",
+  "profile.personalInfo.occupation": "Occupation",
+  "profile.personalInfo.gender": "Gender",
+  "profile.personalInfo.email": "Email"
 }

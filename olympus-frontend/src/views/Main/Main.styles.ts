@@ -9,13 +9,15 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
-  display: flex;
   height: 100%;
+  margin-top: 70px;
+  overflow-y: auto;
 `;
 
 export const Page = styled.div`
-  flex-grow: 1;
-  height: 100%;
-  overflow-y: auto;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1170px;
   padding: 40px 30px;
 `;

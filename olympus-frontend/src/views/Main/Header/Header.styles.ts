@@ -2,10 +2,15 @@ import styled from 'styled-components';
 import logoImg from '../../../assets/images/logo.svg';
 
 export const Wrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 70px;
   background-color: #3f4257;
   display: flex;
   padding-right: 70px;
+  z-index: 1;
 `;
 
 export const Logo = styled.div`

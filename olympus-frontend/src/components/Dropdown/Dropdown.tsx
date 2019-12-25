@@ -5,7 +5,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 interface IDropdownProps {
   isOpened: boolean;
-  content: () => React.ReactNode | React.ReactNode;
+  content: React.ReactNode;
   onOutsideClick: () => void;
   width: number;
   children: (handleRef: (element: any) => void) => React.ReactNode;
@@ -15,6 +15,7 @@ class Dropdown extends React.Component<IDropdownProps> {
   childRef: any | null = null;
   left = 0;
   top = 0;
+  windowEvents = ['resize', 'scroll'];
 
   handleChildRef = (element: any) => {
     this.childRef = element;
@@ -27,20 +28,24 @@ class Dropdown extends React.Component<IDropdownProps> {
   componentDidUpdate(prevProps: Readonly<IDropdownProps>): void {
     if (!prevProps.isOpened && this.props.isOpened) {
       this.updatePosition();
-      this.addEventListener();
+      this.addEventListeners();
     }
 
     if (!this.props.isOpened) {
-      this.removeEventListener();
+      this.removeEventListeners();
     }
   }
 
-  addEventListener() {
-    window.addEventListener('resize', this.updatePosition);
+  addEventListeners() {
+    this.windowEvents.forEach(event => {
+      window.addEventListener(event, this.updatePosition);
+    });
   }
 
-  removeEventListener() {
-    window.removeEventListener('resize', this.updatePosition);
+  removeEventListeners() {
+    this.windowEvents.forEach(event => {
+      window.removeEventListener(event, this.updatePosition);
+    });
   }
 
   updatePosition = () => {

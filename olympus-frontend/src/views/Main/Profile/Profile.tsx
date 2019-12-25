@@ -4,6 +4,10 @@ import { Header } from './Header';
 import { bindActionCreators, Dispatch } from 'redux';
 import { getProfileRequest } from '../../../store/profile/actions';
 import { connect } from 'react-redux';
+import { Spacer } from '../../../components/Spacer';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { About } from './About';
+import { Routes } from '../../../constants/Routes';
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
@@ -29,6 +33,11 @@ class Profile extends React.Component<AllProps> {
     return (
       <Wrapper>
         <Header />
+        <Spacer height={26} />
+        <Switch>
+          <Route path={Routes.PROFILE_ABOUT} component={About} />
+          <Redirect to={Routes.PROFILE_ABOUT} />
+        </Switch>
       </Wrapper>
     );
   }
