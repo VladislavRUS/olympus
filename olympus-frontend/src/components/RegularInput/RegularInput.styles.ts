@@ -35,7 +35,6 @@ export const StyledInput = styled.input`
   font-weight: 400;
   background-color: transparent;
   border: none;
-  outline: none;
 
   &::placeholder {
     opacity: 0.6;

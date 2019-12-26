@@ -11,5 +11,5 @@ export const Cover = styled.div`
   height: 300px;
   flex-shrink: 0;
   width: 100%;
-  background-color: #ff5e3a;
+  background-image: linear-gradient(to top, #c24328, #ff5e3a);
 `;

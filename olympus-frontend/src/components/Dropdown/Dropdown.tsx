@@ -9,6 +9,7 @@ interface IDropdownProps {
   onOutsideClick: () => void;
   width: number;
   children: (handleRef: (element: any) => void) => React.ReactNode;
+  zIndex?: number;
 }
 
 class Dropdown extends React.Component<IDropdownProps> {
@@ -40,13 +41,23 @@ class Dropdown extends React.Component<IDropdownProps> {
     this.windowEvents.forEach(event => {
       window.addEventListener(event, this.updatePosition);
     });
+
+    window.addEventListener('keydown', this.onKeyDown);
   }
 
   removeEventListeners() {
     this.windowEvents.forEach(event => {
       window.removeEventListener(event, this.updatePosition);
     });
+
+    window.removeEventListener('keydown', this.onKeyDown);
   }
+
+  onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      this.props.onOutsideClick();
+    }
+  };
 
   updatePosition = () => {
     if (!this.childRef) {
@@ -65,7 +76,7 @@ class Dropdown extends React.Component<IDropdownProps> {
   render() {
     const content = typeof this.props.content === 'function' ? this.props.content() : this.props.content;
 
-    const { children } = this.props;
+    const { children, zIndex = 0 } = this.props;
 
     return (
       <>
@@ -77,6 +88,7 @@ class Dropdown extends React.Component<IDropdownProps> {
             width={this.props.width}
             top={this.top}
             left={this.left}
+            zIndex={zIndex}
           >
             <OutsideClickHandler onOutsideClick={this.props.onOutsideClick} disabled={!this.props.isOpened}>
               {content}

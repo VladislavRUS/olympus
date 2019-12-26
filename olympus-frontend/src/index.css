@@ -9,3 +9,11 @@ html, body, #root {
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+:focus {
+  outline: #08f auto 4px;
+}
+
+body.using-mouse :focus {
+  outline: none;
+}

@@ -8,13 +8,14 @@ export type Overlay = 'visible' | 'hidden';
 interface ILoaderProps {
   isVisible: boolean;
   overlay?: Overlay;
+  color?: string;
 }
 
-const Loader: React.FC<ILoaderProps> = ({ isVisible, overlay = 'visible' }) => (
+const Loader: React.FC<ILoaderProps> = ({ isVisible, overlay = 'visible', color = '#fff' }) => (
   <PoseGroup>
     {isVisible ? (
       <Wrapper overlay={overlay} key={'wrapper'}>
-        <Spinner color={'#fff'} size={6} />
+        <Spinner color={color} size={6} />
       </Wrapper>
     ) : (
       <React.Fragment key={'fragment'} />

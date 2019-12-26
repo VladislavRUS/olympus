@@ -17,7 +17,7 @@ module.exports = {
         "@typescript-eslint/interface-name-prefix": ['off'],
         "@typescript-eslint/ban-ts-ignore": ['off'],
         "react/prop-types": ['off'],
-        "@typescript-eslint/explicit-function-return-type": ['off'],
+        "@typescript-eslint/explicit-function-return-type": ['off']
     },
     settings: {
         react: {

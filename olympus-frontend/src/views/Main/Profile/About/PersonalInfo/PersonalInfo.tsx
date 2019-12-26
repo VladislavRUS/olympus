@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { IApplicationState } from '../../../../../store';
 import { IPersonalInfo, TPersonalInfoKey } from '../../../../../store/profile/types';
+import { EditModal } from '../../../../../components/EditModal';
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
@@ -53,12 +54,31 @@ const personalInfoFields: IPersonalInfoField[] = [
   },
 ];
 
-class PersonalInfo extends React.Component<Props> {
+type State = {
+  isEditModalOpened: boolean;
+};
+
+class PersonalInfo extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isEditModalOpened: false,
+    };
+  }
+
+  onModalOpen = () => {
+    this.setState({ isEditModalOpened: true });
+  };
+
+  onModalClose = () => {
+    this.setState({ isEditModalOpened: false });
+  };
+
   render() {
     const { t, personalInfo } = this.props;
 
     return (
-      <InformationCard title={t('profile.about.personalInfo.title')}>
+      <InformationCard title={t('profile.about.personalInfo.title')} onEdit={this.onModalOpen}>
         {personalInfoFields.map(field => (
           <InfoBlock
             key={field.personalInfoKey}
@@ -67,6 +87,16 @@ class PersonalInfo extends React.Component<Props> {
             direction={'horizontal'}
           />
         ))}
+
+        <EditModal
+          isOpened={this.state.isEditModalOpened}
+          onRequestClose={this.onModalClose}
+          onSave={this.onModalClose}
+          onCancel={this.onModalClose}
+          cancelButtonText={'Cancel'}
+          saveButtonText={'Save'}
+          isLoading={true}
+        />
       </InformationCard>
     );
   }

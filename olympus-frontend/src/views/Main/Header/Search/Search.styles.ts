@@ -9,15 +9,13 @@ export const Wrapper = styled.div`
   padding: 0 24px;
 `;
 
-export const Input = styled.input`
+export const StyledInput = styled.input`
   width: 100%;
   background-color: transparent;
   height: 50px;
   border: none;
-  outline: none;
   opacity: 0.6;
   color: #fff;
-  font-family: Roboto;
   font-size: 12px;
   font-weight: 400;
   line-height: 14px;
