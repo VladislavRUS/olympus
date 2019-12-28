@@ -41,6 +41,7 @@
     "eject": "react-scripts eject",
     "lint:fix": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx}' --quiet --fix",
     "lint": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx}'",
+    "check-translations-lines-count": "node ./scripts/check-translations-lines-counts.js",
     "sort-translations": "sort-json ./src/translations/*.json"
   },
   "husky": {
@@ -50,8 +51,9 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "yarn lint",
+      "yarn check-translations-lines-count",
       "yarn sort-translations",
+      "yarn lint",
       "git add"
     ]
   },
