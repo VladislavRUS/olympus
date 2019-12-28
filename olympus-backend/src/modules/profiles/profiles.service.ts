@@ -5,7 +5,7 @@ import { User } from '../../database/entities/User';
 import { Profile } from '../../database/entities/Profile';
 
 @Injectable()
-export class ProfileService {
+export class ProfilesService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
