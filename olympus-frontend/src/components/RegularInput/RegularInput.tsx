@@ -20,15 +20,15 @@ class RegularInput extends React.PureComponent<IRegularInputProps> {
     const { value, placeholder = '', type = 'text', name = '', autocomplete = 'off', isValid = true } = this.props;
 
     return (
-      <Wrapper isValid={isValid}>
-        {value && <PlaceholderHint>{placeholder}</PlaceholderHint>}
+      <Wrapper>
+        <PlaceholderHint value={value}>{placeholder}</PlaceholderHint>
         <StyledInput
           onChange={this.onChange}
-          placeholder={placeholder}
           value={value}
           type={type}
           name={name}
           autoComplete={autocomplete}
+          isValid={isValid}
         />
       </Wrapper>
     );

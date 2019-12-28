@@ -1,3 +1,8 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div``;
+export const Empty = styled.div`
+  text-align: center;
+  color: #515365;
+  font-size: 13px;
+  font-weight: 500;
+`;

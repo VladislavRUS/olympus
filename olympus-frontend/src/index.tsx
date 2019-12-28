@@ -39,6 +39,8 @@ document.body.addEventListener('mousedown', () => {
   document.body.classList.add('using-mouse');
 });
 
-document.body.addEventListener('keydown', () => {
-  document.body.classList.remove('using-mouse');
+document.body.addEventListener('keydown', (event: KeyboardEvent) => {
+  if (event.key === 'Tab') {
+    document.body.classList.remove('using-mouse');
+  }
 });

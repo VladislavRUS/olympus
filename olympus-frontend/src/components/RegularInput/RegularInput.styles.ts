@@ -1,43 +1,38 @@
 import styled, { css } from 'styled-components';
 
-export const Wrapper = styled.div<{ isValid: boolean }>`
-  width: 100%;
+export const Wrapper = styled.div`
   position: relative;
-  height: 54px;
-  padding: 0 20px;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  border: 1px solid #d8dbe6;
-  border-radius: 4px;
-
-  ${props =>
-    !props.isValid &&
-    css`
-      border: 1px solid red;
-    `}
 `;
 
-export const PlaceholderHint = styled.div`
+export const PlaceholderHint = styled.div<{ value: string }>`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 14px;
   opacity: 0.6;
   color: #888da8;
-  font-size: 10px;
   font-weight: 400;
   margin-bottom: 8px;
+  pointer-events: none;
+  transition: top 0.1s ease;
+
+  ${props =>
+    props.value &&
+    css`
+      font-size: 12px;
+      top: 10px;
+    `};
 `;
 
-export const StyledInput = styled.input`
+export const StyledInput = styled.input<{ value: string; isValid: boolean }>`
   width: 100%;
-  padding: 0;
+  padding: 0 20px;
+  padding-top: ${props => (props.value ? 18 : 0)}px;
+  height: 54px;
   color: #515365;
   font-size: 14px;
   font-weight: 400;
   background-color: transparent;
-  border: none;
-
-  &::placeholder {
-    opacity: 0.6;
-    color: #888da8;
-  }
+  border: 1px solid ${props => (props.isValid ? '#d8dbe6' : 'red')};
+  border-radius: 4px;
 `;

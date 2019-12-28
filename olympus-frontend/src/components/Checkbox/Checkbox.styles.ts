@@ -4,7 +4,7 @@ interface IWrapperProps {
   isActive: boolean;
 }
 
-export const Wrapper = styled.div<IWrapperProps>`
+export const Wrapper = styled.button.attrs({ type: 'button' })<IWrapperProps>`
   position: relative;
   width: 18px;
   height: 18px;

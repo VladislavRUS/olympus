@@ -1,5 +1,5 @@
 import React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
+import { bindActionCreators, compose, Dispatch } from 'redux';
 import { onChangeEmail, onChangePassword, onLoginRequest } from '../../../../store/login/actions';
 import { IApplicationState } from '../../../../store';
 import { RegularInput } from '../../../../components/RegularInput';
@@ -9,8 +9,8 @@ import { RegularButton } from '../../../../components/RegularButton';
 import { Spacer } from '../../../../components/Spacer';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { ErrorMessage } from '../../../../components/ErrorMessage';
-import { compose } from 'redux';
 import validator from 'validator';
+import { RegularButtonMode } from '../../../../components/RegularButton/RegularButton';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -77,6 +77,7 @@ class LoginForm extends React.Component<AllProps> {
           text={t('home.login.loginButtonTitle')}
           isDisabled={isButtonDisabled}
           isLoading={isLoading}
+          mode={RegularButtonMode.PRIMARY}
         />
         <Spacer height={20} />
         <ErrorMessage message={errorMessage} />

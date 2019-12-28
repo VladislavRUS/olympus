@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { IApplicationState } from '../../../../../store';
 import { IPersonalInfo, TPersonalInfoKey } from '../../../../../store/profile/types';
 import { EditModal } from '../../../../../components/EditModal';
+import { Empty } from './PersonalInfo.styles';
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
@@ -76,17 +77,30 @@ class PersonalInfo extends React.Component<Props, State> {
 
   render() {
     const { t, personalInfo } = this.props;
+    const hasFilledValues = personalInfoFields.map(field => personalInfo[field.personalInfoKey]).find(value => value);
 
     return (
       <InformationCard title={t('profile.about.personalInfo.title')} onEdit={this.onModalOpen}>
-        {personalInfoFields.map(field => (
-          <InfoBlock
-            key={field.personalInfoKey}
-            title={t(field.textTranslationKey)}
-            value={personalInfo[field.personalInfoKey]}
-            direction={'horizontal'}
-          />
-        ))}
+        {hasFilledValues ? (
+          personalInfoFields.map(field => {
+            const value = personalInfo[field.personalInfoKey];
+
+            if (!value) {
+              return null;
+            }
+
+            return (
+              <InfoBlock
+                key={field.personalInfoKey}
+                title={t(field.textTranslationKey)}
+                value={value}
+                direction={'horizontal'}
+              />
+            );
+          })
+        ) : (
+          <Empty>{t('profile.personalInfo.empty')}</Empty>
+        )}
 
         <EditModal
           isOpened={this.state.isEditModalOpened}

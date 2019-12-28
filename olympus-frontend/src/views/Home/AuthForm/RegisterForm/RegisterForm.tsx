@@ -23,6 +23,7 @@ import { TextHighlight } from '../../../../components/TextHighlight';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { ErrorMessage } from '../../../../components/ErrorMessage';
 import validator from 'validator';
+import { RegularButtonMode } from '../../../../components/RegularButton/RegularButton';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -141,6 +142,7 @@ class RegisterForm extends React.Component<AllProps> {
           text={t('home.register.registerButtonTitle')}
           isDisabled={isButtonDisabled}
           isLoading={isLoading}
+          mode={RegularButtonMode.PRIMARY}
         />
         <Spacer height={20} />
         <ErrorMessage message={errorMessage} />
