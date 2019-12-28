@@ -21,6 +21,7 @@ API.interceptors.response.use(
     if (!error.response) {
       toast.error(i18n.t('errors.networkError'));
     } else if (error.response && error.response.status === 401) {
+      localStorage.clear();
       window.location.reload();
     }
 

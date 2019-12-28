@@ -8,8 +8,8 @@ import { PrivateRoute } from './PrivateRoute';
 const App: React.FC = () => {
   return (
     <Switch>
-      <Route path={Routes.HOME} component={Home} />
       <PrivateRoute path={Routes.MAIN} component={Main} />
+      <Route path={Routes.HOME} component={Home} exact={true} />
       <Redirect to={Routes.HOME} />
     </Switch>
   );

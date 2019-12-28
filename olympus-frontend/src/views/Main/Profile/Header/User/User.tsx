@@ -2,26 +2,30 @@ import React from 'react';
 import { Wrapper, Information, FullName, Avatar } from './User.styles';
 import { IApplicationState } from '../../../../../store';
 import { connect } from 'react-redux';
+import { IUser } from '../../../../../store/current-user/types';
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    firstName: state.currentUser.firstName,
-    lastName: state.currentUser.lastName,
+    user: state.currentUser.user,
   };
 
   return stateProps;
 };
 
 interface IStateProps {
-  firstName: string;
-  lastName: string;
+  user: IUser | null;
 }
 
 type Props = IStateProps;
 
 class User extends React.Component<Props> {
   render() {
-    const { firstName, lastName } = this.props;
+    const { user } = this.props;
+    if (!user) {
+      return null;
+    }
+
+    const { firstName, lastName } = user;
 
     return (
       <Wrapper>

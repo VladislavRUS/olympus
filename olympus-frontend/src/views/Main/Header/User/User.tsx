@@ -8,6 +8,7 @@ import { bindActionCreators, Dispatch, compose } from 'redux';
 import { onLogout } from '../../../../store/current-user/actions';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { FiUser } from 'react-icons/fi';
+import { IUser } from '../../../../store/current-user/types';
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ onLogout }, dispatch);
 
@@ -17,16 +18,14 @@ interface IDispatchProps {
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    firstName: state.currentUser.firstName,
-    lastName: state.currentUser.lastName,
+    user: state.currentUser.user,
   };
 
   return stateProps;
 };
 
 interface IStateProps {
-  firstName: string;
-  lastName: string;
+  user: IUser | null;
 }
 
 type AllProps = IStateProps & IDispatchProps & WithTranslation;
@@ -53,7 +52,13 @@ class User extends React.Component<AllProps, IUserState> {
   };
 
   render() {
-    const { firstName, lastName } = this.props;
+    const { user } = this.props;
+
+    if (!user) {
+      return null;
+    }
+
+    const { firstName, lastName } = user;
 
     return (
       <Dropdown
