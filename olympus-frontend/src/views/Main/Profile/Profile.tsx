@@ -5,7 +5,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { getProfileRequest } from '../../../store/profile/actions';
 import { connect } from 'react-redux';
 import { Spacer } from '../../../components/Spacer';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { About } from './About';
 import { Routes } from '../../../constants/Routes';
 import { IApplicationState } from '../../../store';
@@ -39,11 +39,14 @@ interface IDispatchProps {
   getProfileRequest: typeof getProfileRequest;
 }
 
-type AllProps = IStateProps & IDispatchProps;
+type AllProps = IStateProps & IDispatchProps & RouteComponentProps;
 
 class Profile extends React.Component<AllProps> {
   componentDidMount() {
-    this.props.getProfileRequest();
+    const { match } = this.props;
+    const { id } = match.params as any;
+
+    this.props.getProfileRequest(id);
   }
 
   render() {

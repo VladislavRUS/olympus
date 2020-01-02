@@ -5,7 +5,6 @@ import { IRegisterCredentials, RegisterActionTypes } from './types';
 import { IApplicationState } from '../index';
 import { i18n } from '../../translations';
 import { setLoginMode } from '../auth-form/actions';
-import { onChangePassword, onChangeEmail } from '../login/actions';
 
 const getRegisterCredentials = (state: IApplicationState): IRegisterCredentials => state.register.credentials;
 
@@ -20,8 +19,6 @@ function* handleRegister() {
     });
 
     yield put(onRegisterSuccess());
-    yield put(onChangeEmail(credentials.email));
-    yield put(onChangePassword(credentials.password));
     yield put(setLoginMode());
   } catch (error) {
     let errorMessage = '';

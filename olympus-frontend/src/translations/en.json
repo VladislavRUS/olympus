@@ -3,6 +3,8 @@
   "errors.networkError": "Network error. Please check connection",
   "errors.unauthorized": "Invalid credentials",
   "errors.unknown": "Unknown error",
+  "form.errors.email": "Please enter valid email address",
+  "form.errors.required": "Field is required",
   "home.login.emailPlaceholder": "Email",
   "home.login.error.invalidCredentials": "User was not found",
   "home.login.loginButtonTitle": "Login",

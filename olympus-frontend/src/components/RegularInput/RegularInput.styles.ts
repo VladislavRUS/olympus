@@ -36,3 +36,9 @@ export const StyledInput = styled.input<{ value: string; isValid: boolean }>`
   border: 1px solid ${props => (props.isValid ? '#d8dbe6' : 'red')};
   border-radius: 4px;
 `;
+
+export const Error = styled.div`
+  margin-top: 10px;
+  font-size: 12px;
+  color: red;
+`;

@@ -3,6 +3,8 @@
   "errors.networkError": "Ошибка сети. Пожалуйста, проверьте подключение",
   "errors.unauthorized": "Неправильные почта и пароль",
   "errors.unknown": "Неизвестная ошибка",
+  "form.errors.email": "Пожалуйста, введите правильный почтовый адрес",
+  "form.errors.required": "Поле обязательно для заполнения",
   "home.login.emailPlaceholder": "Почта",
   "home.login.error.invalidCredentials": "Такой пользователь не найден",
   "home.login.loginButtonTitle": "Войти",

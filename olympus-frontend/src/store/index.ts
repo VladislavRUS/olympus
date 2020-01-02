@@ -16,6 +16,7 @@ import { profileReducer } from './profile/reducer';
 import { IUserState } from './user/types';
 import { userReducer } from './user/reducer';
 import { userSaga } from './user/sagas';
+import { reducer as formReducer } from 'redux-form';
 
 export interface IApplicationState {
   login: ILoginState;
@@ -23,6 +24,7 @@ export interface IApplicationState {
   authForm: IAuthFormState;
   user: IUserState;
   profile: IProfileState;
+  form: any;
 }
 
 export const createRootReducer = (history: History) =>
@@ -32,6 +34,7 @@ export const createRootReducer = (history: History) =>
     register: registerReducer,
     user: userReducer,
     profile: profileReducer,
+    form: formReducer,
     router: connectRouter(history),
   });
 

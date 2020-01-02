@@ -8,6 +8,20 @@ import { connect } from 'react-redux';
 import { PoseGroup } from 'react-pose';
 import RegisterForm from './RegisterForm/RegisterForm';
 import { LoadingOverlay } from '../../../components/LoadingOverlay';
+import { bindActionCreators, Dispatch } from 'redux';
+import { onLoginRequest } from '../../../store/login/actions';
+
+interface IDispatchProps {
+  onLoginRequest: typeof onLoginRequest;
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(
+    {
+      onLoginRequest,
+    },
+    dispatch,
+  );
 
 interface IStateProps {
   mode: AuthFormModes;
@@ -19,26 +33,36 @@ const mapStateToProps = (state: IApplicationState): IStateProps => ({
   isLoading: state.login.isLoading || state.register.isLoading,
 });
 
-type Props = IStateProps;
+type Props = IStateProps & IDispatchProps;
 
-const AuthForm: React.FC<Props> = ({ mode, isLoading }) => (
-  <Wrapper>
-    <FormModeToggles />
-    <FormContent>
-      <PoseGroup>
-        {mode === AuthFormModes.LOGIN ? (
-          <FormWrapper key={'login'}>
-            <LoginForm />
-          </FormWrapper>
-        ) : (
-          <FormWrapper key={'register'}>
-            <RegisterForm />
-          </FormWrapper>
-        )}
-      </PoseGroup>
-    </FormContent>
-    <LoadingOverlay isLoading={isLoading} />
-  </Wrapper>
-);
+class AuthForm extends React.Component<Props, any> {
+  onLoginSubmit = (values: any) => {
+    this.props.onLoginRequest(values);
+  };
 
-export default connect<IStateProps, {}, {}, IApplicationState>(mapStateToProps)(AuthForm);
+  render() {
+    const { mode, isLoading } = this.props;
+
+    return (
+      <Wrapper>
+        <FormModeToggles />
+        <FormContent>
+          <PoseGroup>
+            {mode === AuthFormModes.LOGIN ? (
+              <FormWrapper key={'login'}>
+                <LoginForm onSubmit={this.onLoginSubmit} />
+              </FormWrapper>
+            ) : (
+              <FormWrapper key={'register'}>
+                <RegisterForm />
+              </FormWrapper>
+            )}
+          </PoseGroup>
+        </FormContent>
+        <LoadingOverlay isLoading={isLoading} />
+      </Wrapper>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);

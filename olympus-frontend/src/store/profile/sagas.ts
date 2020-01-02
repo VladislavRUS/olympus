@@ -1,25 +1,11 @@
-import { all, call, fork, put, takeEvery, select } from 'redux-saga/effects';
+import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { API } from '../../utils/api';
 import { getProfileSuccess, getProfileError } from './actions';
 import { ProfileActionTypes } from './types';
-import { IApplicationState } from '../index';
 
-const getCurrentUserId = (state: IApplicationState) => {
-  if (!state.user.currentUser) {
-    return null;
-  }
-
-  return state.user.currentUser.id;
-};
-
-function* handleGetProfile() {
+function* handleGetProfile(action: any) {
   try {
-    const id = yield select(getCurrentUserId);
-
-    if (id === null) {
-      yield put(getProfileError());
-      return;
-    }
+    const id = action.payload;
 
     const { data } = yield call(API.get, `/profiles/${id}`);
 

@@ -1,37 +1,31 @@
 import React from 'react';
-import { bindActionCreators, compose, Dispatch } from 'redux';
-import { onChangeEmail, onChangePassword, onLoginRequest } from '../../../../store/login/actions';
+import { bindActionCreators, Dispatch } from 'redux';
+import { onLoginRequest } from '../../../../store/login/actions';
 import { IApplicationState } from '../../../../store';
 import { RegularInput } from '../../../../components/RegularInput';
 import { connect } from 'react-redux';
 import { BaseForm } from '../BaseForm';
-import { RegularButton } from '../../../../components/RegularButton';
 import { Spacer } from '../../../../components/Spacer';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { ErrorMessage } from '../../../../components/ErrorMessage';
-import validator from 'validator';
+import { reduxForm, InjectedFormProps, Field, WrappedFieldProps } from 'redux-form';
+import { RegularButton } from '../../../../components/RegularButton';
 import { RegularButtonMode } from '../../../../components/RegularButton/RegularButton';
+import validator from 'validator';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      onChangeEmail,
-      onChangePassword,
       onLoginRequest,
     },
     dispatch,
   );
 
 interface IDispatchProps {
-  onChangeEmail: typeof onChangeEmail;
-  onChangePassword: typeof onChangePassword;
   onLoginRequest: typeof onLoginRequest;
 }
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    email: state.login.credentials.email,
-    password: state.login.credentials.password,
     errorMessage: state.login.errorMessage,
     isLoading: state.login.isLoading,
   };
@@ -40,50 +34,73 @@ const mapStateToProps = (state: IApplicationState) => {
 };
 
 interface IStateProps {
-  email: string;
-  password: string;
   errorMessage: string;
   isLoading: boolean;
 }
 
-type AllProps = IStateProps & IDispatchProps & WithTranslation;
+type AllProps = IStateProps & IDispatchProps & InjectedFormProps & WithTranslation;
+
+const email = (value?: string) => (value && validator.isEmail(value) ? undefined : 'form.errors.email');
+const required = (value?: string) => (value ? undefined : 'form.errors.required');
 
 class LoginForm extends React.Component<AllProps> {
-  render() {
-    const { isLoading, errorMessage, email, password, onChangeEmail, onChangePassword, onLoginRequest, t } = this.props;
-
-    const isButtonDisabled = !email.trim() || !password.trim() || !validator.isEmail(email);
+  renderField = (props: WrappedFieldProps & { placeholder: string }) => {
+    const { t } = this.props;
+    const { placeholder, input, meta } = props;
+    const { value, onChange, name, onFocus, onBlur } = input;
 
     return (
-      <BaseForm title={t('home.login.title')} onSubmit={onLoginRequest}>
-        <RegularInput
-          value={email}
-          onChangeText={onChangeEmail}
-          placeholder={t('home.login.emailPlaceholder')}
+      <RegularInput
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        name={name}
+        error={t(meta.error)}
+        touched={meta.touched}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
+    );
+  };
+
+  render() {
+    const { handleSubmit, t, invalid, isLoading } = this.props;
+
+    return (
+      <BaseForm title={t('home.login.title')} onSubmit={handleSubmit}>
+        <Field
           name={'email'}
-          isValid={email ? validator.isEmail(email) : true}
+          component={this.renderField}
+          placeholder={t('home.login.emailPlaceholder')}
+          validate={email}
         />
+
         <Spacer height={20} />
-        <RegularInput
-          value={password}
-          onChangeText={onChangePassword}
-          placeholder={t('home.login.passwordPlaceholder')}
-          type={'password'}
+
+        <Field
           name={'password'}
+          component={this.renderField}
+          placeholder={t('home.login.passwordPlaceholder')}
+          validate={required}
         />
+
         <Spacer height={20} />
+
         <RegularButton
           type={'submit'}
           text={t('home.login.loginButtonTitle')}
-          isDisabled={isButtonDisabled}
+          isDisabled={invalid}
           isLoading={isLoading}
           mode={RegularButtonMode.PRIMARY}
         />
         <Spacer height={20} />
-        <ErrorMessage message={errorMessage} />
       </BaseForm>
     );
   }
 }
 
-export default compose(withTranslation(), connect(mapStateToProps, mapDispatchToProps))(LoginForm);
+const createReduxForm = reduxForm({ form: 'login' });
+const translated = withTranslation();
+const ConnectedLoginForm = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+
+export default createReduxForm(translated(ConnectedLoginForm));
