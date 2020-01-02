@@ -8,17 +8,18 @@ import { IApplicationState } from '../../../../../store';
 import { IPersonalInfo, TPersonalInfoKey } from '../../../../../store/profile/types';
 import { EditModal } from '../../../../../components/EditModal';
 import { Empty } from './PersonalInfo.styles';
+import { getPersonalInfoState } from '../../../../../store/profile/selectors';
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    personalInfo: state.profile.profile.personalInfo,
+    personalInfo: getPersonalInfoState(state),
   };
 
   return stateProps;
 };
 
 interface IStateProps {
-  personalInfo: IPersonalInfo;
+  personalInfo: IPersonalInfo | null;
 }
 
 type Props = WithTranslation & IStateProps;
@@ -77,6 +78,11 @@ class PersonalInfo extends React.Component<Props, State> {
 
   render() {
     const { t, personalInfo } = this.props;
+
+    if (!personalInfo) {
+      return null;
+    }
+
     const hasFilledValues = personalInfoFields.map(field => personalInfo[field.personalInfoKey]).find(value => value);
 
     return (

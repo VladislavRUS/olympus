@@ -2,11 +2,11 @@ import React from 'react';
 import { Wrapper, Information, FullName, Avatar } from './User.styles';
 import { IApplicationState } from '../../../../../store';
 import { connect } from 'react-redux';
-import { IUser } from '../../../../../store/current-user/types';
+import { IUser } from '../../../../../store/user/types';
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    user: state.currentUser.user,
+    user: state.user.currentUser,
   };
 
   return stateProps;

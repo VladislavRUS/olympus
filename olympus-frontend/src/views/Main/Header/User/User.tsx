@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { Dropdown } from '../../../../components/Dropdown';
 import { DropdownItem } from '../../../../components/DropdownItem';
 import { bindActionCreators, Dispatch, compose } from 'redux';
-import { onLogout } from '../../../../store/current-user/actions';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { FiUser } from 'react-icons/fi';
-import { IUser } from '../../../../store/current-user/types';
+import { IUser } from '../../../../store/user/types';
+import { onLogout } from '../../../../store/user/actions';
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ onLogout }, dispatch);
 
@@ -18,7 +18,7 @@ interface IDispatchProps {
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    user: state.currentUser.user,
+    user: state.user.currentUser,
   };
 
   return stateProps;

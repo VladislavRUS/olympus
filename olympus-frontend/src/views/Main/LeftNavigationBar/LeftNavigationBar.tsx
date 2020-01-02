@@ -20,9 +20,14 @@ const LeftNavigationBar: React.FC<RouteComponentProps> = ({ location }) => (
     {links.map(link => {
       const Icon = link.icon;
 
+      const linkToStart = link.to
+        .split('/')
+        .slice(0, 3)
+        .join('/');
+
       return (
         <StyledLink to={link.to} key={link.to}>
-          <Icon color={location.pathname.startsWith(link.to) ? '#ff5e3a' : '#9a9fbf'} size={24} />
+          <Icon color={location.pathname.startsWith(linkToStart) ? '#ff5e3a' : '#9a9fbf'} size={24} />
         </StyledLink>
       );
     })}

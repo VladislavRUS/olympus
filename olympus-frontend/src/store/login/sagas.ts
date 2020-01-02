@@ -6,6 +6,7 @@ import { IApplicationState } from '../index';
 import { i18n } from '../../translations';
 import { replace } from 'connected-react-router';
 import { Routes } from '../../constants/Routes';
+
 const getLoginCredentials = (state: IApplicationState): ILoginCredentials => state.login.credentials;
 
 function* handleLogin() {

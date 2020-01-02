@@ -8,6 +8,23 @@ import { Spacer } from '../../../components/Spacer';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { About } from './About';
 import { Routes } from '../../../constants/Routes';
+import { IApplicationState } from '../../../store';
+import { IProfile } from '../../../store/profile/types';
+import { IUser } from '../../../store/user/types';
+
+const mapStateToProps = (state: IApplicationState) => {
+  const stateProps: IStateProps = {
+    profile: state.profile.currentProfile,
+    user: state.user.currentUser,
+  };
+
+  return stateProps;
+};
+
+interface IStateProps {
+  profile: IProfile | null;
+  user: IUser | null;
+}
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
@@ -22,7 +39,7 @@ interface IDispatchProps {
   getProfileRequest: typeof getProfileRequest;
 }
 
-type AllProps = IDispatchProps;
+type AllProps = IStateProps & IDispatchProps;
 
 class Profile extends React.Component<AllProps> {
   componentDidMount() {
@@ -30,17 +47,19 @@ class Profile extends React.Component<AllProps> {
   }
 
   render() {
+    const { user } = this.props;
+
     return (
       <Wrapper>
         <Header />
         <Spacer height={26} />
         <Switch>
           <Route path={Routes.PROFILE_ABOUT} component={About} />
-          <Redirect to={Routes.PROFILE_ABOUT} />
+          {user && <Redirect to={Routes.PROFILE_ABOUT.replace(':id', user.id.toString())} />}
         </Switch>
       </Wrapper>
     );
   }
 }
 
-export default connect(null, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

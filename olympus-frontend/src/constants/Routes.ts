@@ -1,10 +1,10 @@
 export enum Routes {
   HOME = '/',
   MAIN = '/main',
-  PROFILE = '/main/profile',
-  PROFILE_ABOUT = '/main/profile/about',
-  PROFILE_FRIENDS = '/main/profile/friends',
-  PROFILE_PHOTOS = '/main/profile/photos',
-  PROFILE_VIDEOS = '/main/profile/videos',
+  PROFILE = '/main/profile/:id',
+  PROFILE_ABOUT = '/main/profile/:id/about',
+  PROFILE_FRIENDS = '/main/profile/:id/friends',
+  PROFILE_PHOTOS = '/main/profile/:id/photos',
+  PROFILE_VIDEOS = '/main/profile/:id/videos',
   FEED = '/main/feed',
 }

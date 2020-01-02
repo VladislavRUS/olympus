@@ -5,11 +5,11 @@ import { ProfileActionTypes } from './types';
 import { IApplicationState } from '../index';
 
 const getCurrentUserId = (state: IApplicationState) => {
-  if (!state.currentUser.user) {
+  if (!state.user.currentUser) {
     return null;
   }
 
-  return state.currentUser.user.id;
+  return state.user.currentUser.id;
 };
 
 function* handleGetProfile() {

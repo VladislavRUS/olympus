@@ -6,7 +6,12 @@ import { Spacer } from '../../../../../components/Spacer';
 import { compose } from 'redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-const links = [
+interface ILink {
+  to: string;
+  textKey: string;
+}
+
+const links: ILink[] = [
   {
     to: Routes.PROFILE_ABOUT,
     textKey: 'profile.links.about',
@@ -27,20 +32,29 @@ const links = [
 
 type Props = WithTranslation & RouteComponentProps;
 
-const Navbar: React.FC<Props> = ({ t, location }) => {
+const replaceLinkTo = (link: string, id: string) => {
+  return link.replace(':id', id);
+};
+
+const Navbar: React.FC<Props> = ({ t, location, match }) => {
+  const id = (match.params as any).id;
+
+  const renderLinks = (links: ILink[]) =>
+    links.map(link => {
+      const to = replaceLinkTo(link.to, id);
+
+      return (
+        <StyledLink key={link.to} to={to}>
+          <LinkText isActive={location.pathname === to}>{t(link.textKey)}</LinkText>
+        </StyledLink>
+      );
+    });
+
   return (
     <Wrapper>
-      {links.slice(0, 2).map(link => (
-        <StyledLink key={link.to} to={link.to}>
-          <LinkText isActive={location.pathname === link.to}>{t(link.textKey)}</LinkText>
-        </StyledLink>
-      ))}
+      {renderLinks(links.slice(0, 2))}
       <Spacer width={353} />
-      {links.slice(2).map(link => (
-        <StyledLink key={link.to} to={link.to}>
-          <LinkText isActive={location.pathname === link.to}>{t(link.textKey)}</LinkText>
-        </StyledLink>
-      ))}
+      {renderLinks(links.slice(2))}
     </Wrapper>
   );
 };

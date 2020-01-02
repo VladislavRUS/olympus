@@ -4,13 +4,13 @@ import { Header } from './Header';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { LeftNavigationBar } from './LeftNavigationBar';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { Routes } from '../../constants/Routes';
 import { Profile } from './Profile';
 import { Feed } from './Feed';
-import { getCurrentUserRequest } from '../../store/current-user/actions';
 import { IApplicationState } from '../../store';
-import { IUser } from '../../store/current-user/types';
+import { getCurrentUserRequest } from '../../store/user/actions';
+import { IUser } from '../../store/user/types';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -26,7 +26,7 @@ interface IDispatchProps {
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    user: state.currentUser.user,
+    user: state.user.currentUser,
   };
 
   return stateProps;
@@ -36,7 +36,7 @@ interface IStateProps {
   user: IUser | null;
 }
 
-type Props = IStateProps & IDispatchProps;
+type Props = IStateProps & IDispatchProps & RouteComponentProps;
 
 class Main extends React.Component<Props> {
   componentDidMount() {
@@ -56,7 +56,7 @@ class Main extends React.Component<Props> {
               <Switch>
                 <Route path={Routes.PROFILE} component={Profile} />
                 <Route path={Routes.FEED} component={Feed} />
-                <Redirect to={Routes.PROFILE} />
+                <Redirect to={Routes.PROFILE.replace(':id', user.id.toString())} />
               </Switch>
             </Page>
           )}
