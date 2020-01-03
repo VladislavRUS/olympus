@@ -1,5 +1,7 @@
 {
   "app.logout": "Logout",
+  "app.save": "Save",
+  "app.cancel": "Cancel",
   "errors.networkError": "Network error. Please check connection",
   "errors.unauthorized": "Invalid credentials",
   "errors.unknown": "Unknown error",

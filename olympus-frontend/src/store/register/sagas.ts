@@ -1,21 +1,16 @@
-import { all, call, fork, put, takeEvery, select, delay } from 'redux-saga/effects';
+import { all, call, fork, put, takeEvery, delay } from 'redux-saga/effects';
 import { API } from '../../utils/api';
 import { onRegisterError, onRegisterSuccess } from './actions';
-import { IRegisterCredentials, RegisterActionTypes } from './types';
-import { IApplicationState } from '../index';
+import { RegisterActionTypes } from './types';
 import { i18n } from '../../translations';
 import { setLoginMode } from '../auth-form/actions';
 
-const getRegisterCredentials = (state: IApplicationState): IRegisterCredentials => state.register.credentials;
-
-function* handleRegister() {
+function* handleRegister(action: any) {
   yield delay(500);
-
-  const credentials: IRegisterCredentials = yield select(getRegisterCredentials);
 
   try {
     yield call(API.post, '/auth/register', {
-      ...credentials,
+      ...action.payload,
     });
 
     yield put(onRegisterSuccess());

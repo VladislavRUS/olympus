@@ -56,7 +56,7 @@ class Main extends React.Component<Props> {
               <Switch>
                 <Route path={Routes.PROFILE} component={Profile} />
                 <Route path={Routes.FEED} component={Feed} />
-                <Redirect to={Routes.PROFILE.replace(':id', user.id.toString())} />
+                <Redirect to={Routes.PROFILE.replace(':id', user.profileId.toString())} />
               </Switch>
             </Page>
           )}

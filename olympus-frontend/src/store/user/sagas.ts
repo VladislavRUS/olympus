@@ -7,7 +7,7 @@ import { Routes } from '../../constants/Routes';
 
 function* handleGetCurrentUser() {
   try {
-    const { data } = yield call(API.get, '/auth/current-user');
+    const { data } = yield call(API.get, '/users/current');
 
     yield put(getCurrentUserSuccess(data));
   } catch (error) {

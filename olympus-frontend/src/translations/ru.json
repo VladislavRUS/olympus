@@ -1,5 +1,7 @@
 {
   "app.logout": "Выйти",
+  "app.save": "Сохранить",
+  "app.cancel": "Отменить",
   "errors.networkError": "Ошибка сети. Пожалуйста, проверьте подключение",
   "errors.unauthorized": "Неправильные почта и пароль",
   "errors.unknown": "Неизвестная ошибка",

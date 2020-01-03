@@ -2,27 +2,40 @@ import React from 'react';
 import { InformationCard } from '../../../../../components/InformationCard';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { InfoBlock } from '../../../../../components/InfoBlock';
-import { compose } from 'redux';
+import { bindActionCreators, compose, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { IApplicationState } from '../../../../../store';
-import { IPersonalInfo, TPersonalInfoKey } from '../../../../../store/profile/types';
-import { EditModal } from '../../../../../components/EditModal';
+import { IProfile, TPersonalInfoKey } from '../../../../../store/profile/types';
 import { Empty } from './PersonalInfo.styles';
-import { getPersonalInfoState } from '../../../../../store/profile/selectors';
+import { PersonalInfoForm } from './PersonalInfoForm';
+import { Modal } from '../../../../../components/Modal';
+import { updateProfileRequest } from '../../../../../store/profile/actions';
+
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(
+    {
+      updateProfileRequest,
+    },
+    dispatch,
+  );
+
+interface IDispatchProps {
+  updateProfileRequest: typeof updateProfileRequest;
+}
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    personalInfo: getPersonalInfoState(state),
+    profile: state.profile.currentProfile,
   };
 
   return stateProps;
 };
 
 interface IStateProps {
-  personalInfo: IPersonalInfo | null;
+  profile: IProfile | null;
 }
 
-type Props = WithTranslation & IStateProps;
+type TProps = WithTranslation & IStateProps & IDispatchProps;
 
 interface IPersonalInfoField {
   personalInfoKey: TPersonalInfoKey;
@@ -60,8 +73,8 @@ type State = {
   isEditModalOpened: boolean;
 };
 
-class PersonalInfo extends React.Component<Props, State> {
-  constructor(props: Props) {
+class PersonalInfo extends React.Component<TProps, State> {
+  constructor(props: TProps) {
     super(props);
     this.state = {
       isEditModalOpened: false,
@@ -76,12 +89,30 @@ class PersonalInfo extends React.Component<Props, State> {
     this.setState({ isEditModalOpened: false });
   };
 
-  render() {
-    const { t, personalInfo } = this.props;
+  onSubmit = (values: any) => {
+    const { profile } = this.props;
 
-    if (!personalInfo) {
+    if (!profile) {
+      return;
+    }
+
+    const updatedProfile: IProfile = {
+      ...profile,
+      personalInfo: values,
+    };
+
+    this.props.updateProfileRequest(updatedProfile);
+    this.onModalClose();
+  };
+
+  render() {
+    const { t, profile } = this.props;
+
+    if (!profile) {
       return null;
     }
+
+    const { personalInfo } = profile;
 
     const hasFilledValues = personalInfoFields.map(field => personalInfo[field.personalInfoKey]).find(value => value);
 
@@ -108,18 +139,12 @@ class PersonalInfo extends React.Component<Props, State> {
           <Empty>{t('profile.personalInfo.empty')}</Empty>
         )}
 
-        <EditModal
-          isOpened={this.state.isEditModalOpened}
-          onRequestClose={this.onModalClose}
-          onSave={this.onModalClose}
-          onCancel={this.onModalClose}
-          cancelButtonText={'Cancel'}
-          saveButtonText={'Save'}
-          isLoading={true}
-        />
+        <Modal isOpened={this.state.isEditModalOpened} onRequestClose={this.onModalClose}>
+          <PersonalInfoForm onSubmit={this.onSubmit} onCancel={this.onModalClose} initialValues={personalInfo} />
+        </Modal>
       </InformationCard>
     );
   }
 }
 
-export default compose(withTranslation(), connect(mapStateToProps))(PersonalInfo);
+export default compose(withTranslation(), connect(mapStateToProps, mapDispatchToProps))(PersonalInfo);

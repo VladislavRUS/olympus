@@ -12,12 +12,14 @@ export const initialState: IProfileState = {
 
 export const profileReducer = (state: IProfileState = initialState, action: ProfileAction): IProfileState => {
   switch (action.type) {
+    case ProfileActionTypes.UPDATE_PROFILE_REQUEST:
     case ProfileActionTypes.GET_PROFILE_REQUEST: {
       return {
         ...state,
         isLoading: true,
       };
     }
+    case ProfileActionTypes.UPDATE_PROFILE_SUCCESS:
     case ProfileActionTypes.GET_PROFILE_SUCCESS: {
       return {
         ...state,
@@ -25,6 +27,7 @@ export const profileReducer = (state: IProfileState = initialState, action: Prof
         currentProfile: action.payload,
       };
     }
+    case ProfileActionTypes.UPDATE_PROFILE_ERROR:
     case ProfileActionTypes.GET_PROFILE_ERROR: {
       return {
         ...state,
