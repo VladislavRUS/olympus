@@ -7,52 +7,29 @@ import { BaseForm } from '../BaseForm';
 import { RegularButton } from '../../../../components/RegularButton';
 import { Spacer } from '../../../../components/Spacer';
 import { NamesWrapper, TermsText } from './RegisterForm.styles';
-import {
-  onChangeBirthday,
-  onChangeEmail,
-  onChangeFirstName,
-  onChangeGender,
-  onChangeLastName,
-  onChangePassword,
-  onRegisterRequest,
-  toggleTermsAccept,
-} from '../../../../store/register/actions';
-import { IRegisterCredentials } from '../../../../store/register/types';
+import { onRegisterRequest } from '../../../../store/register/actions';
 import { CheckboxRow } from '../../../../components/CheckboxRow';
 import { TextHighlight } from '../../../../components/TextHighlight';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { ErrorMessage } from '../../../../components/ErrorMessage';
 import { RegularButtonMode } from '../../../../components/RegularButton/RegularButton';
+import { Field, reduxForm, WrappedFieldProps, InjectedFormProps } from 'redux-form';
+import { email, required } from '../../../../utils/validators';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      onChangeFirstName,
-      onChangeLastName,
-      onChangeEmail,
-      onChangePassword,
-      onChangeBirthday,
-      onChangeGender,
-      toggleTermsAccept,
       onRegisterRequest,
     },
     dispatch,
   );
 
 interface IDispatchProps {
-  onChangeEmail: typeof onChangeEmail;
-  onChangePassword: typeof onChangePassword;
-  onChangeFirstName: typeof onChangeFirstName;
-  onChangeLastName: typeof onChangeLastName;
-  onChangeBirthday: typeof onChangeBirthday;
-  onChangeGender: typeof onChangeGender;
-  toggleTermsAccept: typeof toggleTermsAccept;
   onRegisterRequest: typeof onRegisterRequest;
 }
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    ...state.register.credentials,
     errorMessage: state.register.errorMessage,
     isLoading: state.register.isLoading,
   };
@@ -60,14 +37,33 @@ const mapStateToProps = (state: IApplicationState) => {
   return stateProps;
 };
 
-interface IStateProps extends IRegisterCredentials {
+interface IStateProps {
   errorMessage: string;
   isLoading: boolean;
 }
 
-type AllProps = IStateProps & IDispatchProps & WithTranslation;
+type AllProps = IStateProps & IDispatchProps & WithTranslation & InjectedFormProps;
 
-class RegisterForm extends React.Component<AllProps> {
+interface IState {
+  termsAccepted: boolean;
+}
+
+class RegisterForm extends React.Component<AllProps, IState> {
+  constructor(props: AllProps) {
+    super(props);
+    this.state = {
+      termsAccepted: false,
+    };
+  }
+
+  get isButtonDisabled() {
+    return this.props.invalid || !this.state.termsAccepted;
+  }
+
+  onToggleAcceptTerms = () => {
+    this.setState({ termsAccepted: !this.state.termsAccepted });
+  };
+
   onHighlightClick = (event?: React.MouseEvent<HTMLElement>) => {
     const { t } = this.props;
 
@@ -75,53 +71,61 @@ class RegisterForm extends React.Component<AllProps> {
     alert(t('home.register.termsAndConditions'));
   };
 
-  render() {
-    const {
-      t,
-      isLoading,
-      errorMessage,
-      firstName,
-      lastName,
-      email,
-      password,
-      isTermsAccepted,
-      onChangeFirstName,
-      onChangeLastName,
-      onChangeEmail,
-      onChangePassword,
-      toggleTermsAccept,
-      onRegisterRequest,
-    } = this.props;
-
-    const isButtonDisabled =
-      !firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !isTermsAccepted;
+  renderField = (props: WrappedFieldProps & { placeholder: string; type: string }) => {
+    const { t } = this.props;
+    const { type, placeholder, input, meta } = props;
+    const { value, onChange, name, onFocus, onBlur } = input;
 
     return (
-      <BaseForm title={t('home.register.title')} onSubmit={onRegisterRequest}>
+      <RegularInput
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        name={name}
+        error={t(meta.error)}
+        touched={meta.touched}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        type={type}
+      />
+    );
+  };
+
+  render() {
+    const { t, isLoading, errorMessage, handleSubmit } = this.props;
+
+    return (
+      <BaseForm title={t('home.register.title')} onSubmit={handleSubmit}>
         <NamesWrapper>
-          <RegularInput
-            value={firstName}
-            onChangeText={onChangeFirstName}
+          <Field
+            name={'firstName'}
+            component={this.renderField}
             placeholder={t('home.register.firstNamePlaceholder')}
           />
+
           <Spacer width={20} />
-          <RegularInput
-            value={lastName}
-            onChangeText={onChangeLastName}
-            placeholder={t('home.register.lastNamePlaceholder')}
-          />
+
+          <Field name={'lastName'} component={this.renderField} placeholder={t('home.register.lastNamePlaceholder')} />
         </NamesWrapper>
         <Spacer height={20} />
-        <RegularInput value={email} onChangeText={onChangeEmail} placeholder={t('home.register.emailPlaceholder')} />
-        <Spacer height={20} />
-        <RegularInput
-          value={password}
-          onChangeText={onChangePassword}
-          placeholder={t('home.register.passwordPlaceholder')}
-          type={'password'}
+        <Field
+          name={'email'}
+          component={this.renderField}
+          placeholder={t('home.register.emailPlaceholder')}
+          validate={email}
         />
+
         <Spacer height={20} />
-        <CheckboxRow onClick={toggleTermsAccept} isActive={isTermsAccepted}>
+        <Field
+          name={'password'}
+          component={this.renderField}
+          placeholder={t('home.register.passwordPlaceholder')}
+          validate={required}
+        />
+
+        <Spacer height={20} />
+
+        <CheckboxRow onClick={this.onToggleAcceptTerms} isActive={this.state.termsAccepted}>
           <TermsText>
             {t('home.register.accept')}{' '}
             <TextHighlight onClick={this.onHighlightClick}>
@@ -130,11 +134,12 @@ class RegisterForm extends React.Component<AllProps> {
             {t('home.register.website')}
           </TermsText>
         </CheckboxRow>
+
         <Spacer height={20} />
         <RegularButton
           type={'submit'}
           text={t('home.register.registerButtonTitle')}
-          isDisabled={isButtonDisabled}
+          isDisabled={this.isButtonDisabled}
           isLoading={isLoading}
           mode={RegularButtonMode.PRIMARY}
         />
@@ -145,4 +150,8 @@ class RegisterForm extends React.Component<AllProps> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(RegisterForm));
+const createReduxForm = reduxForm({ form: 'register' });
+const translated = withTranslation();
+const ConnectedRegisterForm = connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
+
+export default createReduxForm(translated(ConnectedRegisterForm));

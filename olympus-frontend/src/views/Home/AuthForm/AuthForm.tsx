@@ -10,15 +10,18 @@ import RegisterForm from './RegisterForm/RegisterForm';
 import { LoadingOverlay } from '../../../components/LoadingOverlay';
 import { bindActionCreators, Dispatch } from 'redux';
 import { onLoginRequest } from '../../../store/login/actions';
+import { onRegisterRequest } from '../../../store/register/actions';
 
 interface IDispatchProps {
   onLoginRequest: typeof onLoginRequest;
+  onRegisterRequest: typeof onRegisterRequest;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       onLoginRequest,
+      onRegisterRequest,
     },
     dispatch,
   );
@@ -40,6 +43,10 @@ class AuthForm extends React.Component<Props, any> {
     this.props.onLoginRequest(values);
   };
 
+  onRegisterSubmit = (values: any) => {
+    this.props.onRegisterRequest(values);
+  };
+
   render() {
     const { mode, isLoading } = this.props;
 
@@ -54,7 +61,7 @@ class AuthForm extends React.Component<Props, any> {
               </FormWrapper>
             ) : (
               <FormWrapper key={'register'}>
-                <RegisterForm />
+                <RegisterForm onSubmit={this.onRegisterSubmit} />
               </FormWrapper>
             )}
           </PoseGroup>

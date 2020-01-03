@@ -10,7 +10,7 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 import { reduxForm, InjectedFormProps, Field, WrappedFieldProps } from 'redux-form';
 import { RegularButton } from '../../../../components/RegularButton';
 import { RegularButtonMode } from '../../../../components/RegularButton/RegularButton';
-import validator from 'validator';
+import { email, required } from '../../../../utils/validators';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -40,13 +40,10 @@ interface IStateProps {
 
 type AllProps = IStateProps & IDispatchProps & InjectedFormProps & WithTranslation;
 
-const email = (value?: string) => (value && validator.isEmail(value) ? undefined : 'form.errors.email');
-const required = (value?: string) => (value ? undefined : 'form.errors.required');
-
 class LoginForm extends React.Component<AllProps> {
-  renderField = (props: WrappedFieldProps & { placeholder: string }) => {
+  renderField = (props: WrappedFieldProps & { placeholder: string; type: string }) => {
     const { t } = this.props;
-    const { placeholder, input, meta } = props;
+    const { type, placeholder, input, meta } = props;
     const { value, onChange, name, onFocus, onBlur } = input;
 
     return (
@@ -59,6 +56,7 @@ class LoginForm extends React.Component<AllProps> {
         touched={meta.touched}
         onFocus={onFocus}
         onBlur={onBlur}
+        type={type}
       />
     );
   };
@@ -82,6 +80,7 @@ class LoginForm extends React.Component<AllProps> {
           component={this.renderField}
           placeholder={t('home.login.passwordPlaceholder')}
           validate={required}
+          type={'password'}
         />
 
         <Spacer height={20} />
