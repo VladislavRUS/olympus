@@ -2,24 +2,33 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class PersonalInfo {
+  constructor() {
+    this.about = '';
+    this.birthday = '';
+    this.birthplace = '';
+    this.occupation = '';
+    this.gender = '';
+    this.email = '';
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: '' })
+  @Column()
   about: string;
 
-  @Column({ default: '' })
+  @Column()
   birthday: string;
 
-  @Column({ default: '' })
+  @Column()
   birthplace: string;
 
-  @Column({ default: '' })
+  @Column()
   occupation: string;
 
-  @Column({ default: '' })
+  @Column()
   gender: string;
 
-  @Column({ default: '' })
+  @Column()
   email: string;
 }

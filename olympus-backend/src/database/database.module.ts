@@ -13,4 +13,5 @@ export const DatabaseModule = TypeOrmModule.forRoot({
   database: config.databaseName,
   entities: [User, Profile, PersonalInfo],
   synchronize: true,
+  dropSchema: true,
 });

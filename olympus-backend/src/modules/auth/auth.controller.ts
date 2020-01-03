@@ -1,4 +1,4 @@
-import { Body, ConflictException, Controller, Post, UseGuards, Request, Get } from '@nestjs/common';
+import { Body, ConflictException, Controller, Post, UseGuards, Request } from '@nestjs/common';
 import { RegisterUserDto } from './dto/RegisterUserDto';
 import { ErrorCodes } from '../../constants/ErrorCodes';
 import { hashSync } from 'bcryptjs';
@@ -21,6 +21,7 @@ export class AuthController {
       throw new ConflictException(ErrorCodes.REGISTER_USERS_EXISTS);
     } else {
       const user = new User();
+      user.avatar = '';
       user.email = email;
       user.lastName = lastName;
       user.firstName = firstName;
@@ -34,11 +35,5 @@ export class AuthController {
   @Post('/login')
   async login(@Request() req) {
     return this.authService.login(req.user);
-  }
-
-  @UseGuards(AuthGuard())
-  @Get('/current-user')
-  async profile(@Request() req) {
-    return await this.usersService.findById(req.user.id);
   }
 }

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, Unique, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Unique, OneToOne, JoinColumn, RelationId } from 'typeorm';
 import { Profile } from './Profile';
 
 @Entity()
@@ -6,6 +6,9 @@ import { Profile } from './Profile';
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  avatar: string;
 
   @Column()
   firstName: string;
@@ -22,4 +25,7 @@ export class User {
   @OneToOne(() => Profile)
   @JoinColumn()
   profile: Profile;
+
+  @RelationId((user: User) => user.profile)
+  profileId: number;
 }

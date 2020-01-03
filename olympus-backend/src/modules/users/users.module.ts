@@ -4,10 +4,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../../database/entities/User';
 import { Profile } from '../../database/entities/Profile';
 import { PersonalInfo } from '../../database/entities/PersonalInfo';
+import { UsersController } from './users.controller';
+import { passportModule } from '../passport';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Profile, PersonalInfo])],
+  imports: [passportModule, TypeOrmModule.forFeature([User, Profile, PersonalInfo])],
   providers: [UsersService],
   exports: [UsersService],
+  controllers: [UsersController],
 })
 export class UsersModule {}

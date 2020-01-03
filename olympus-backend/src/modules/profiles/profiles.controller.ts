@@ -1,18 +1,44 @@
-import { Controller, UseGuards, Request, Get, Param, UnauthorizedException } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Get,
+  Param,
+  NotFoundException,
+  Put,
+  Body,
+  Request,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ProfilesService } from './profiles.service';
+import { ProfileDto } from './dto/ProfileDto';
+import { UsersService } from '../users/users.service';
 
 @Controller('profiles')
 export class ProfilesController {
-  constructor(private profileService: ProfilesService) {}
+  constructor(private profileService: ProfilesService, private userService: UsersService) {}
 
   @UseGuards(AuthGuard())
   @Get('/:id')
-  async profile(@Param('id') id, @Request() req) {
-    if (req.user.id === +id) {
-      return await this.profileService.findByUserId(req.user.id);
+  async getProfile(@Param('id') id) {
+    const profile = await this.profileService.getById(id);
+
+    if (!profile) {
+      throw new NotFoundException();
     }
 
-    throw new UnauthorizedException();
+    return profile;
+  }
+
+  @UseGuards(AuthGuard())
+  @Put('/:id')
+  async updateProfile(@Param('id') id, @Body() profileDto: ProfileDto, @Request() req) {
+    const user = await this.userService.findById(req.user.id);
+
+    if (user.profileId !== +id) {
+      throw new UnauthorizedException();
+    }
+
+    return await this.profileService.updateProfile(id, profileDto);
   }
 }

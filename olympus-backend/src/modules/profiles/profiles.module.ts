@@ -4,11 +4,12 @@ import { Profile } from '../../database/entities/Profile';
 import { PersonalInfo } from '../../database/entities/PersonalInfo';
 import { ProfilesService } from './profiles.service';
 import { ProfilesController } from './profiles.controller';
-import { passportModule } from '../auth/auth.module';
 import { User } from '../../database/entities/User';
+import { UsersModule } from '../users/users.module';
+import { passportModule } from '../passport';
 
 @Module({
-  imports: [passportModule, TypeOrmModule.forFeature([User, Profile, PersonalInfo])],
+  imports: [passportModule, TypeOrmModule.forFeature([User, Profile, PersonalInfo]), UsersModule],
   providers: [ProfilesService],
   exports: [],
   controllers: [ProfilesController],
