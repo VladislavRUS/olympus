@@ -11,6 +11,7 @@ export const Wrapper = styled.button.attrs({ type: 'button' })<IWrapperProps>`
   cursor: pointer;
   border: 1px solid #e6ecf5;
   border-radius: 4px;
+  background-color: #fff;
 
   &::after {
     content: '';

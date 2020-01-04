@@ -30,13 +30,13 @@ const links: ILink[] = [
   },
 ];
 
-type Props = WithTranslation & RouteComponentProps;
+type TProps = WithTranslation & RouteComponentProps;
 
 const replaceLinkTo = (link: string, id: string) => {
   return link.replace(':id', id);
 };
 
-const Navbar: React.FC<Props> = ({ t, location, match }) => {
+const Navbar: React.FC<TProps> = ({ t, location, match }) => {
   const id = (match.params as any).id;
 
   const renderLinks = (links: ILink[]) =>

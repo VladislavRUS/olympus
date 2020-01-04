@@ -39,9 +39,9 @@ interface IDispatchProps {
   getProfileRequest: typeof getProfileRequest;
 }
 
-type AllProps = IStateProps & IDispatchProps & RouteComponentProps;
+type TProps = IStateProps & IDispatchProps & RouteComponentProps;
 
-class Profile extends React.Component<AllProps> {
+class Profile extends React.Component<TProps> {
   componentDidMount() {
     const { match } = this.props;
     const { id } = match.params as any;

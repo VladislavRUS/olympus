@@ -16,9 +16,9 @@ interface IStateProps {
   user: IUser | null;
 }
 
-type Props = IStateProps;
+type TProps = IStateProps;
 
-class User extends React.Component<Props> {
+class User extends React.Component<TProps> {
   render() {
     const { user } = this.props;
     if (!user) {

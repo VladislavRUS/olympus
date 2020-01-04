@@ -19,9 +19,9 @@ interface IDispatchProps {
   replace: typeof replace;
 }
 
-type AllProps = IDispatchProps;
+type TProps = IDispatchProps;
 
-class Home extends React.Component<AllProps> {
+class Home extends React.Component<TProps> {
   componentDidMount() {
     if (localStorage.getItem('access_token')) {
       this.props.replace(Routes.MAIN);

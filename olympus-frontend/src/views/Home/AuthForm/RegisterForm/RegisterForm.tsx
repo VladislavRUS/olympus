@@ -42,14 +42,14 @@ interface IStateProps {
   isLoading: boolean;
 }
 
-type AllProps = IStateProps & IDispatchProps & WithTranslation & InjectedFormProps;
+type TProps = IStateProps & IDispatchProps & WithTranslation & InjectedFormProps;
 
-interface IState {
+type TState = {
   termsAccepted: boolean;
-}
+};
 
-class RegisterForm extends React.Component<AllProps, IState> {
-  constructor(props: AllProps) {
+class RegisterForm extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     this.state = {
       termsAccepted: false,

@@ -36,9 +36,9 @@ interface IStateProps {
   user: IUser | null;
 }
 
-type Props = IStateProps & IDispatchProps & RouteComponentProps;
+type TProps = IStateProps & IDispatchProps & RouteComponentProps;
 
-class Main extends React.Component<Props> {
+class Main extends React.Component<TProps> {
   componentDidMount() {
     this.props.getCurrentUserRequest();
   }

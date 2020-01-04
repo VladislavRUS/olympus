@@ -36,9 +36,9 @@ const mapStateToProps = (state: IApplicationState): IStateProps => ({
   isLoading: state.login.isLoading || state.register.isLoading,
 });
 
-type Props = IStateProps & IDispatchProps;
+type TProps = IStateProps & IDispatchProps;
 
-class AuthForm extends React.Component<Props, any> {
+class AuthForm extends React.Component<TProps> {
   onLoginSubmit = (values: any) => {
     this.props.onLoginRequest(values);
   };

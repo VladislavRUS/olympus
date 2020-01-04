@@ -28,14 +28,14 @@ interface IStateProps {
   user: IUser | null;
 }
 
-type AllProps = IStateProps & IDispatchProps & WithTranslation;
+type TProps = IStateProps & IDispatchProps & WithTranslation;
 
-interface IUserState {
+type TState = {
   isDropdownOpened: boolean;
-}
+};
 
-class User extends React.Component<AllProps, IUserState> {
-  constructor(props: AllProps) {
+class User extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
 
     this.state = {

@@ -2,9 +2,9 @@ import React from 'react';
 import { InformationCard } from '../../../../../components/InformationCard';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-type Props = WithTranslation;
+type TProps = WithTranslation;
 
-class Career extends React.Component<Props> {
+class Career extends React.Component<TProps> {
   render() {
     const { t } = this.props;
 

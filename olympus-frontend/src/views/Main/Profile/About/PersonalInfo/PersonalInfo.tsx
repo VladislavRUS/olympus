@@ -73,11 +73,11 @@ const personalInfoFields: IPersonalInfoField[] = [
   },
 ];
 
-type State = {
+type TState = {
   isEditModalOpened: boolean;
 };
 
-class PersonalInfo extends React.Component<TProps, State> {
+class PersonalInfo extends React.Component<TProps, TState> {
   constructor(props: TProps) {
     super(props);
     this.state = {

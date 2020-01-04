@@ -11,6 +11,7 @@ export const Wrapper = styled.button.attrs({ type: 'button' })<IWrapperProps>`
   padding: 0;
   margin: 0;
   cursor: pointer;
+  background-color: transparent;
 
   &:hover {
     text-decoration: underline;

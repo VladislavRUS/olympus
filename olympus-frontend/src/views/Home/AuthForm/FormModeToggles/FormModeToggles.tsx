@@ -10,12 +10,14 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { setLoginMode, setRegisterMode } from '../../../../store/auth-form/actions';
 
 const mapStateToProps = (state: IApplicationState) => {
-  return {
+  const stateProps: IStateProps = {
     mode: state.authForm.mode,
-  } as IMapStateToProps;
+  };
+
+  return stateProps;
 };
 
-interface IMapStateToProps {
+interface IStateProps {
   mode: AuthFormModes;
 }
 
@@ -28,14 +30,14 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     dispatch,
   );
 
-interface IMapDispatchToProps {
+interface IDispatchToProps {
   setLoginMode: typeof setLoginMode;
   setRegisterMode: typeof setRegisterMode;
 }
 
-type AllProps = IMapStateToProps & IMapDispatchToProps;
+type TProps = IStateProps & IDispatchToProps;
 
-const FormModeToggles: React.FC<AllProps> = ({ mode, setLoginMode, setRegisterMode }) => (
+const FormModeToggles: React.FC<TProps> = ({ mode, setLoginMode, setRegisterMode }) => (
   <Wrapper>
     <FormModeToggle icon={LoginModeIcon} onClick={setLoginMode} isActive={mode === AuthFormModes.LOGIN} />
     <Divider />

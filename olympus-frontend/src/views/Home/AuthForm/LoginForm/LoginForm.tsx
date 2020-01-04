@@ -38,9 +38,9 @@ interface IStateProps {
   isLoading: boolean;
 }
 
-type AllProps = IStateProps & IDispatchProps & InjectedFormProps & WithTranslation;
+type TProps = IStateProps & IDispatchProps & InjectedFormProps & WithTranslation;
 
-class LoginForm extends React.Component<AllProps> {
+class LoginForm extends React.Component<TProps> {
   renderField = (props: WrappedFieldProps & { placeholder: string; type: string }) => {
     const { t } = this.props;
     const { type, placeholder, input, meta } = props;
