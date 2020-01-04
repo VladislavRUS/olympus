@@ -36,3 +36,4 @@ lerna-debug.log*
 src/config.ts
 
 docker-dev.sh
+upload
