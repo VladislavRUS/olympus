@@ -3,8 +3,8 @@ import { Segment } from '../Segment';
 import { Wrapper, Content, Title, Header, MenuIconWrapper } from './InformationCard.styles';
 import { Dropdown } from '../Dropdown';
 import { FiMoreHorizontal } from 'react-icons/fi';
-import { DropdownItem } from '../DropdownItem';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import { DropdownTextItem } from '../Dropdown/DropdownItems/DropdownTextItem';
 
 interface IInformationCardProps {
   title: string;
@@ -73,7 +73,7 @@ class InformationCard extends React.Component<TProps, IInformationCardState> {
 
     return (
       <React.Fragment>
-        <DropdownItem item={t('app.edit')} renderItem={item => item} onClick={this.onEdit} />
+        <DropdownTextItem text={t('app.edit')} onClick={this.onEdit} />
       </React.Fragment>
     );
   };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper } from './DropdownItem.styles';
+import { Wrapper } from './BaseDropdownItem.styles';
 
 interface IDropdownItemProps<T> {
   item: T;
@@ -7,7 +7,7 @@ interface IDropdownItemProps<T> {
   onClick: (item: T) => void;
 }
 
-class DropdownItem<T> extends React.Component<IDropdownItemProps<T>> {
+class BaseDropdownItem<T> extends React.Component<IDropdownItemProps<T>> {
   onClick = () => {
     this.props.onClick(this.props.item);
   };
@@ -18,4 +18,4 @@ class DropdownItem<T> extends React.Component<IDropdownItemProps<T>> {
   }
 }
 
-export default DropdownItem;
+export { BaseDropdownItem };

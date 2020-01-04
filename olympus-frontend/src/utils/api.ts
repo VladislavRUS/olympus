@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { i18n } from '../translations';
+import { i18n } from '../i18n';
 
 const API = axios.create({
   baseURL: 'http://localhost:5000/api/v1',

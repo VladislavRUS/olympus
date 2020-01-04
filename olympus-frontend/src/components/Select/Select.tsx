@@ -1,8 +1,8 @@
 import React from 'react';
 import { Dropdown } from '../Dropdown';
-import { InputWrapper, Text, IconWrapper } from './Select.styles';
-import { DropdownItem } from '../DropdownItem';
+import { Wrapper, Text, IconWrapper } from './Select.styles';
 import { FiChevronDown } from 'react-icons/fi';
+import { BaseDropdownItem } from '../Dropdown/DropdownItems/BaseDropdownItem';
 
 interface ISelectProps<T> {
   selectedItem: T;
@@ -34,7 +34,7 @@ class Select<T> extends React.Component<TProps<T>, TState> {
 
   renderContent = () => {
     return this.props.items.map((item, idx) => (
-      <DropdownItem key={idx} item={item} renderItem={this.props.renderItem} onClick={this.onItemClick} />
+      <BaseDropdownItem key={idx} item={item} renderItem={this.props.renderItem} onClick={this.onItemClick} />
     ));
   };
 
@@ -56,14 +56,15 @@ class Select<T> extends React.Component<TProps<T>, TState> {
         onOutsideClick={this.onClose}
         width={100}
         units={'%'}
+        arrow={false}
       >
         {(handleRef: any) => (
-          <InputWrapper ref={handleRef} onClick={this.onOpen}>
+          <Wrapper ref={handleRef} onClick={this.onOpen}>
             <Text>{selectedItem ? extractValue(selectedItem) : placeholder}</Text>
             <IconWrapper isOpened={this.state.isOpened}>
               <FiChevronDown />
             </IconWrapper>
-          </InputWrapper>
+          </Wrapper>
         )}
       </Dropdown>
     );

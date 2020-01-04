@@ -7,6 +7,8 @@ import { EditButtons } from '../../../../../../components/EditButtons';
 import { Spacer } from '../../../../../../components/Spacer';
 import { email } from '../../../../../../utils/validators';
 import { Select } from '../../../../../../components/Select';
+import { TextOption } from '../../../../../../components/Select/Options/TextOption';
+import { DatePicker } from '../../../../../../components/DatePicker';
 
 interface IPersonalInfoFormProps {
   onCancel: () => void;
@@ -37,7 +39,7 @@ class PersonalInfoForm extends React.Component<TProps> {
     );
   };
 
-  renderSelect = (props: WrappedFieldProps & { placeholder: string; type: string }) => {
+  renderSelect = (props: WrappedFieldProps & { placeholder: string }) => {
     const { t } = this.props;
     const { input } = props;
     const { onChange, value } = input;
@@ -50,8 +52,29 @@ class PersonalInfoForm extends React.Component<TProps> {
         placeholder={t('profile.personalInfo.gender.placeholder')}
         extractValue={item => t(`profile.personalInfo.gender.${item}`)}
         selectedItem={selected || ''}
-        renderItem={item => t(`profile.personalInfo.gender.${item}`)}
+        renderItem={item => <TextOption text={t(`profile.personalInfo.gender.${item}`)} />}
         onItemClick={item => onChange(item)}
+      />
+    );
+  };
+
+  renderDatePicker = (props: WrappedFieldProps & { placeholder: string }) => {
+    const { t } = this.props;
+
+    const { input, placeholder } = props;
+    const { onChange, value } = input;
+
+    const onChangeDate = (date: Date) => onChange(date.toISOString());
+
+    const date = value ? new Date(value) : null;
+
+    return (
+      <DatePicker
+        date={date}
+        onChange={onChangeDate}
+        showYearDropdown={true}
+        placeholder={placeholder}
+        dateFormat={t('profile.personalInfo.birthdayFormat')}
       />
     );
   };
@@ -65,7 +88,7 @@ class PersonalInfoForm extends React.Component<TProps> {
 
         <Spacer height={20} />
 
-        <Field name={'birthday'} component={this.renderField} placeholder={t('profile.personalInfo.birthday')} />
+        <Field name={'birthday'} component={this.renderDatePicker} placeholder={t('profile.personalInfo.birthday')} />
 
         <Spacer height={20} />
 

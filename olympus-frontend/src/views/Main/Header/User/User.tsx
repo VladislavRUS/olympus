@@ -3,12 +3,12 @@ import { Wrapper, Avatar, FullName } from './User.styles';
 import { IApplicationState } from '../../../../store';
 import { connect } from 'react-redux';
 import { Dropdown } from '../../../../components/Dropdown';
-import { DropdownItem } from '../../../../components/DropdownItem';
 import { bindActionCreators, Dispatch, compose } from 'redux';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { FiUser } from 'react-icons/fi';
 import { IUser } from '../../../../store/user/types';
 import { onLogout } from '../../../../store/user/actions';
+import { DropdownTextItem } from '../../../../components/Dropdown/DropdownItems/DropdownTextItem';
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ onLogout }, dispatch);
 
@@ -67,7 +67,7 @@ class User extends React.Component<AllProps, IUserState> {
         onOutsideClick={this.onCloseDropdown}
         width={250}
       >
-        {(handleRef: (element: any) => void) => (
+        {(handleRef: any) => (
           <Wrapper onClick={this.onOpenDropdown} ref={handleRef}>
             <Avatar>
               <FiUser size={34} color={'#fff'} />
@@ -84,11 +84,7 @@ class User extends React.Component<AllProps, IUserState> {
   renderUserDropdownBody = () => {
     const { t } = this.props;
 
-    return (
-      <React.Fragment>
-        <DropdownItem item={t('app.logout')} renderItem={item => item} onClick={this.props.onLogout} />
-      </React.Fragment>
-    );
+    return <DropdownTextItem text={t('app.logout')} onClick={this.props.onLogout} />;
   };
 }
 

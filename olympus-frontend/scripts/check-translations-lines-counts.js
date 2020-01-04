@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require('fs');
 
-const translationsFolder = './src/translations';
+const translationsFolder = './src/i18n/translations';
 
 const files = fs.readdirSync(translationsFolder);
 const translations = files.filter(file => file.endsWith('.json'));

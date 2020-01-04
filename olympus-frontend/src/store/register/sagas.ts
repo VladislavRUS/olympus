@@ -2,7 +2,7 @@ import { all, call, fork, put, takeEvery, delay } from 'redux-saga/effects';
 import { API } from '../../utils/api';
 import { onRegisterError, onRegisterSuccess } from './actions';
 import { RegisterActionTypes } from './types';
-import { i18n } from '../../translations';
+import { i18n } from '../../i18n';
 import { setLoginMode } from '../auth-form/actions';
 
 function* handleRegister(action: any) {

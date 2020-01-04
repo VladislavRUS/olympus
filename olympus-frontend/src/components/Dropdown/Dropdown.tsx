@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Wrapper } from './Dropdown.styles';
+import { Wrapper, ContentWrapper, Arrow } from './Dropdown.styles';
 import OutsideClickHandler from 'react-outside-click-handler';
+
+export type TDropdownMode = 'styled' | 'transparent';
 
 interface IDropdownProps {
   isOpened: boolean;
@@ -11,6 +13,8 @@ interface IDropdownProps {
   units?: 'px' | '%';
   children: (handleRef: (element: any) => void) => React.ReactNode;
   zIndex?: number;
+  mode?: TDropdownMode;
+  arrow?: boolean;
 }
 
 class Dropdown extends React.Component<IDropdownProps> {
@@ -25,12 +29,12 @@ class Dropdown extends React.Component<IDropdownProps> {
   };
 
   componentDidMount(): void {
-    this.updatePosition();
+    this.update();
   }
 
   componentDidUpdate(prevProps: Readonly<IDropdownProps>): void {
     if (!prevProps.isOpened && this.props.isOpened) {
-      this.updatePosition();
+      this.update();
       this.addEventListeners();
     }
 
@@ -41,7 +45,7 @@ class Dropdown extends React.Component<IDropdownProps> {
 
   addEventListeners() {
     this.windowEvents.forEach(event => {
-      window.addEventListener(event, this.updatePosition);
+      window.addEventListener(event, this.update);
     });
 
     window.addEventListener('keydown', this.onKeyDown);
@@ -49,7 +53,7 @@ class Dropdown extends React.Component<IDropdownProps> {
 
   removeEventListeners() {
     this.windowEvents.forEach(event => {
-      window.removeEventListener(event, this.updatePosition);
+      window.removeEventListener(event, this.update);
     });
 
     window.removeEventListener('keydown', this.onKeyDown);
@@ -61,7 +65,7 @@ class Dropdown extends React.Component<IDropdownProps> {
     }
   };
 
-  updatePosition = () => {
+  update = () => {
     if (!this.childRef) {
       return;
     }
@@ -90,7 +94,7 @@ class Dropdown extends React.Component<IDropdownProps> {
       return null;
     }
 
-    const { content, zIndex = 1 } = this.props;
+    const { content, zIndex = 1, mode = 'styled', arrow = true } = this.props;
 
     const dropdownContent = typeof content === 'function' ? content() : content;
 
@@ -103,7 +107,8 @@ class Dropdown extends React.Component<IDropdownProps> {
         zIndex={zIndex}
       >
         <OutsideClickHandler onOutsideClick={this.props.onOutsideClick} disabled={!this.props.isOpened}>
-          {dropdownContent}
+          {arrow && <Arrow />}
+          <ContentWrapper mode={mode}>{dropdownContent}</ContentWrapper>
         </OutsideClickHandler>
       </Wrapper>,
       this.childRef,

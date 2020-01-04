@@ -37,6 +37,7 @@
   "profile.links.videos": "Videos",
   "profile.personalInfo.about": "About",
   "profile.personalInfo.birthday": "Birthday",
+  "profile.personalInfo.birthdayFormat": "dd MMM, yyyy",
   "profile.personalInfo.birthplace": "Birthplace",
   "profile.personalInfo.email": "Email",
   "profile.personalInfo.empty": "Nothing is filled yet",

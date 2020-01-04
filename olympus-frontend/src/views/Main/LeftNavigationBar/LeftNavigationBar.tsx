@@ -1,8 +1,23 @@
 import React from 'react';
-import { Wrapper, StyledLink } from './LeftNavigationBar.styles';
+import { StyledLink, Wrapper } from './LeftNavigationBar.styles';
 import { Routes } from '../../../constants/Routes';
-import { FiUser, FiList } from 'react-icons/fi';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { FiList, FiUser } from 'react-icons/fi';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { IApplicationState } from '../../../store';
+import { IUser } from '../../../store/user/types';
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state: IApplicationState) => {
+  const stateProps: IStateProps = {
+    user: state.user.currentUser,
+  };
+
+  return stateProps;
+};
+
+interface IStateProps {
+  user: IUser | null;
+}
 
 const links = [
   {
@@ -15,23 +30,33 @@ const links = [
   },
 ];
 
-const LeftNavigationBar: React.FC<RouteComponentProps> = ({ location }) => (
-  <Wrapper>
-    {links.map(link => {
-      const Icon = link.icon;
+type TProps = IStateProps & RouteComponentProps;
 
-      const linkToStart = link.to
-        .split('/')
-        .slice(0, 3)
-        .join('/');
+const LeftNavigationBar: React.FC<TProps> = ({ location, user }) => {
+  return (
+    <Wrapper>
+      {links.map(link => {
+        const Icon = link.icon;
 
-      return (
-        <StyledLink to={link.to} key={link.to}>
-          <Icon color={location.pathname.startsWith(linkToStart) ? '#ff5e3a' : '#9a9fbf'} size={24} />
-        </StyledLink>
-      );
-    })}
-  </Wrapper>
-);
+        const linkToStart = link.to
+          .split('/')
+          .slice(0, 3)
+          .join('/');
 
-export default withRouter(LeftNavigationBar);
+        let to: string = link.to;
+
+        if (to === Routes.PROFILE && user) {
+          to = to.replace(':id', user.profileId.toString());
+        }
+
+        return (
+          <StyledLink to={to} key={link.to}>
+            <Icon color={location.pathname.startsWith(linkToStart) ? '#ff5e3a' : '#9a9fbf'} size={24} />
+          </StyledLink>
+        );
+      })}
+    </Wrapper>
+  );
+};
+
+export default withRouter(connect(mapStateToProps)(LeftNavigationBar));

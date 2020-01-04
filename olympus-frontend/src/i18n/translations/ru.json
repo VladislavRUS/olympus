@@ -37,6 +37,7 @@
   "profile.links.videos": "Видео",
   "profile.personalInfo.about": "Обо мне",
   "profile.personalInfo.birthday": "Дата рождения",
+  "profile.personalInfo.birthdayFormat": "dd MMM, yyyy",
   "profile.personalInfo.birthplace": "Место рождения",
   "profile.personalInfo.email": "Почта",
   "profile.personalInfo.empty": "Еще ничего не заполнено",

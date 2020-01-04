@@ -2,7 +2,7 @@ import { all, call, fork, put, takeEvery, delay } from 'redux-saga/effects';
 import { API } from '../../utils/api';
 import { onLoginError, onLoginSuccess } from './actions';
 import { LoginActionTypes } from './types';
-import { i18n } from '../../translations';
+import { i18n } from '../../i18n';
 import { replace } from 'connected-react-router';
 import { Routes } from '../../constants/Routes';
 

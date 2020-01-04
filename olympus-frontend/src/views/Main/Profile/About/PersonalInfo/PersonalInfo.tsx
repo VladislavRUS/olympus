@@ -11,6 +11,7 @@ import { PersonalInfoForm } from './PersonalInfoForm';
 import { Modal } from '../../../../../components/Modal';
 import { updateProfileRequest } from '../../../../../store/profile/actions';
 import { Loader } from '../../../../../components/Loader';
+import { formatDate } from '../../../../../i18n';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -136,6 +137,12 @@ class PersonalInfo extends React.Component<TProps, State> {
 
             if (field.personalInfoKey === 'gender') {
               value = t(`profile.personalInfo.gender.${value}`);
+            }
+
+            if (field.personalInfoKey === 'birthday') {
+              const dateFormat = t('profile.personalInfo.birthdayFormat');
+
+              value = formatDate(new Date(value), dateFormat);
             }
 
             return (

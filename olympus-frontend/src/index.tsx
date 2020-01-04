@@ -1,5 +1,6 @@
 import 'normalize.css';
-import './index.css';
+import './styles/index.css';
+import './styles/datepicker.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createBrowserHistory } from 'history';
@@ -7,7 +8,7 @@ import App from './views/App/App';
 import configureStore from './configureStore';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import './translations';
+import './i18n';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
