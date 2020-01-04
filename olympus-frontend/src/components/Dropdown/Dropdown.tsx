@@ -8,6 +8,7 @@ interface IDropdownProps {
   content: React.ReactNode;
   onOutsideClick: () => void;
   width: number;
+  units?: 'px' | '%';
   children: (handleRef: (element: any) => void) => React.ReactNode;
   zIndex?: number;
 }
@@ -16,6 +17,7 @@ class Dropdown extends React.Component<IDropdownProps> {
   childRef: any | null = null;
   left = 0;
   top = 0;
+  width = 0;
   windowEvents = ['resize', 'scroll'];
 
   handleChildRef = (element: any) => {
@@ -64,38 +66,57 @@ class Dropdown extends React.Component<IDropdownProps> {
       return;
     }
 
-    const rect = this.childRef.getBoundingClientRect();
+    const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = this.childRef;
 
-    const { left, width, bottom } = rect;
-    this.top = bottom;
-    this.left = left + width / 2 - this.props.width / 2;
+    this.top = offsetTop + offsetHeight;
+
+    const { units = 'px' } = this.props;
+
+    let width = this.props.width;
+
+    if (units === '%') {
+      width = (offsetWidth * width) / 100;
+    }
+
+    this.left = offsetLeft + offsetWidth / 2 - width / 2;
+
+    this.width = width;
 
     this.forceUpdate();
   };
 
-  render() {
-    const content = typeof this.props.content === 'function' ? this.props.content() : this.props.content;
+  renderPortal() {
+    if (!this.childRef) {
+      return null;
+    }
 
-    const { children, zIndex = 0 } = this.props;
+    const { content, zIndex = 1 } = this.props;
+
+    const dropdownContent = typeof content === 'function' ? content() : content;
+
+    return ReactDOM.createPortal(
+      <Wrapper
+        pose={this.props.isOpened ? 'visible' : 'hidden'}
+        width={this.width}
+        top={this.top}
+        left={this.left}
+        zIndex={zIndex}
+      >
+        <OutsideClickHandler onOutsideClick={this.props.onOutsideClick} disabled={!this.props.isOpened}>
+          {dropdownContent}
+        </OutsideClickHandler>
+      </Wrapper>,
+      this.childRef,
+    );
+  }
+
+  render() {
+    const { children } = this.props;
 
     return (
       <>
         {children(this.handleChildRef)}
-
-        {ReactDOM.createPortal(
-          <Wrapper
-            pose={this.props.isOpened ? 'visible' : 'hidden'}
-            width={this.props.width}
-            top={this.top}
-            left={this.left}
-            zIndex={zIndex}
-          >
-            <OutsideClickHandler onOutsideClick={this.props.onOutsideClick} disabled={!this.props.isOpened}>
-              {content}
-            </OutsideClickHandler>
-          </Wrapper>,
-          document.body,
-        )}
+        {this.renderPortal()}
       </>
     );
   }

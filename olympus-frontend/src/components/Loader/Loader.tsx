@@ -11,7 +11,7 @@ interface ILoaderProps {
   color?: string;
 }
 
-const Loader: React.FC<ILoaderProps> = ({ isVisible, overlay = 'visible', color = '#fff' }) => (
+const Loader: React.FC<ILoaderProps> = ({ isVisible, overlay = 'visible', color = '#000' }) => (
   <PoseGroup>
     {isVisible ? (
       <Wrapper overlay={overlay} key={'wrapper'}>

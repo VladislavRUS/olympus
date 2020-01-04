@@ -23,7 +23,7 @@ export const profileReducer = (state: IProfileState = initialState, action: Prof
     case ProfileActionTypes.GET_PROFILE_SUCCESS: {
       return {
         ...state,
-        isLoading: true,
+        isLoading: false,
         currentProfile: action.payload,
       };
     }
@@ -31,7 +31,7 @@ export const profileReducer = (state: IProfileState = initialState, action: Prof
     case ProfileActionTypes.GET_PROFILE_ERROR: {
       return {
         ...state,
-        isLoading: true,
+        isLoading: false,
       };
     }
   }

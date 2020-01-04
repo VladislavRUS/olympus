@@ -6,6 +6,7 @@ import { RegularInput } from '../../../../../../components/RegularInput';
 import { EditButtons } from '../../../../../../components/EditButtons';
 import { Spacer } from '../../../../../../components/Spacer';
 import { email } from '../../../../../../utils/validators';
+import { Select } from '../../../../../../components/Select';
 
 interface IPersonalInfoFormProps {
   onCancel: () => void;
@@ -14,6 +15,8 @@ interface IPersonalInfoFormProps {
 type TProps = WithTranslation & InjectedFormProps<{}, IPersonalInfoFormProps> & IPersonalInfoFormProps;
 
 class PersonalInfoForm extends React.Component<TProps> {
+  genders = ['male', 'female'];
+
   renderField = (props: WrappedFieldProps & { placeholder: string; type: string }) => {
     const { t } = this.props;
     const { type, placeholder, input, meta } = props;
@@ -30,6 +33,25 @@ class PersonalInfoForm extends React.Component<TProps> {
         onFocus={onFocus}
         onBlur={onBlur}
         type={type}
+      />
+    );
+  };
+
+  renderSelect = (props: WrappedFieldProps & { placeholder: string; type: string }) => {
+    const { t } = this.props;
+    const { input } = props;
+    const { onChange, value } = input;
+
+    const selected = this.genders.find(gender => gender === value);
+
+    return (
+      <Select
+        items={this.genders}
+        placeholder={t('profile.personalInfo.gender.placeholder')}
+        extractValue={item => t(`profile.personalInfo.gender.${item}`)}
+        selectedItem={selected || ''}
+        renderItem={item => t(`profile.personalInfo.gender.${item}`)}
+        onItemClick={item => onChange(item)}
       />
     );
   };
@@ -55,7 +77,7 @@ class PersonalInfoForm extends React.Component<TProps> {
 
         <Spacer height={20} />
 
-        <Field name={'gender'} component={this.renderField} placeholder={t('profile.personalInfo.gender')} />
+        <Field name={'gender'} component={this.renderSelect} placeholder={t('profile.personalInfo.gender')} />
 
         <Spacer height={20} />
 

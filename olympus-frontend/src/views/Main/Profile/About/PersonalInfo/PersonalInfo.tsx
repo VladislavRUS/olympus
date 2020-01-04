@@ -10,6 +10,7 @@ import { Empty } from './PersonalInfo.styles';
 import { PersonalInfoForm } from './PersonalInfoForm';
 import { Modal } from '../../../../../components/Modal';
 import { updateProfileRequest } from '../../../../../store/profile/actions';
+import { Loader } from '../../../../../components/Loader';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -26,6 +27,7 @@ interface IDispatchProps {
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
     profile: state.profile.currentProfile,
+    isUpdatingProfile: state.profile.isLoading,
   };
 
   return stateProps;
@@ -33,6 +35,7 @@ const mapStateToProps = (state: IApplicationState) => {
 
 interface IStateProps {
   profile: IProfile | null;
+  isUpdatingProfile: boolean;
 }
 
 type TProps = WithTranslation & IStateProps & IDispatchProps;
@@ -81,6 +84,12 @@ class PersonalInfo extends React.Component<TProps, State> {
     };
   }
 
+  componentDidUpdate(prevProps: Readonly<TProps>): void {
+    if (prevProps.isUpdatingProfile && !this.props.isUpdatingProfile) {
+      this.onModalClose();
+    }
+  }
+
   onModalOpen = () => {
     this.setState({ isEditModalOpened: true });
   };
@@ -102,11 +111,10 @@ class PersonalInfo extends React.Component<TProps, State> {
     };
 
     this.props.updateProfileRequest(updatedProfile);
-    this.onModalClose();
   };
 
   render() {
-    const { t, profile } = this.props;
+    const { t, profile, isUpdatingProfile } = this.props;
 
     if (!profile) {
       return null;
@@ -120,10 +128,14 @@ class PersonalInfo extends React.Component<TProps, State> {
       <InformationCard title={t('profile.about.personalInfo.title')} onEdit={this.onModalOpen}>
         {hasFilledValues ? (
           personalInfoFields.map(field => {
-            const value = personalInfo[field.personalInfoKey];
+            let value = personalInfo[field.personalInfoKey];
 
             if (!value) {
               return null;
+            }
+
+            if (field.personalInfoKey === 'gender') {
+              value = t(`profile.personalInfo.gender.${value}`);
             }
 
             return (
@@ -141,6 +153,7 @@ class PersonalInfo extends React.Component<TProps, State> {
 
         <Modal isOpened={this.state.isEditModalOpened} onRequestClose={this.onModalClose}>
           <PersonalInfoForm onSubmit={this.onSubmit} onCancel={this.onModalClose} initialValues={personalInfo} />
+          <Loader isVisible={isUpdatingProfile} />
         </Modal>
       </InformationCard>
     );

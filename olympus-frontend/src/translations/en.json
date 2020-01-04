@@ -1,7 +1,8 @@
 {
+  "app.cancel": "Cancel",
+  "app.edit": "Edit",
   "app.logout": "Logout",
   "app.save": "Save",
-  "app.cancel": "Cancel",
   "errors.networkError": "Network error. Please check connection",
   "errors.unauthorized": "Invalid credentials",
   "errors.unknown": "Unknown error",
@@ -40,5 +41,8 @@
   "profile.personalInfo.email": "Email",
   "profile.personalInfo.empty": "Nothing is filled yet",
   "profile.personalInfo.gender": "Gender",
+  "profile.personalInfo.gender.female": "Female",
+  "profile.personalInfo.gender.male": "Male",
+  "profile.personalInfo.gender.placeholder": "Please select your gender",
   "profile.personalInfo.occupation": "Occupation"
 }

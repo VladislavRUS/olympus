@@ -28,16 +28,18 @@ const PoseContent = posed.div({
   enter: {
     y: 0,
     opacity: 1,
+    scale: 1,
     transition: {
-      duration: 200,
+      duration: 250,
       ease: 'easeInOut',
     },
   },
   exit: {
-    y: '100%',
+    y: '20%',
     opacity: 0,
+    scale: 0.8,
     transition: {
-      duration: 200,
+      duration: 250,
       ease: 'easeInOut',
     },
   },

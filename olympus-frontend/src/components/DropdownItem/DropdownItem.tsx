@@ -4,13 +4,17 @@ import { Wrapper } from './DropdownItem.styles';
 interface IDropdownItemProps<T> {
   item: T;
   renderItem: (item: T) => React.ReactNode;
-  onClick: () => void;
+  onClick: (item: T) => void;
 }
 
 class DropdownItem<T> extends React.Component<IDropdownItemProps<T>> {
+  onClick = () => {
+    this.props.onClick(this.props.item);
+  };
+
   render() {
-    const { item, renderItem, onClick } = this.props;
-    return <Wrapper onClick={onClick}>{renderItem(item)}</Wrapper>;
+    const { item, renderItem } = this.props;
+    return <Wrapper onClick={this.onClick}>{renderItem(item)}</Wrapper>;
   }
 }
 

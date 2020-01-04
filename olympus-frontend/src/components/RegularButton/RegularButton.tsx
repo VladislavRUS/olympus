@@ -27,7 +27,11 @@ const RegularButton: React.FC<IRegularButtonProps> = ({
 }) => {
   return (
     <StyledButton onClick={onClick} type={type} isLoading={isLoading} disabled={isDisabled} mode={mode}>
-      {isLoading ? <Loader isVisible={true} overlay={'hidden'} /> : <React.Fragment>{text}</React.Fragment>}
+      {isLoading ? (
+        <Loader isVisible={true} overlay={'hidden'} color={'#fff'} />
+      ) : (
+        <React.Fragment>{text}</React.Fragment>
+      )}
     </StyledButton>
   );
 };

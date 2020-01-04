@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   position: relative;
 `;
 
-export const PlaceholderHint = styled.div<{ value: string }>`
+export const PlaceholderHint = styled.div<{ hasValue: boolean }>`
   position: absolute;
   top: 20px;
   left: 20px;
@@ -17,7 +17,7 @@ export const PlaceholderHint = styled.div<{ value: string }>`
   transition: top 0.1s ease;
 
   ${props =>
-    props.value &&
+    props.hasValue &&
     css`
       font-size: 12px;
       top: 10px;

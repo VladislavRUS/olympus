@@ -1,7 +1,8 @@
 {
+  "app.cancel": "Отменить",
+  "app.edit": "Редактировать",
   "app.logout": "Выйти",
   "app.save": "Сохранить",
-  "app.cancel": "Отменить",
   "errors.networkError": "Ошибка сети. Пожалуйста, проверьте подключение",
   "errors.unauthorized": "Неправильные почта и пароль",
   "errors.unknown": "Неизвестная ошибка",
@@ -40,5 +41,8 @@
   "profile.personalInfo.email": "Почта",
   "profile.personalInfo.empty": "Еще ничего не заполнено",
   "profile.personalInfo.gender": "Пол",
+  "profile.personalInfo.gender.female": "Женский",
+  "profile.personalInfo.gender.male": "Мужской",
+  "profile.personalInfo.gender.placeholder": "Пожалуйста, выберите пол",
   "profile.personalInfo.occupation": "Профессия"
 }

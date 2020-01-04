@@ -4,6 +4,7 @@ import { Wrapper, Content, Title, Header, MenuIconWrapper } from './InformationC
 import { Dropdown } from '../Dropdown';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { DropdownItem } from '../DropdownItem';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 interface IInformationCardProps {
   title: string;
@@ -14,8 +15,10 @@ interface IInformationCardState {
   isOpened: boolean;
 }
 
-class InformationCard extends React.Component<IInformationCardProps, IInformationCardState> {
-  constructor(props: IInformationCardProps) {
+type TProps = IInformationCardProps & WithTranslation;
+
+class InformationCard extends React.Component<TProps, IInformationCardState> {
+  constructor(props: TProps) {
     super(props);
     this.state = {
       isOpened: false,
@@ -42,7 +45,7 @@ class InformationCard extends React.Component<IInformationCardProps, IInformatio
               isOpened={this.state.isOpened}
               content={this.renderContent}
               onOutsideClick={this.onCloseDropdown}
-              width={120}
+              width={200}
             >
               {(handleRef: (element: any) => void) => (
                 <MenuIconWrapper ref={handleRef} onClick={this.onOpenDropdown}>
@@ -66,12 +69,16 @@ class InformationCard extends React.Component<IInformationCardProps, IInformatio
   };
 
   renderContent = () => {
+    const { t } = this.props;
+
     return (
       <React.Fragment>
-        <DropdownItem item={'Edit'} renderItem={item => item} onClick={this.onEdit} />
+        <DropdownItem item={t('app.edit')} renderItem={item => item} onClick={this.onEdit} />
       </React.Fragment>
     );
   };
 }
 
-export default InformationCard;
+const translated = withTranslation();
+
+export default translated(InformationCard);

@@ -13,6 +13,7 @@ interface IRegularInputProps {
   autocomplete?: 'on' | 'off';
   error?: string;
   touched?: boolean;
+  readonly?: boolean;
 }
 
 class RegularInput extends React.PureComponent<IRegularInputProps> {
@@ -36,13 +37,14 @@ class RegularInput extends React.PureComponent<IRegularInputProps> {
       error = '',
       onFocus,
       onBlur,
+      readonly = false,
     } = this.props;
 
     const showError = touched && error;
 
     return (
       <Wrapper>
-        <PlaceholderHint value={value}>{placeholder}</PlaceholderHint>
+        <PlaceholderHint hasValue={Boolean(value)}>{placeholder}</PlaceholderHint>
         <StyledInput
           onChange={this.onChange}
           onFocus={onFocus}
@@ -52,6 +54,7 @@ class RegularInput extends React.PureComponent<IRegularInputProps> {
           name={name}
           autoComplete={autocomplete}
           isValid={!showError}
+          readOnly={readonly}
         />
 
         {showError && <Error>{error}</Error>}

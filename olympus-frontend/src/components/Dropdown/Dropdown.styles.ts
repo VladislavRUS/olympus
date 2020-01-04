@@ -15,7 +15,7 @@ const PoseWrapper = posed.div({
   },
   hidden: {
     opacity: 0,
-    y: '50%',
+    y: '25%',
     transition: {
       ease: 'easeInOut',
       duration: 200,
@@ -30,6 +30,7 @@ export const Wrapper = styled(PoseWrapper)<{
   left: number;
   top: number;
   zIndex: number;
+  units: string;
 }>`
   position: absolute;
   left: ${props => props.left}px;
