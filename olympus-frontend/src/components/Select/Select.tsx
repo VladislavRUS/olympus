@@ -58,14 +58,12 @@ class Select<T> extends React.Component<TProps<T>, TState> {
         units={'%'}
         arrow={false}
       >
-        {(handleRef: any) => (
-          <Wrapper ref={handleRef} onClick={this.onOpen}>
-            <Text>{selectedItem ? extractValue(selectedItem) : placeholder}</Text>
-            <IconWrapper isOpened={this.state.isOpened}>
-              <FiChevronDown />
-            </IconWrapper>
-          </Wrapper>
-        )}
+        <Wrapper onClick={this.onOpen}>
+          <Text>{selectedItem ? extractValue(selectedItem) : placeholder}</Text>
+          <IconWrapper isOpened={this.state.isOpened}>
+            <FiChevronDown />
+          </IconWrapper>
+        </Wrapper>
       </Dropdown>
     );
   }

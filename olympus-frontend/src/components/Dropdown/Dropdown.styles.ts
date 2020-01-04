@@ -2,7 +2,11 @@ import styled, { css } from 'styled-components';
 import posed from 'react-pose';
 import { TDropdownMode } from './Dropdown';
 
-const PoseWrapper = posed.div({
+export const Wrapper = styled.div`
+  display: inherit;
+`;
+
+const PoseBodyWrapper = posed.div({
   visible: {
     opacity: 1,
     y: 0,
@@ -21,24 +25,23 @@ const PoseWrapper = posed.div({
       ease: 'easeInOut',
       duration: 200,
     },
-    applyAtEnd: {
+    applyAtStart: {
       pointerEvents: 'none',
     },
   },
 });
 
-export const Wrapper = styled(PoseWrapper)<{
+export const BodyWrapper = styled(PoseBodyWrapper)<{
   left: number;
   top: number;
-  zIndex: number;
-  units: string;
+  width: number;
 }>`
   position: absolute;
   left: ${props => props.left}px;
   top: ${props => props.top}px;
   width: ${props => props.width}px;
-  z-index: ${props => props.zIndex};
   padding-top: 8px;
+  z-index: 1;
 `;
 
 export const Arrow = styled.div`

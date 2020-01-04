@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
   cursor: pointer;
 `;
 
-export const Date = styled.div`
+export const FormattedDate = styled.div`
   color: #515365;
   font-size: 14px;
   font-weight: 400;

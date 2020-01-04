@@ -47,11 +47,9 @@ class InformationCard extends React.Component<TProps, IInformationCardState> {
               onOutsideClick={this.onCloseDropdown}
               width={200}
             >
-              {(handleRef: (element: any) => void) => (
-                <MenuIconWrapper ref={handleRef} onClick={this.onOpenDropdown}>
-                  <FiMoreHorizontal color={'#9a9fbf'} size={20} />
-                </MenuIconWrapper>
-              )}
+              <MenuIconWrapper onClick={this.onOpenDropdown}>
+                <FiMoreHorizontal color={'#9a9fbf'} size={20} />
+              </MenuIconWrapper>
             </Dropdown>
           </Header>
           <Content>{children}</Content>

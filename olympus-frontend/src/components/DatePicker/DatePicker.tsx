@@ -1,8 +1,8 @@
 import React from 'react';
 import { Dropdown } from '../Dropdown';
 import ReactDatePicker from 'react-datepicker';
-import { Wrapper, Date, ReactDatePickerWrapper, Placeholder, IconWrapper } from './DatePicker.styles';
-
+import { Wrapper, FormattedDate, ReactDatePickerWrapper, Placeholder, IconWrapper } from './DatePicker.styles';
+import { subYears } from 'date-fns';
 import { datePickerLocale, formatDate } from '../../i18n';
 import { FiCalendar } from 'react-icons/fi';
 
@@ -16,19 +16,26 @@ type TProps = {
   showYearDropdown?: boolean;
   dateFormat?: string;
   placeholder?: string;
+  maxDate?: Date;
 };
 
 class DatePicker extends React.Component<TProps, TState> {
+  minDate: Date;
+
   constructor(props: TProps) {
     super(props);
 
     this.state = {
       isOpened: false,
     };
+
+    this.minDate = subYears(new Date(), 100);
   }
 
   renderContent = () => {
-    const { date, showYearDropdown = false } = this.props;
+    const { date, showYearDropdown = false, maxDate = new Date() } = this.props;
+
+    const dateFormatCalendar = showYearDropdown ? 'LLLL' : 'LLLL yyyy';
 
     return (
       <ReactDatePickerWrapper>
@@ -39,6 +46,9 @@ class DatePicker extends React.Component<TProps, TState> {
           inline={true}
           showYearDropdown={showYearDropdown}
           dropdownMode="select"
+          dateFormatCalendar={dateFormatCalendar}
+          minDate={this.minDate}
+          maxDate={maxDate}
         />
       </ReactDatePickerWrapper>
     );
@@ -64,14 +74,16 @@ class DatePicker extends React.Component<TProps, TState> {
 
     return (
       <Wrapper onClick={this.onOpen}>
-        {date ? <Date>{formatDate(date, dateFormat)}</Date> : <Placeholder>{placeholder}</Placeholder>}
+        {date ? (
+          <FormattedDate>{formatDate(date, dateFormat)}</FormattedDate>
+        ) : (
+          <Placeholder>{placeholder}</Placeholder>
+        )}
 
         <Dropdown isOpened={this.state.isOpened} content={this.renderContent} onOutsideClick={this.onClose} width={240}>
-          {(handleRef: any) => (
-            <IconWrapper ref={handleRef}>
-              <FiCalendar color={'#a0a5c3'} />
-            </IconWrapper>
-          )}
+          <IconWrapper>
+            <FiCalendar color={'#a0a5c3'} />
+          </IconWrapper>
         </Dropdown>
       </Wrapper>
     );

@@ -9,7 +9,7 @@ export const Header = styled.div`
   height: 60px;
   display: flex;
   align-items: center;
-  padding: 0 26px;
+  padding: 0 19px 0 26px;
   border-bottom: 1px solid #e6ecf5;
   justify-content: space-between;
 `;
@@ -27,7 +27,6 @@ export const Content = styled.div`
 
 export const MenuIconWrapper = styled.div`
   padding: 7px;
-  margin-right: -7px;
   display: flex;
   align-items: center;
   justify-content: center;

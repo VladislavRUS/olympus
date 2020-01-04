@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Wrapper, ContentWrapper, Arrow } from './Dropdown.styles';
+import { Wrapper, BodyWrapper, ContentWrapper, Arrow } from './Dropdown.styles';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 export type TDropdownMode = 'styled' | 'transparent';
@@ -11,21 +11,20 @@ interface IDropdownProps {
   onOutsideClick: () => void;
   width: number;
   units?: 'px' | '%';
-  children: (handleRef: (element: any) => void) => React.ReactNode;
   zIndex?: number;
   mode?: TDropdownMode;
   arrow?: boolean;
 }
 
 class Dropdown extends React.Component<IDropdownProps> {
-  childRef: any | null = null;
+  wrapperRef: any | null = null;
   left = 0;
   top = 0;
   width = 0;
   windowEvents = ['resize', 'scroll'];
 
-  handleChildRef = (element: any) => {
-    this.childRef = element;
+  handleWrapperRef = (element: any) => {
+    this.wrapperRef = element;
   };
 
   componentDidMount(): void {
@@ -66,11 +65,11 @@ class Dropdown extends React.Component<IDropdownProps> {
   };
 
   update = () => {
-    if (!this.childRef) {
+    if (!this.wrapperRef) {
       return;
     }
 
-    const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = this.childRef;
+    const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = this.wrapperRef;
 
     this.top = offsetTop + offsetHeight;
 
@@ -90,28 +89,22 @@ class Dropdown extends React.Component<IDropdownProps> {
   };
 
   renderPortal() {
-    if (!this.childRef) {
+    if (!this.wrapperRef) {
       return null;
     }
 
-    const { content, zIndex = 1, mode = 'styled', arrow = true } = this.props;
+    const { content, mode = 'styled', arrow = true, isOpened } = this.props;
 
     const dropdownContent = typeof content === 'function' ? content() : content;
 
     return ReactDOM.createPortal(
-      <Wrapper
-        pose={this.props.isOpened ? 'visible' : 'hidden'}
-        width={this.width}
-        top={this.top}
-        left={this.left}
-        zIndex={zIndex}
-      >
+      <BodyWrapper pose={isOpened ? 'visible' : 'hidden'} width={this.width} top={this.top} left={this.left}>
         <OutsideClickHandler onOutsideClick={this.props.onOutsideClick} disabled={!this.props.isOpened}>
           {arrow && <Arrow />}
           <ContentWrapper mode={mode}>{dropdownContent}</ContentWrapper>
         </OutsideClickHandler>
-      </Wrapper>,
-      this.childRef,
+      </BodyWrapper>,
+      this.wrapperRef,
     );
   }
 
@@ -119,10 +112,10 @@ class Dropdown extends React.Component<IDropdownProps> {
     const { children } = this.props;
 
     return (
-      <>
-        {children(this.handleChildRef)}
+      <Wrapper ref={this.handleWrapperRef}>
+        {children}
         {this.renderPortal()}
-      </>
+      </Wrapper>
     );
   }
 }

@@ -67,16 +67,14 @@ class User extends React.Component<AllProps, IUserState> {
         onOutsideClick={this.onCloseDropdown}
         width={250}
       >
-        {(handleRef: any) => (
-          <Wrapper onClick={this.onOpenDropdown} ref={handleRef}>
-            <Avatar>
-              <FiUser size={34} color={'#fff'} />
-            </Avatar>
-            <FullName>
-              {firstName} {lastName}
-            </FullName>
-          </Wrapper>
-        )}
+        <Wrapper onClick={this.onOpenDropdown}>
+          <Avatar>
+            <FiUser size={34} color={'#fff'} />
+          </Avatar>
+          <FullName>
+            {firstName} {lastName}
+          </FullName>
+        </Wrapper>
       </Dropdown>
     );
   }

@@ -3,6 +3,10 @@
     display: block !important;
 }
 
+.react-datepicker .react-datepicker__header {
+    border-bottom: 1px solid #e6ecf5;
+}
+
 .react-datepicker__day {
     color: #4b4e65;
     font-family: Roboto;
