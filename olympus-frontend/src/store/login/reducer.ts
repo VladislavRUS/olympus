@@ -1,5 +1,5 @@
 import { ILoginState, LoginActionTypes } from './types';
-import { ActionType } from 'typesafe-actions';
+import { ActionType, createReducer } from 'typesafe-actions';
 
 import * as loginActions from './actions';
 
@@ -10,29 +10,8 @@ export const initialState: ILoginState = {
   errorMessage: '',
 };
 
-export const loginReducer = (state: ILoginState = initialState, action: LoginAction): ILoginState => {
-  switch (action.type) {
-    case LoginActionTypes.LOGIN_REQUEST: {
-      return {
-        ...state,
-        errorMessage: '',
-        isLoading: true,
-      };
-    }
-    case LoginActionTypes.LOGIN_SUCCESS: {
-      return {
-        ...state,
-        isLoading: false,
-      };
-    }
-    case LoginActionTypes.LOGIN_ERROR: {
-      return {
-        ...state,
-        errorMessage: action.payload,
-        isLoading: false,
-      };
-    }
-  }
-
-  return state;
-};
+export const loginReducer = createReducer<ILoginState, LoginAction>(initialState, {
+  [LoginActionTypes.LOGIN_REQUEST]: state => ({ ...state, errorMessage: '', isLoading: true }),
+  [LoginActionTypes.LOGIN_SUCCESS]: state => ({ ...state, isLoading: false }),
+  [LoginActionTypes.LOGIN_ERROR]: (state, action) => ({ ...state, errorMessage: action.payload, isLoading: false }),
+});

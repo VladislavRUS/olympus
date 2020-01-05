@@ -19,16 +19,13 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     dispatch,
   );
 
-interface IDispatchProps {
-  updateProfileCover: typeof updateProfileCover;
-  updateProfileAvatar: typeof updateProfileAvatar;
-}
+type TDispatchProps = ReturnType<typeof mapDispatchToProps>;
+
+type TProps = TDispatchProps & WithTranslation;
 
 type TState = {
   isOpened: boolean;
 };
-
-type TProps = IDispatchProps & WithTranslation;
 
 class Settings extends React.Component<TProps, TState> {
   avatarRef = React.createRef<HTMLInputElement>();

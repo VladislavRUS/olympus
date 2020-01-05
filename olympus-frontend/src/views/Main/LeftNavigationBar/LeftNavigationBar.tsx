@@ -4,20 +4,7 @@ import { Routes } from '../../../constants/Routes';
 import { FiList, FiUser } from 'react-icons/fi';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { IApplicationState } from '../../../store';
-import { IUser } from '../../../store/user/types';
 import { connect } from 'react-redux';
-
-const mapStateToProps = (state: IApplicationState) => {
-  const stateProps: IStateProps = {
-    user: state.user.current,
-  };
-
-  return stateProps;
-};
-
-interface IStateProps {
-  user: IUser | null;
-}
 
 const links = [
   {
@@ -30,7 +17,13 @@ const links = [
   },
 ];
 
-type TProps = IStateProps & RouteComponentProps;
+const mapStateToProps = (state: IApplicationState) => ({
+  user: state.user.current,
+});
+
+type TStateProps = ReturnType<typeof mapStateToProps>;
+
+type TProps = TStateProps & RouteComponentProps;
 
 const LeftNavigationBar: React.FC<TProps> = ({ location, user }) => {
   return (

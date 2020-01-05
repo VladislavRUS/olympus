@@ -1,27 +1,31 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { API } from '../../utils/api';
-import { getCurrentUserSuccess, getCurrentUserError } from './actions';
+import * as userActions from './actions';
 import { UserActionTypes } from './types';
 import { replace } from 'connected-react-router';
 import { Routes } from '../../constants/Routes';
 
 function* handleGetCurrentUser() {
+  yield put(userActions.fetchUserAsync.request());
+
   try {
     const { data } = yield call(API.get, '/users/current');
 
-    yield put(getCurrentUserSuccess(data));
+    yield put(userActions.fetchUserAsync.success(data));
   } catch (error) {
-    yield put(getCurrentUserError());
+    yield put(userActions.fetchUserAsync.failure());
   }
-}
-
-function* watchCurrentUserRequest() {
-  yield takeEvery(UserActionTypes.GET_CURRENT_USER_REQUEST, handleGetCurrentUser);
 }
 
 function* handleLogout() {
   localStorage.clear();
   yield put(replace(Routes.HOME));
+}
+
+// WATCHERS
+
+function* watchCurrentUserRequest() {
+  yield takeEvery(UserActionTypes.GET_CURRENT_USER, handleGetCurrentUser);
 }
 
 function* watchLogout() {

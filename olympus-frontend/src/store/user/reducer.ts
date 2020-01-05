@@ -1,37 +1,21 @@
 import { IUserState, UserActionTypes } from './types';
-import { ActionType } from 'typesafe-actions';
+import { ActionType, createReducer } from 'typesafe-actions';
 
-import * as currentUserActions from './actions';
+import * as userActions from './actions';
+
+export type UserAction = ActionType<typeof userActions>;
 
 export const initialState: IUserState = {
   current: null,
   isLoading: false,
 };
 
-export const userReducer = (
-  state: IUserState = initialState,
-  action: ActionType<typeof currentUserActions>,
-): IUserState => {
-  switch (action.type) {
-    case UserActionTypes.GET_CURRENT_USER_REQUEST: {
-      return {
-        ...state,
-        isLoading: true,
-      };
-    }
-    case UserActionTypes.GET_CURRENT_USER_SUCCESS: {
-      return {
-        ...state,
-        isLoading: true,
-        current: action.payload,
-      };
-    }
-    case UserActionTypes.GET_CURRENT_USER_ERROR: {
-      return {
-        ...state,
-        isLoading: true,
-      };
-    }
-  }
-  return state;
-};
+export const userReducer = createReducer<IUserState, UserAction>(initialState, {
+  [UserActionTypes.GET_CURRENT_USER_REQUEST]: state => ({ ...state, isLoading: true }),
+  [UserActionTypes.GET_CURRENT_USER_SUCCESS]: (state, action) => ({
+    ...state,
+    isLoading: false,
+    current: action.payload,
+  }),
+  [UserActionTypes.GET_CURRENT_USER_ERROR]: state => ({ ...state, isLoading: false }),
+});

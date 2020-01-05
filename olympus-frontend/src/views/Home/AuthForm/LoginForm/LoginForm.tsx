@@ -1,6 +1,4 @@
 import React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import { onLoginRequest } from '../../../../store/login/actions';
 import { IApplicationState } from '../../../../store';
 import { RegularInput } from '../../../../components/RegularInput';
 import { connect } from 'react-redux';
@@ -12,33 +10,14 @@ import { RegularButton } from '../../../../components/RegularButton';
 import { RegularButtonMode } from '../../../../components/RegularButton/RegularButton';
 import { email, required } from '../../../../utils/validators';
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators(
-    {
-      onLoginRequest,
-    },
-    dispatch,
-  );
+const mapStateToProps = (state: IApplicationState) => ({
+  errorMessage: state.login.errorMessage,
+  isLoading: state.login.isLoading,
+});
 
-interface IDispatchProps {
-  onLoginRequest: typeof onLoginRequest;
-}
+type TStateProps = ReturnType<typeof mapStateToProps>;
 
-const mapStateToProps = (state: IApplicationState) => {
-  const stateProps: IStateProps = {
-    errorMessage: state.login.errorMessage,
-    isLoading: state.login.isLoading,
-  };
-
-  return stateProps;
-};
-
-interface IStateProps {
-  errorMessage: string;
-  isLoading: boolean;
-}
-
-type TProps = IStateProps & IDispatchProps & InjectedFormProps & WithTranslation;
+type TProps = TStateProps & InjectedFormProps & WithTranslation;
 
 class LoginForm extends React.Component<TProps> {
   renderField = (props: WrappedFieldProps & { placeholder: string; type: string }) => {
@@ -100,6 +79,6 @@ class LoginForm extends React.Component<TProps> {
 
 const createReduxForm = reduxForm({ form: 'login' });
 const translated = withTranslation();
-const ConnectedLoginForm = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+const ConnectedLoginForm = connect(mapStateToProps)(LoginForm);
 
 export default createReduxForm(translated(ConnectedLoginForm));

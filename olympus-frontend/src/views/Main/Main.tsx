@@ -9,38 +9,29 @@ import { Routes } from '../../constants/Routes';
 import { Profile } from './Profile';
 import { Feed } from './Feed';
 import { IApplicationState } from '../../store';
-import { getCurrentUserRequest } from '../../store/user/actions';
-import { IUser } from '../../store/user/types';
+import { getCurrentUser } from '../../store/user/actions';
+
+const mapStateToProps = (state: IApplicationState) => ({
+  user: state.user.current,
+});
+
+type TStateProps = ReturnType<typeof mapStateToProps>;
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      getCurrentUserRequest,
+      getCurrentUser,
     },
     dispatch,
   );
 
-interface IDispatchProps {
-  getCurrentUserRequest: typeof getCurrentUserRequest;
-}
+type TDispatchProps = ReturnType<typeof mapDispatchToProps>;
 
-const mapStateToProps = (state: IApplicationState) => {
-  const stateProps: IStateProps = {
-    user: state.user.current,
-  };
-
-  return stateProps;
-};
-
-interface IStateProps {
-  user: IUser | null;
-}
-
-type TProps = IStateProps & IDispatchProps & RouteComponentProps;
+type TProps = TStateProps & TDispatchProps & RouteComponentProps;
 
 class Main extends React.Component<TProps> {
   componentDidMount() {
-    this.props.getCurrentUserRequest();
+    this.props.getCurrentUser();
   }
 
   render() {

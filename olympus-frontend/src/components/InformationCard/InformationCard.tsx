@@ -1,10 +1,11 @@
 import React from 'react';
 import { Segment } from '../Segment';
-import { Wrapper, Content, Title, Header, MenuIconWrapper } from './InformationCard.styles';
+import { Content, Header, MenuIconWrapper, Title, Wrapper } from './InformationCard.styles';
 import { Dropdown } from '../Dropdown';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { DropdownTextItem } from '../Dropdown/DropdownItems/DropdownTextItem';
+import { UserAccess, AccessType } from '../UserAccess';
 
 interface IInformationCardProps {
   title: string;
@@ -41,16 +42,18 @@ class InformationCard extends React.Component<TProps, IInformationCardState> {
         <Wrapper>
           <Header>
             <Title>{title}</Title>
-            <Dropdown
-              isOpened={this.state.isOpened}
-              content={this.renderContent}
-              onOutsideClick={this.onCloseDropdown}
-              width={200}
-            >
-              <MenuIconWrapper onClick={this.onOpenDropdown}>
-                <FiMoreHorizontal color={'#9a9fbf'} size={20} />
-              </MenuIconWrapper>
-            </Dropdown>
+            <UserAccess accessType={AccessType.CURRENT}>
+              <Dropdown
+                isOpened={this.state.isOpened}
+                content={this.renderContent}
+                onOutsideClick={this.onCloseDropdown}
+                width={200}
+              >
+                <MenuIconWrapper onClick={this.onOpenDropdown}>
+                  <FiMoreHorizontal color={'#9a9fbf'} size={20} />
+                </MenuIconWrapper>
+              </Dropdown>
+            </UserAccess>
           </Header>
           <Content>{children}</Content>
         </Wrapper>

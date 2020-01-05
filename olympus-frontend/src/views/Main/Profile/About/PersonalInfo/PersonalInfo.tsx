@@ -9,37 +9,9 @@ import { IProfile, TPersonalInfoKey } from '../../../../../store/profile/types';
 import { Empty } from './PersonalInfo.styles';
 import { PersonalInfoForm } from './PersonalInfoForm';
 import { Modal } from '../../../../../components/Modal';
-import { updateProfileRequest } from '../../../../../store/profile/actions';
+import { updateProfile } from '../../../../../store/profile/actions';
 import { Loader } from '../../../../../components/Loader';
 import { formatDate } from '../../../../../i18n';
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators(
-    {
-      updateProfileRequest,
-    },
-    dispatch,
-  );
-
-interface IDispatchProps {
-  updateProfileRequest: typeof updateProfileRequest;
-}
-
-const mapStateToProps = (state: IApplicationState) => {
-  const stateProps: IStateProps = {
-    profile: state.profile.current,
-    isUpdatingProfile: state.profile.isLoading,
-  };
-
-  return stateProps;
-};
-
-interface IStateProps {
-  profile: IProfile | null;
-  isUpdatingProfile: boolean;
-}
-
-type TProps = WithTranslation & IStateProps & IDispatchProps;
 
 interface IPersonalInfoField {
   personalInfoKey: TPersonalInfoKey;
@@ -72,6 +44,25 @@ const personalInfoFields: IPersonalInfoField[] = [
     textTranslationKey: 'profile.personalInfo.email',
   },
 ];
+
+const mapStateToProps = (state: IApplicationState) => ({
+  profile: state.profile.current,
+  isUpdatingProfile: state.profile.isLoading,
+});
+
+type TStateProps = ReturnType<typeof mapStateToProps>;
+
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(
+    {
+      updateProfile,
+    },
+    dispatch,
+  );
+
+type TDispatchProps = ReturnType<typeof mapDispatchToProps>;
+
+type TProps = TStateProps & TDispatchProps & WithTranslation;
 
 type TState = {
   isEditModalOpened: boolean;
@@ -111,7 +102,7 @@ class PersonalInfo extends React.Component<TProps, TState> {
       personalInfo: values,
     };
 
-    this.props.updateProfileRequest(updatedProfile);
+    this.props.updateProfile(updatedProfile);
   };
 
   render() {

@@ -1,14 +1,12 @@
-import { all, call, fork, put, takeEvery, delay } from 'redux-saga/effects';
+import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { API } from '../../utils/api';
-import { onLoginError, onLoginSuccess } from './actions';
 import { LoginActionTypes } from './types';
 import { i18n } from '../../i18n';
 import { replace } from 'connected-react-router';
 import { Routes } from '../../constants/Routes';
+import { loginAsync, onLogin } from './actions';
 
-function* handleLogin(action: any) {
-  yield delay(500);
-
+function* handleLogin(action: ReturnType<typeof onLogin>) {
   try {
     const { data } = yield call(API.post, '/auth/login', {
       ...action.payload,
@@ -17,7 +15,7 @@ function* handleLogin(action: any) {
     API.defaults.headers.Authorization = `Bearer ${data.access_token}`;
     localStorage.setItem('access_token', data.access_token);
 
-    yield put(onLoginSuccess());
+    yield put(loginAsync.success());
     yield put(replace(Routes.MAIN));
   } catch (error) {
     let errorMessage = '';
@@ -26,12 +24,14 @@ function* handleLogin(action: any) {
       errorMessage = i18n.t('home.login.error.invalidCredentials');
     }
 
-    yield put(onLoginError(errorMessage));
+    yield put(loginAsync.failure(errorMessage));
   }
 }
 
+// WATCHERS
+
 function* watchLoginRequest() {
-  yield takeEvery(LoginActionTypes.LOGIN_REQUEST, handleLogin);
+  yield takeEvery(LoginActionTypes.LOGIN, handleLogin);
 }
 
 function* loginSaga() {

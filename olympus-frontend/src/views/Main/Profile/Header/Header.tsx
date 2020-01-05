@@ -7,23 +7,16 @@ import { Actions } from './Actions';
 import { connect } from 'react-redux';
 import { IApplicationState } from '../../../../store';
 
-const mapStateToProps = (state: IApplicationState) => {
-  const stateProps: IStateProps = {
-    avatarUrl: state.profile.current ? state.profile.current.avatar : null,
-    coverUrl: state.profile.current ? state.profile.current.cover : null,
-  };
+const mapStateToProps = (state: IApplicationState) => ({
+  avatarUrl: state.profile.current ? state.profile.current.avatar : null,
+  coverUrl: state.profile.current ? state.profile.current.cover : null,
+});
 
-  return stateProps;
-};
+type TStateProps = ReturnType<typeof mapStateToProps>;
 
-interface IStateProps {
-  coverUrl: string | null;
-  avatarUrl: string | null;
-}
+type TProps = TStateProps;
 
-type TProps = IStateProps;
-
-class Header extends React.Component<TProps, any> {
+class Header extends React.Component<TProps> {
   render() {
     const { coverUrl } = this.props;
 

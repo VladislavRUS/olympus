@@ -1,5 +1,4 @@
 import React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
 import { IApplicationState } from '../../../../store';
 import { RegularInput } from '../../../../components/RegularInput';
 import { connect } from 'react-redux';
@@ -7,7 +6,6 @@ import { BaseForm } from '../BaseForm';
 import { RegularButton } from '../../../../components/RegularButton';
 import { Spacer } from '../../../../components/Spacer';
 import { NamesWrapper, TermsText } from './RegisterForm.styles';
-import { onRegisterRequest } from '../../../../store/register/actions';
 import { CheckboxRow } from '../../../../components/CheckboxRow';
 import { TextHighlight } from '../../../../components/TextHighlight';
 import { withTranslation, WithTranslation } from 'react-i18next';
@@ -16,33 +14,14 @@ import { RegularButtonMode } from '../../../../components/RegularButton/RegularB
 import { Field, reduxForm, WrappedFieldProps, InjectedFormProps } from 'redux-form';
 import { email, required } from '../../../../utils/validators';
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators(
-    {
-      onRegisterRequest,
-    },
-    dispatch,
-  );
+const mapStateToProps = (state: IApplicationState) => ({
+  errorMessage: state.register.errorMessage,
+  isLoading: state.register.isLoading,
+});
 
-interface IDispatchProps {
-  onRegisterRequest: typeof onRegisterRequest;
-}
+type TStateProps = ReturnType<typeof mapStateToProps>;
 
-const mapStateToProps = (state: IApplicationState) => {
-  const stateProps: IStateProps = {
-    errorMessage: state.register.errorMessage,
-    isLoading: state.register.isLoading,
-  };
-
-  return stateProps;
-};
-
-interface IStateProps {
-  errorMessage: string;
-  isLoading: boolean;
-}
-
-type TProps = IStateProps & IDispatchProps & WithTranslation & InjectedFormProps;
+type TProps = TStateProps & WithTranslation & InjectedFormProps;
 
 type TState = {
   termsAccepted: boolean;
@@ -152,6 +131,6 @@ class RegisterForm extends React.Component<TProps, TState> {
 
 const createReduxForm = reduxForm({ form: 'register' });
 const translated = withTranslation();
-const ConnectedRegisterForm = connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
+const ConnectedRegisterForm = connect(mapStateToProps)(RegisterForm);
 
 export default createReduxForm(translated(ConnectedRegisterForm));

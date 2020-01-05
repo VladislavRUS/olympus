@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   width: 194px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 `;
 
 export const Circle = styled.button<{ backgroundColor: string }>`

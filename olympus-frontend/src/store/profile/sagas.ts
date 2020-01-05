@@ -1,60 +1,41 @@
-import { all, call, fork, put, takeEvery, select } from 'redux-saga/effects';
+import { all, call, fork, put, takeEvery, select, take } from 'redux-saga/effects';
 import { API } from '../../utils/api';
-import {
-  getProfileSuccess,
-  getProfileError,
-  updateProfileSuccess,
-  updateProfileError,
-  updateProfileRequest,
-} from './actions';
+import * as profileActions from './actions';
 import { IProfile, ProfileActionTypes } from './types';
-import { IApplicationState } from '../index';
-import { getCurrentUserRequest } from '../user/actions';
+import { getCurrentUser } from '../user/actions';
+import { getProfile } from './selectors';
 
-const getProfile = (state: IApplicationState) => state.profile.current;
+function* handleGetProfile(action: ReturnType<typeof profileActions.getProfile>) {
+  yield put(profileActions.fetchProfileAsync.request());
 
-function* handleGetProfile(action: any) {
   try {
     const id = action.payload;
 
     const { data } = yield call(API.get, `/profiles/${id}`);
 
-    yield put(getProfileSuccess(data));
+    yield put(profileActions.fetchProfileAsync.success(data));
   } catch (error) {
-    yield put(getProfileError());
+    yield put(profileActions.fetchProfileAsync.failure(error));
   }
 }
 
-function* watchProfileRequest() {
-  yield takeEvery(ProfileActionTypes.GET_PROFILE_REQUEST, handleGetProfile);
-}
+function* handleUpdateProfile(action: ReturnType<typeof profileActions.updateProfile>) {
+  yield put(profileActions.updateProfileAsync.request());
 
-function* handleUpdateProfile(action: any) {
   try {
     const { id } = action.payload;
 
     const { data } = yield call(API.put, `/profiles/${id}`, action.payload);
 
-    yield put(updateProfileSuccess(data));
-
-    const profile = yield select(getProfile);
-
-    if (profile && id === profile.id) {
-      yield put(getCurrentUserRequest());
-    }
+    yield put(profileActions.updateProfileAsync.success(data));
   } catch (error) {
-    yield put(updateProfileError());
+    yield put(profileActions.updateProfileAsync.failure(error));
   }
 }
 
-function* watchProfileUpdate() {
-  yield takeEvery(ProfileActionTypes.UPDATE_PROFILE_REQUEST, handleUpdateProfile);
-}
-
-function* handleUpdateProfileCover(action: any) {
-  const file = action.payload;
+function* handleUpdateProfileCover(action: ReturnType<typeof profileActions.updateProfileCover>) {
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append('file', action.payload);
 
   const { data } = yield call(API.post, `/files`, formData);
   const { path } = data;
@@ -62,17 +43,16 @@ function* handleUpdateProfileCover(action: any) {
   const profile = yield select(getProfile);
   const updatedProfile: IProfile = { ...profile, cover: path };
 
-  yield put(updateProfileRequest(updatedProfile));
+  yield put(profileActions.updateProfile(updatedProfile));
+
+  yield take([ProfileActionTypes.UPDATE_PROFILE_SUCCESS]);
+
+  yield put(getCurrentUser());
 }
 
-function* watchProfileCoverUpdate() {
-  yield takeEvery(ProfileActionTypes.UPDATE_PROFILE_COVER, handleUpdateProfileCover);
-}
-
-function* handleUpdateProfileAvatar(action: any) {
-  const file = action.payload;
+function* handleUpdateProfileAvatar(action: ReturnType<typeof profileActions.updateProfileAvatar>) {
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append('file', action.payload);
 
   const { data } = yield call(API.post, `/files`, formData);
   const { path } = data;
@@ -80,7 +60,25 @@ function* handleUpdateProfileAvatar(action: any) {
   const profile = yield select(getProfile);
   const updatedProfile: IProfile = { ...profile, avatar: path };
 
-  yield put(updateProfileRequest(updatedProfile));
+  yield put(profileActions.updateProfile(updatedProfile));
+
+  yield take([ProfileActionTypes.UPDATE_PROFILE_SUCCESS]);
+
+  yield put(getCurrentUser());
+}
+
+// WATCHERS
+
+function* watchProfileRequest() {
+  yield takeEvery(ProfileActionTypes.GET_PROFILE, handleGetProfile);
+}
+
+function* watchProfileUpdate() {
+  yield takeEvery(ProfileActionTypes.UPDATE_PROFILE, handleUpdateProfile);
+}
+
+function* watchProfileCoverUpdate() {
+  yield takeEvery(ProfileActionTypes.UPDATE_PROFILE_COVER, handleUpdateProfileCover);
 }
 
 function* watchProfileAvatarUpdate() {

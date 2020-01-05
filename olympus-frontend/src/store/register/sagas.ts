@@ -1,19 +1,19 @@
-import { all, call, fork, put, takeEvery, delay } from 'redux-saga/effects';
+import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { API } from '../../utils/api';
-import { onRegisterError, onRegisterSuccess } from './actions';
 import { RegisterActionTypes } from './types';
 import { i18n } from '../../i18n';
 import { setLoginMode } from '../auth-form/actions';
+import { registerAsync } from './actions';
 
 function* handleRegister(action: any) {
-  yield delay(500);
+  yield put(registerAsync.request());
 
   try {
     yield call(API.post, '/auth/register', {
       ...action.payload,
     });
 
-    yield put(onRegisterSuccess());
+    yield put(registerAsync.success());
     yield put(setLoginMode());
   } catch (error) {
     let errorMessage = '';
@@ -22,12 +22,14 @@ function* handleRegister(action: any) {
       errorMessage = i18n.t('home.register.error.alreadyExists');
     }
 
-    yield put(onRegisterError(errorMessage));
+    yield put(registerAsync.failure(errorMessage));
   }
 }
 
+// WATCHERS
+
 function* watchRegisterRequest() {
-  yield takeEvery(RegisterActionTypes.REGISTER_REQUEST, handleRegister);
+  yield takeEvery(RegisterActionTypes.REGISTER, handleRegister);
 }
 
 function* registerSaga() {

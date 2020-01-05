@@ -2,21 +2,14 @@ import React from 'react';
 import { Wrapper, Information, FullName, Avatar } from './User.styles';
 import { IApplicationState } from '../../../../../store';
 import { connect } from 'react-redux';
-import { IProfile } from '../../../../../store/profile/types';
 
-const mapStateToProps = (state: IApplicationState) => {
-  const stateProps: IStateProps = {
-    profile: state.profile.current,
-  };
+const mapStateToProps = (state: IApplicationState) => ({
+  profile: state.profile.current,
+});
 
-  return stateProps;
-};
+type TStateProps = ReturnType<typeof mapStateToProps>;
 
-interface IStateProps {
-  profile: IProfile | null;
-}
-
-type TProps = IStateProps;
+type TProps = TStateProps;
 
 class User extends React.Component<TProps> {
   render() {
@@ -39,4 +32,4 @@ class User extends React.Component<TProps> {
   }
 }
 
-export default connect<IStateProps, {}, {}, IApplicationState>(mapStateToProps)(User);
+export default connect(mapStateToProps)(User);

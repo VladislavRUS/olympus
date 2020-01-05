@@ -2,51 +2,40 @@ import React from 'react';
 import { Wrapper } from './Profile.styles';
 import { Header } from './Header';
 import { bindActionCreators, Dispatch } from 'redux';
-import { getProfileRequest } from '../../../store/profile/actions';
+import { getProfile } from '../../../store/profile/actions';
 import { connect } from 'react-redux';
 import { Spacer } from '../../../components/Spacer';
 import { Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { About } from './About';
 import { Routes } from '../../../constants/Routes';
 import { IApplicationState } from '../../../store';
-import { IProfile } from '../../../store/profile/types';
-import { IUser } from '../../../store/user/types';
 
-const mapStateToProps = (state: IApplicationState) => {
-  const stateProps: IStateProps = {
-    profile: state.profile.current,
-    user: state.user.current,
-  };
+const mapStateToProps = (state: IApplicationState) => ({
+  profile: state.profile.current,
+  user: state.user.current,
+});
 
-  return stateProps;
-};
-
-interface IStateProps {
-  profile: IProfile | null;
-  user: IUser | null;
-}
+type TStateProps = ReturnType<typeof mapStateToProps>;
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
-      getProfileRequest,
+      getProfile,
     },
     dispatch,
   );
 };
 
-interface IDispatchProps {
-  getProfileRequest: typeof getProfileRequest;
-}
+type TDispatchProps = ReturnType<typeof mapDispatchToProps>;
 
-type TProps = IStateProps & IDispatchProps & RouteComponentProps;
+type TProps = TStateProps & TDispatchProps & RouteComponentProps;
 
 class Profile extends React.Component<TProps> {
   componentDidMount() {
     const { match } = this.props;
     const { id } = match.params as any;
 
-    this.props.getProfileRequest(id);
+    this.props.getProfile(id);
   }
 
   render() {

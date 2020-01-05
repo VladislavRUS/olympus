@@ -24,9 +24,11 @@ export interface IPersonalInfo {
 export type TPersonalInfoKey = keyof IPersonalInfo;
 
 export enum ProfileActionTypes {
+  GET_PROFILE = '@@profile/GET_PROFILE',
   GET_PROFILE_REQUEST = '@@profile/GET_PROFILE_REQUEST',
   GET_PROFILE_SUCCESS = '@@profile/GET_PROFILE_SUCCESS',
   GET_PROFILE_ERROR = '@@profile/GET_PROFILE_ERROR',
+  UPDATE_PROFILE = '@@profile/UPDATE_PROFILE',
   UPDATE_PROFILE_REQUEST = '@@profile/UPDATE_PROFILE_REQUEST',
   UPDATE_PROFILE_SUCCESS = '@@profile/UPDATE_PROFILE_SUCCESS',
   UPDATE_PROFILE_ERROR = '@@profile/UPDATE_PROFILE_ERROR',

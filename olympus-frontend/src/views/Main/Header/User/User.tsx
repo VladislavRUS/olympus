@@ -5,29 +5,20 @@ import { connect } from 'react-redux';
 import { Dropdown } from '../../../../components/Dropdown';
 import { bindActionCreators, Dispatch, compose } from 'redux';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { IUser } from '../../../../store/user/types';
 import { onLogout } from '../../../../store/user/actions';
 import { DropdownTextItem } from '../../../../components/Dropdown/DropdownItems/DropdownTextItem';
 
+const mapStateToProps = (state: IApplicationState) => ({
+  user: state.user.current,
+});
+
+type TStateProps = ReturnType<typeof mapStateToProps>;
+
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ onLogout }, dispatch);
 
-interface IDispatchProps {
-  onLogout: typeof onLogout;
-}
+type TDispatchProps = ReturnType<typeof mapDispatchToProps>;
 
-const mapStateToProps = (state: IApplicationState) => {
-  const stateProps: IStateProps = {
-    user: state.user.current,
-  };
-
-  return stateProps;
-};
-
-interface IStateProps {
-  user: IUser | null;
-}
-
-type TProps = IStateProps & IDispatchProps & WithTranslation;
+type TProps = TStateProps & TDispatchProps & WithTranslation;
 
 type TState = {
   isDropdownOpened: boolean;

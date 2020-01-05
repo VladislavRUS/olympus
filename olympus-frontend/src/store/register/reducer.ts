@@ -1,5 +1,5 @@
 import { IRegisterState, RegisterActionTypes } from './types';
-import { ActionType } from 'typesafe-actions';
+import { ActionType, createReducer } from 'typesafe-actions';
 
 import * as registerActions from './actions';
 
@@ -10,29 +10,12 @@ export const initialState: IRegisterState = {
   errorMessage: '',
 };
 
-export const registerReducer = (state: IRegisterState = initialState, action: RegisterAction): IRegisterState => {
-  switch (action.type) {
-    case RegisterActionTypes.REGISTER_REQUEST: {
-      return {
-        ...state,
-        errorMessage: '',
-        isLoading: true,
-      };
-    }
-    case RegisterActionTypes.REGISTER_SUCCESS: {
-      return {
-        ...state,
-        isLoading: false,
-      };
-    }
-    case RegisterActionTypes.REGISTER_ERROR: {
-      return {
-        ...state,
-        errorMessage: action.payload,
-        isLoading: false,
-      };
-    }
-  }
-
-  return state;
-};
+export const registerReducer = createReducer<IRegisterState, RegisterAction>(initialState, {
+  [RegisterActionTypes.REGISTER_REQUEST]: state => ({ ...state, errorMessage: '', isLoading: true }),
+  [RegisterActionTypes.REGISTER_SUCCESS]: state => ({ ...state, isLoading: false }),
+  [RegisterActionTypes.REGISTER_ERROR]: (state, action) => ({
+    ...state,
+    errorMessage: action.payload,
+    isLoading: true,
+  }),
+});
