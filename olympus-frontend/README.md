@@ -1,4 +1,4 @@
-## Olympus
+## Olympus-Frontend
 Frontend for social network app
 
 Stack:
