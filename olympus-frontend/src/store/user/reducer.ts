@@ -4,7 +4,7 @@ import { ActionType } from 'typesafe-actions';
 import * as currentUserActions from './actions';
 
 export const initialState: IUserState = {
-  currentUser: null,
+  current: null,
   isLoading: false,
 };
 
@@ -23,7 +23,7 @@ export const userReducer = (
       return {
         ...state,
         isLoading: true,
-        currentUser: action.payload,
+        current: action.payload,
       };
     }
     case UserActionTypes.GET_CURRENT_USER_ERROR: {

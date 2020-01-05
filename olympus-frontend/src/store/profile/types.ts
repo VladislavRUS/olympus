@@ -1,5 +1,5 @@
 export interface IProfileState {
-  currentProfile: IProfile | null;
+  current: IProfile | null;
   isLoading: boolean;
 }
 

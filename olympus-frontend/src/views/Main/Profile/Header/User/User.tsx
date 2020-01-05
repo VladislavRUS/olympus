@@ -6,7 +6,7 @@ import { IProfile } from '../../../../../store/profile/types';
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    profile: state.profile.currentProfile,
+    profile: state.profile.current,
   };
 
   return stateProps;

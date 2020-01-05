@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    user: state.user.currentUser,
+    user: state.user.current,
   };
 
   return stateProps;

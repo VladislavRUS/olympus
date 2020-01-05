@@ -11,7 +11,7 @@ import { IProfile, ProfileActionTypes } from './types';
 import { IApplicationState } from '../index';
 import { getCurrentUserRequest } from '../user/actions';
 
-const getProfile = (state: IApplicationState) => state.profile.currentProfile;
+const getProfile = (state: IApplicationState) => state.profile.current;
 
 function* handleGetProfile(action: any) {
   try {

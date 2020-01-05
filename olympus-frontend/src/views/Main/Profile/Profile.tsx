@@ -14,8 +14,8 @@ import { IUser } from '../../../store/user/types';
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    profile: state.profile.currentProfile,
-    user: state.user.currentUser,
+    profile: state.profile.current,
+    user: state.user.current,
   };
 
   return stateProps;

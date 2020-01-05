@@ -1,7 +1,7 @@
 import { IProfile } from '../profile/types';
 
 export interface IUserState {
-  currentUser: IUser | null;
+  current: IUser | null;
   isLoading: boolean;
 }
 

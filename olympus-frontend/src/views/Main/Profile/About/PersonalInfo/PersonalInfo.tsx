@@ -27,7 +27,7 @@ interface IDispatchProps {
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    profile: state.profile.currentProfile,
+    profile: state.profile.current,
     isUpdatingProfile: state.profile.isLoading,
   };
 

@@ -6,8 +6,9 @@ import { ButtonColorCircle } from '../../../../../../components/ButtonColorCircl
 import { FilePicker } from '../../../../../../components/FilePicker';
 import { FilePickerAccept } from '../../../../../../components/FilePicker/FilePicker';
 import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import { bindActionCreators, compose, Dispatch } from 'redux';
 import { updateProfileAvatar, updateProfileCover } from '../../../../../../store/profile/actions';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -27,7 +28,7 @@ type TState = {
   isOpened: boolean;
 };
 
-type TProps = IDispatchProps;
+type TProps = IDispatchProps & WithTranslation;
 
 class Settings extends React.Component<TProps, TState> {
   avatarRef = React.createRef<HTMLInputElement>();
@@ -74,10 +75,12 @@ class Settings extends React.Component<TProps, TState> {
   };
 
   renderContent = () => {
+    const { t } = this.props;
+
     return (
       <React.Fragment>
-        <DropdownTextItem text={'Загрузить аватар'} onClick={this.onUploadAvatar} />
-        <DropdownTextItem text={'Загрузить обложку'} onClick={this.onUploadCover} />
+        <DropdownTextItem text={t('profile.header.uploadAvatar')} onClick={this.onUploadAvatar} />
+        <DropdownTextItem text={t('profile.header.uploadCover')} onClick={this.onUploadCover} />
       </React.Fragment>
     );
   };
@@ -103,4 +106,6 @@ class Settings extends React.Component<TProps, TState> {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Settings);
+const translated = withTranslation();
+
+export default compose(translated, connect(null, mapDispatchToProps))(Settings);

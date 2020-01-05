@@ -9,8 +9,8 @@ import { IApplicationState } from '../../../../store';
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    avatarUrl: state.profile.currentProfile ? state.profile.currentProfile.avatar : null,
-    coverUrl: state.profile.currentProfile ? state.profile.currentProfile.cover : null,
+    avatarUrl: state.profile.current ? state.profile.current.avatar : null,
+    coverUrl: state.profile.current ? state.profile.current.cover : null,
   };
 
   return stateProps;

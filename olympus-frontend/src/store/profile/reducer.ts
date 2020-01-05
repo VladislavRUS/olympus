@@ -6,7 +6,7 @@ import * as profileActions from './actions';
 export type ProfileAction = ActionType<typeof profileActions>;
 
 export const initialState: IProfileState = {
-  currentProfile: null,
+  current: null,
   isLoading: false,
 };
 
@@ -24,7 +24,7 @@ export const profileReducer = (state: IProfileState = initialState, action: Prof
       return {
         ...state,
         isLoading: false,
-        currentProfile: action.payload,
+        current: action.payload,
       };
     }
     case ProfileActionTypes.UPDATE_PROFILE_ERROR:
