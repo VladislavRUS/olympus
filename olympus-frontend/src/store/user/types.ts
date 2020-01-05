@@ -1,3 +1,5 @@
+import { IProfile } from '../profile/types';
+
 export interface IUserState {
   currentUser: IUser | null;
   isLoading: boolean;
@@ -5,10 +7,8 @@ export interface IUserState {
 
 export interface IUser {
   id: number;
-  firstName: string;
-  lastName: string;
   email: string;
-  profileId: number;
+  profile: IProfile;
 }
 
 export enum UserActionTypes {

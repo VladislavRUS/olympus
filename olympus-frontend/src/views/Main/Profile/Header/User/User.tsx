@@ -2,34 +2,35 @@ import React from 'react';
 import { Wrapper, Information, FullName, Avatar } from './User.styles';
 import { IApplicationState } from '../../../../../store';
 import { connect } from 'react-redux';
-import { IUser } from '../../../../../store/user/types';
+import { IProfile } from '../../../../../store/profile/types';
 
 const mapStateToProps = (state: IApplicationState) => {
   const stateProps: IStateProps = {
-    user: state.user.currentUser,
+    profile: state.profile.currentProfile,
   };
 
   return stateProps;
 };
 
 interface IStateProps {
-  user: IUser | null;
+  profile: IProfile | null;
 }
 
 type TProps = IStateProps;
 
 class User extends React.Component<TProps> {
   render() {
-    const { user } = this.props;
-    if (!user) {
+    const { profile } = this.props;
+
+    if (!profile) {
       return null;
     }
 
-    const { firstName, lastName } = user;
+    const { firstName, lastName, avatar } = profile;
 
     return (
       <Wrapper>
-        <Avatar />
+        <Avatar avatarUrl={avatar} />
         <Information>
           <FullName>{`${firstName} ${lastName}`}</FullName>
         </Information>

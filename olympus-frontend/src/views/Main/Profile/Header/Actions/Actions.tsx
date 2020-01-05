@@ -1,6 +1,7 @@
 import React from 'react';
 import { Wrapper, Circle } from './Actions.styles';
-import { FiUserPlus, FiMessageSquare, FiSettings } from 'react-icons/fi';
+import { FiUserPlus, FiMessageSquare } from 'react-icons/fi';
+import { Settings } from './Settings';
 
 class Actions extends React.Component {
   render() {
@@ -14,9 +15,7 @@ class Actions extends React.Component {
           <FiMessageSquare color={'#fff'} size={22} />
         </Circle>
 
-        <Circle backgroundColor={'#ff5e3a'}>
-          <FiSettings color={'#fff'} size={22} />
-        </Circle>
+        <Settings />
       </Wrapper>
     );
   }

@@ -56,7 +56,7 @@ class Main extends React.Component<TProps> {
               <Switch>
                 <Route path={Routes.PROFILE} component={Profile} />
                 <Route path={Routes.FEED} component={Feed} />
-                <Redirect to={Routes.PROFILE.replace(':id', user.profileId.toString())} />
+                <Redirect to={Routes.PROFILE.replace(':id', user.profile.id.toString())} />
               </Switch>
             </Page>
           )}

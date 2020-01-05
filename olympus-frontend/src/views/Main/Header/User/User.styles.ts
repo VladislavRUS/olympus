@@ -14,8 +14,14 @@ export const Wrapper = styled.button`
   }
 `;
 
-export const Avatar = styled.div`
+export const Avatar = styled.div<{ avatarUrl: string }>`
   margin-right: 8px;
+  width: 34px;
+  height: 34px;
+  background-color: #fff;
+  background-image: ${props => `url(${props.avatarUrl})`};
+  background-size: cover;
+  border-radius: 50%;
 `;
 
 export const FullName = styled.div`

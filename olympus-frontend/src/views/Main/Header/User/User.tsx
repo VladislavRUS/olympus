@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Dropdown } from '../../../../components/Dropdown';
 import { bindActionCreators, Dispatch, compose } from 'redux';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { FiUser } from 'react-icons/fi';
 import { IUser } from '../../../../store/user/types';
 import { onLogout } from '../../../../store/user/actions';
 import { DropdownTextItem } from '../../../../components/Dropdown/DropdownItems/DropdownTextItem';
@@ -58,7 +57,8 @@ class User extends React.Component<TProps, TState> {
       return null;
     }
 
-    const { firstName, lastName } = user;
+    const { profile } = user;
+    const { firstName, lastName, avatar } = profile;
 
     return (
       <Dropdown
@@ -68,9 +68,7 @@ class User extends React.Component<TProps, TState> {
         width={250}
       >
         <Wrapper onClick={this.onOpenDropdown}>
-          <Avatar>
-            <FiUser size={34} color={'#fff'} />
-          </Avatar>
+          <Avatar avatarUrl={avatar} />
           <FullName>
             {firstName} {lastName}
           </FullName>

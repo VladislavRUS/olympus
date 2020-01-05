@@ -46,7 +46,7 @@ const LeftNavigationBar: React.FC<TProps> = ({ location, user }) => {
         let to: string = link.to;
 
         if (to === Routes.PROFILE && user) {
-          to = to.replace(':id', user.profileId.toString());
+          to = to.replace(':id', user.profile.id.toString());
         }
 
         return (

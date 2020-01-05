@@ -14,6 +14,7 @@ interface IDropdownProps {
   zIndex?: number;
   mode?: TDropdownMode;
   arrow?: boolean;
+  attachToElement?: boolean;
 }
 
 class Dropdown extends React.Component<IDropdownProps> {
@@ -69,21 +70,35 @@ class Dropdown extends React.Component<IDropdownProps> {
       return;
     }
 
-    const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = this.wrapperRef;
+    const { units = 'px', attachToElement = true } = this.props;
 
-    this.top = offsetTop + offsetHeight;
+    let dropdownWidth = this.props.width;
 
-    const { units = 'px' } = this.props;
+    if (attachToElement) {
+      const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = this.wrapperRef;
 
-    let width = this.props.width;
+      this.top = offsetTop + offsetHeight;
 
-    if (units === '%') {
-      width = (offsetWidth * width) / 100;
+      if (units === '%') {
+        dropdownWidth = (offsetWidth * dropdownWidth) / 100;
+      }
+
+      this.left = offsetLeft + offsetWidth / 2 - dropdownWidth / 2;
+
+      this.width = dropdownWidth;
+    } else {
+      const rect = this.wrapperRef.getBoundingClientRect();
+      const { top, left, width, height } = rect;
+
+      this.top = top + height;
+
+      if (units === '%') {
+        dropdownWidth = (width * dropdownWidth) / 100;
+      }
+
+      this.left = left + width / 2 - dropdownWidth / 2;
+      this.width = dropdownWidth;
     }
-
-    this.left = offsetLeft + offsetWidth / 2 - width / 2;
-
-    this.width = width;
 
     this.forceUpdate();
   };
@@ -93,9 +108,11 @@ class Dropdown extends React.Component<IDropdownProps> {
       return null;
     }
 
-    const { content, mode = 'styled', arrow = true, isOpened } = this.props;
+    const { content, mode = 'styled', arrow = true, isOpened, attachToElement = true } = this.props;
 
     const dropdownContent = typeof content === 'function' ? content() : content;
+
+    const target = attachToElement ? this.wrapperRef : document.body;
 
     return ReactDOM.createPortal(
       <BodyWrapper pose={isOpened ? 'visible' : 'hidden'} width={this.width} top={this.top} left={this.left}>
@@ -104,7 +121,7 @@ class Dropdown extends React.Component<IDropdownProps> {
           <ContentWrapper mode={mode}>{dropdownContent}</ContentWrapper>
         </OutsideClickHandler>
       </BodyWrapper>,
-      this.wrapperRef,
+      target,
     );
   }
 

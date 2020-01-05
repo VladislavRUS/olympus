@@ -4,6 +4,9 @@ export interface IProfileState {
 }
 
 export interface IProfile {
+  id: number;
+  firstName: string;
+  lastName: string;
   avatar: string;
   cover: string;
   personalInfo: IPersonalInfo;
@@ -27,4 +30,6 @@ export enum ProfileActionTypes {
   UPDATE_PROFILE_REQUEST = '@@profile/UPDATE_PROFILE_REQUEST',
   UPDATE_PROFILE_SUCCESS = '@@profile/UPDATE_PROFILE_SUCCESS',
   UPDATE_PROFILE_ERROR = '@@profile/UPDATE_PROFILE_ERROR',
+  UPDATE_PROFILE_COVER = '@@profile/UPDATE_PROFILE_COVER',
+  UPDATE_PROFILE_AVATAR = '@@profile/UPDATE_PROFILE_AVATAR',
 }

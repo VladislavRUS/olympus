@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-export const Avatar = styled.div`
+export const Avatar = styled.div<{ avatarUrl: string }>`
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -17,6 +17,8 @@ export const Avatar = styled.div`
   background-color: #3f4257;
   margin-bottom: 11px;
   box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
+  background-image: ${props => `url(${props.avatarUrl})`};
+  background-size: cover;
 `;
 
 export const Information = styled.div`
