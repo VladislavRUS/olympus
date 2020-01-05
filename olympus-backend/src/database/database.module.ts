@@ -1,8 +1,8 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/User';
-import { config } from '../config';
 import { Profile } from './entities/Profile';
 import { PersonalInfo } from './entities/PersonalInfo';
+import config from '../config.json';
 
 export const DatabaseModule = TypeOrmModule.forRoot({
   type: 'postgres',

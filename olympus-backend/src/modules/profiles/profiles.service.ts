@@ -39,6 +39,7 @@ export class ProfilesService {
   async updateProfile(id: number, profileDto: ProfileDto): Promise<Profile | null> {
     const profile = await this.getById(id);
 
+    profile.avatar = profileDto.avatar;
     profile.cover = profileDto.cover;
     await this.profileRepository.save(profile);
 

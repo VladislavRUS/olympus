@@ -23,7 +23,7 @@ export class UsersService {
   }
 
   async findById(id: number): Promise<User | null> {
-    const user = this.userRepository.findOne({ id });
+    const user = this.userRepository.findOne({ id }, { relations: ['profile'] });
     return user ? user : null;
   }
 
@@ -37,11 +37,11 @@ export class UsersService {
     return user ? user : null;
   }
 
-  async create(user: User): Promise<void> {
+  async create(user: User, firstName: string, lastName: string): Promise<void> {
     const personalInfo = new PersonalInfo();
     await this.personalInfoRepository.save(personalInfo);
 
-    const profile = new Profile();
+    const profile = new Profile(firstName, lastName);
     profile.personalInfo = personalInfo;
     await this.profileRepository.save(profile);
 

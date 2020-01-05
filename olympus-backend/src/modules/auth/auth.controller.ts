@@ -21,13 +21,10 @@ export class AuthController {
       throw new ConflictException(ErrorCodes.REGISTER_USERS_EXISTS);
     } else {
       const user = new User();
-      user.avatar = '';
       user.email = email;
-      user.lastName = lastName;
-      user.firstName = firstName;
       user.passwordHash = hashSync(password, 8);
 
-      await this.usersService.create(user);
+      await this.usersService.create(user, firstName, lastName);
     }
   }
 

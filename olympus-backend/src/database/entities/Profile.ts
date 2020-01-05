@@ -3,12 +3,24 @@ import { PersonalInfo } from './PersonalInfo';
 
 @Entity()
 export class Profile {
-  constructor() {
+  constructor(firstName: string, lastName: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.avatar = '';
     this.cover = '';
   }
 
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  firstName: string;
+
+  @Column()
+  lastName: string;
+
+  @Column()
+  avatar: string;
 
   @Column()
   cover: string;

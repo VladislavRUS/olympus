@@ -7,15 +7,6 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  avatar: string;
-
-  @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
-
   @Column({ name: 'email' })
   email: string;
 
