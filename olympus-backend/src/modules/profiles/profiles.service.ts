@@ -5,6 +5,7 @@ import { User } from '../../database/entities/User';
 import { Profile } from '../../database/entities/Profile';
 import { ProfileDto } from './dto/ProfileDto';
 import { PersonalInfo } from '../../database/entities/PersonalInfo';
+import { Interests } from '../../database/entities/Interests';
 
 @Injectable()
 export class ProfilesService {
@@ -15,10 +16,12 @@ export class ProfilesService {
     private readonly profileRepository: Repository<Profile>,
     @InjectRepository(PersonalInfo)
     private readonly personalInfoRepository: Repository<PersonalInfo>,
+    @InjectRepository(Interests)
+    private readonly interestsRepository: Repository<Interests>,
   ) {}
 
   async getById(id: number): Promise<Profile | null> {
-    return this.profileRepository.findOne({ id }, { relations: ['personalInfo'] });
+    return this.profileRepository.findOne({ id }, { relations: ['personalInfo', 'interests'] });
   }
 
   async updatePersonalInfo(personalInfoId: number, profileDto: ProfileDto) {
@@ -36,6 +39,23 @@ export class ProfilesService {
     return personalInfo;
   }
 
+  async updateInterests(interestsId: number, profileDto: ProfileDto) {
+    const interests = await this.interestsRepository.findOne({ id: interestsId });
+
+    interests.hobbies = profileDto.interests.hobbies;
+    interests.tvShows = profileDto.interests.tvShows;
+    interests.movies = profileDto.interests.movies;
+    interests.games = profileDto.interests.games;
+    interests.music = profileDto.interests.music;
+    interests.books = profileDto.interests.books;
+    interests.writers = profileDto.interests.writers;
+    interests.other = profileDto.interests.other;
+
+    await this.interestsRepository.save(interests);
+
+    return interests;
+  }
+
   async updateProfile(id: number, profileDto: ProfileDto): Promise<Profile | null> {
     const profile = await this.getById(id);
 
@@ -44,6 +64,7 @@ export class ProfilesService {
     await this.profileRepository.save(profile);
 
     profile.personalInfo = await this.updatePersonalInfo(profile.personalInfoId, profileDto);
+    profile.interests = await this.updateInterests(profile.interestsId, profileDto);
 
     return profile;
   }

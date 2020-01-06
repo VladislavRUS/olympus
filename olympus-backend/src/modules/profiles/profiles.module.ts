@@ -7,9 +7,10 @@ import { ProfilesController } from './profiles.controller';
 import { User } from '../../database/entities/User';
 import { UsersModule } from '../users/users.module';
 import { passportModule } from '../passport';
+import { Interests } from '../../database/entities/Interests';
 
 @Module({
-  imports: [passportModule, TypeOrmModule.forFeature([User, Profile, PersonalInfo]), UsersModule],
+  imports: [passportModule, TypeOrmModule.forFeature([User, Profile, PersonalInfo, Interests]), UsersModule],
   providers: [ProfilesService],
   exports: [],
   controllers: [ProfilesController],

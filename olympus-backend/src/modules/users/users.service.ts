@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '../../database/entities/User';
 import { Profile } from '../../database/entities/Profile';
 import { PersonalInfo } from '../../database/entities/PersonalInfo';
+import { Interests } from '../../database/entities/Interests';
 
 @Injectable()
 export class UsersService {
@@ -14,6 +15,8 @@ export class UsersService {
     private readonly profileRepository: Repository<Profile>,
     @InjectRepository(PersonalInfo)
     private readonly personalInfoRepository: Repository<PersonalInfo>,
+    @InjectRepository(Interests)
+    private readonly interestsRepository: Repository<Interests>,
   ) {}
 
   async findByEmail(email: string): Promise<User | null> {
@@ -41,8 +44,12 @@ export class UsersService {
     const personalInfo = new PersonalInfo();
     await this.personalInfoRepository.save(personalInfo);
 
+    const interests = new Interests();
+    await this.interestsRepository.save(interests);
+
     const profile = new Profile(firstName, lastName);
     profile.personalInfo = personalInfo;
+    profile.interests = interests;
     await this.profileRepository.save(profile);
 
     user.profile = profile;
