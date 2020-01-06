@@ -1,7 +1,7 @@
 import React from 'react';
-import { Wrapper, PersonalInfoWrapper, HobbiesWrapper, CareerWrapper } from './About.styles';
+import { Wrapper, PersonalInfoWrapper, InterestsWrapper, CareerWrapper } from './About.styles';
 import { PersonalInfo } from './PersonalInfo';
-import { Hobbies } from './Hobbies';
+import { Interests } from './Interests';
 import { Career } from './Career';
 
 class About extends React.Component {
@@ -11,9 +11,9 @@ class About extends React.Component {
         <PersonalInfoWrapper>
           <PersonalInfo />
         </PersonalInfoWrapper>
-        <HobbiesWrapper>
-          <Hobbies />
-        </HobbiesWrapper>
+        <InterestsWrapper>
+          <Interests />
+        </InterestsWrapper>
         <CareerWrapper>
           <Career />
         </CareerWrapper>

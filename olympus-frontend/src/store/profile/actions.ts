@@ -17,3 +17,8 @@ export const updateProfileAsync = createAsyncAction(
 
 export const updateProfileCover = (file: File) => action(ProfileActionTypes.UPDATE_PROFILE_COVER, file);
 export const updateProfileAvatar = (file: File) => action(ProfileActionTypes.UPDATE_PROFILE_AVATAR, file);
+
+export const openPersonalInfoEditModal = () => action(ProfileActionTypes.OPEN_PERSONAL_INFO_EDIT_MODAL);
+export const openInterestsEditModal = () => action(ProfileActionTypes.OPEN_INTERESTS_EDIT_MODAL);
+export const openEducationEditModal = () => action(ProfileActionTypes.OPEN_EDUCATION_EDIT_MODAL);
+export const closeEditModals = () => action(ProfileActionTypes.CLOSE_EDIT_MODALS);

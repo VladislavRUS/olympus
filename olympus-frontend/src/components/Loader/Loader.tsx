@@ -1,5 +1,4 @@
 import React from 'react';
-import { PoseGroup } from 'react-pose';
 import { Wrapper } from './Loader.styles';
 import { BeatLoader as Spinner } from 'react-spinners';
 
@@ -12,15 +11,9 @@ interface ILoaderProps {
 }
 
 const Loader: React.FC<ILoaderProps> = ({ isVisible, overlay = 'visible', color = '#000' }) => (
-  <PoseGroup>
-    {isVisible ? (
-      <Wrapper overlay={overlay} key={'wrapper'}>
-        <Spinner color={color} size={6} />
-      </Wrapper>
-    ) : (
-      <React.Fragment key={'fragment'} />
-    )}
-  </PoseGroup>
+  <Wrapper overlay={overlay} key={'wrapper'} pose={isVisible ? 'visible' : 'hidden'}>
+    <Spinner color={color} size={6} />
+  </Wrapper>
 );
 
 export default Loader;

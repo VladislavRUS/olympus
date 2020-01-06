@@ -4,6 +4,7 @@ import * as profileActions from './actions';
 import { IProfile, ProfileActionTypes } from './types';
 import { getCurrentUser } from '../user/actions';
 import { getProfile } from './selectors';
+import { closeEditModals } from './actions';
 
 function* handleGetProfile(action: ReturnType<typeof profileActions.getProfile>) {
   yield put(profileActions.fetchProfileAsync.request());
@@ -28,6 +29,7 @@ function* handleUpdateProfile(action: ReturnType<typeof profileActions.updatePro
     const { data } = yield call(API.put, `/profiles/${id}`, action.payload);
 
     yield put(profileActions.updateProfileAsync.success(data));
+    yield put(closeEditModals());
   } catch (error) {
     yield put(profileActions.updateProfileAsync.failure(error));
   }

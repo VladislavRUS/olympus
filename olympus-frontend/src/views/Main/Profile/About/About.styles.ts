@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   grid-template-rows: auto auto;
   grid-gap: 30px;
   grid-template-areas:
-    'personal hobbies'
+    'personal interests'
     'personal career';
 `;
 
@@ -14,8 +14,8 @@ export const PersonalInfoWrapper = styled.div`
   grid-area: personal;
 `;
 
-export const HobbiesWrapper = styled.div`
-  grid-area: hobbies;
+export const InterestsWrapper = styled.div`
+  grid-area: interests;
 `;
 
 export const CareerWrapper = styled.div`

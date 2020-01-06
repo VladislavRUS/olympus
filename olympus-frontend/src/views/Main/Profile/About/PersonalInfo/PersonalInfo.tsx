@@ -9,7 +9,7 @@ import { IProfile, TPersonalInfoKey } from '../../../../../store/profile/types';
 import { Empty } from './PersonalInfo.styles';
 import { PersonalInfoForm } from './PersonalInfoForm';
 import { Modal } from '../../../../../components/Modal';
-import { updateProfile } from '../../../../../store/profile/actions';
+import { closeEditModals, openPersonalInfoEditModal, updateProfile } from '../../../../../store/profile/actions';
 import { Loader } from '../../../../../components/Loader';
 import { formatDate } from '../../../../../i18n';
 
@@ -48,6 +48,7 @@ const personalInfoFields: IPersonalInfoField[] = [
 const mapStateToProps = (state: IApplicationState) => ({
   profile: state.profile.current,
   isUpdatingProfile: state.profile.isLoading,
+  isModalOpened: state.profile.editModals.isPersonalInfoOpened,
 });
 
 type TStateProps = ReturnType<typeof mapStateToProps>;
@@ -56,6 +57,8 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       updateProfile,
+      closeEditModals,
+      openPersonalInfoEditModal,
     },
     dispatch,
   );
@@ -64,32 +67,7 @@ type TDispatchProps = ReturnType<typeof mapDispatchToProps>;
 
 type TProps = TStateProps & TDispatchProps & WithTranslation;
 
-type TState = {
-  isEditModalOpened: boolean;
-};
-
-class PersonalInfo extends React.Component<TProps, TState> {
-  constructor(props: TProps) {
-    super(props);
-    this.state = {
-      isEditModalOpened: false,
-    };
-  }
-
-  componentDidUpdate(prevProps: Readonly<TProps>): void {
-    if (prevProps.isUpdatingProfile && !this.props.isUpdatingProfile) {
-      this.onModalClose();
-    }
-  }
-
-  onModalOpen = () => {
-    this.setState({ isEditModalOpened: true });
-  };
-
-  onModalClose = () => {
-    this.setState({ isEditModalOpened: false });
-  };
-
+class PersonalInfo extends React.Component<TProps> {
   onSubmit = (values: any) => {
     const { profile } = this.props;
 
@@ -117,7 +95,7 @@ class PersonalInfo extends React.Component<TProps, TState> {
     const hasFilledValues = personalInfoFields.map(field => personalInfo[field.personalInfoKey]).find(value => value);
 
     return (
-      <InformationCard title={t('profile.about.personalInfo.title')} onEdit={this.onModalOpen}>
+      <InformationCard title={t('profile.about.personalInfo.title')} onEdit={this.props.openPersonalInfoEditModal}>
         {hasFilledValues ? (
           personalInfoFields.map(field => {
             let value = personalInfo[field.personalInfoKey];
@@ -149,8 +127,12 @@ class PersonalInfo extends React.Component<TProps, TState> {
           <Empty>{t('profile.personalInfo.empty')}</Empty>
         )}
 
-        <Modal isOpened={this.state.isEditModalOpened} onRequestClose={this.onModalClose}>
-          <PersonalInfoForm onSubmit={this.onSubmit} onCancel={this.onModalClose} initialValues={personalInfo} />
+        <Modal isOpened={this.props.isModalOpened} onRequestClose={this.props.closeEditModals}>
+          <PersonalInfoForm
+            onSubmit={this.onSubmit}
+            onCancel={this.props.closeEditModals}
+            initialValues={personalInfo}
+          />
           <Loader isVisible={isUpdatingProfile} />
         </Modal>
       </InformationCard>

@@ -1,6 +1,13 @@
 export interface IProfileState {
   current: IProfile | null;
   isLoading: boolean;
+  editModals: IEditModals;
+}
+
+export interface IEditModals {
+  isPersonalInfoOpened: boolean;
+  isInterestsOpened: boolean;
+  isEducationOpened: boolean;
 }
 
 export interface IProfile {
@@ -10,6 +17,7 @@ export interface IProfile {
   avatar: string;
   cover: string;
   personalInfo: IPersonalInfo;
+  interests: IInterests;
 }
 
 export interface IPersonalInfo {
@@ -21,7 +29,19 @@ export interface IPersonalInfo {
   email: string;
 }
 
+export interface IInterests {
+  hobbies: string;
+  tvShows: string;
+  movies: string;
+  games: string;
+  music: string;
+  books: string;
+  writers: string;
+  other: string;
+}
+
 export type TPersonalInfoKey = keyof IPersonalInfo;
+export type TInterestsKey = keyof IInterests;
 
 export enum ProfileActionTypes {
   GET_PROFILE = '@@profile/GET_PROFILE',
@@ -34,4 +54,8 @@ export enum ProfileActionTypes {
   UPDATE_PROFILE_ERROR = '@@profile/UPDATE_PROFILE_ERROR',
   UPDATE_PROFILE_COVER = '@@profile/UPDATE_PROFILE_COVER',
   UPDATE_PROFILE_AVATAR = '@@profile/UPDATE_PROFILE_AVATAR',
+  CLOSE_EDIT_MODALS = '@@profile/CLOSE_EDIT_MODALS',
+  OPEN_PERSONAL_INFO_EDIT_MODAL = '@@profile/OPEN_PERSONAL_INFO_EDIT_MODAL',
+  OPEN_INTERESTS_EDIT_MODAL = '@@profile/OPEN_INTERESTS_EDIT_MODAL',
+  OPEN_EDUCATION_EDIT_MODAL = '@@profile/OPEN_EDUCATION_EDIT_MODAL',
 }

@@ -1,8 +1,16 @@
 {
-  "name": "react-olympus",
-  "version": "0.1.0",
-  "private": true,
-  "homepage": ".",
+  "browserslist": {
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ]
+  },
   "dependencies": {
     "@types/jest": "24.0.23",
     "@types/node": "12.12.14",
@@ -39,41 +47,6 @@
     "typescript": "3.7.2",
     "validator": "^12.1.0"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint:fix": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx}' --quiet --fix",
-    "lint": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx}'",
-    "check-translations-lines-count": "node ./scripts/check-translations-lines-counts.js",
-    "sort-translations": "sort-json ./src/i18n/translations/*.json"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "yarn check-translations-lines-count",
-      "yarn sort-translations",
-      "yarn lint",
-      "git add"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.9.0",
     "@typescript-eslint/parser": "^2.9.0",
@@ -83,5 +56,32 @@
     "eslint-plugin-react": "^7.16.0",
     "prettier": "^1.19.1",
     "sort-json": "^2.0.0"
-  }
+  },
+  "homepage": ".",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,json}": [
+      "yarn check-translations-lines-count",
+      "yarn sort-translations",
+      "yarn lint",
+      "git add"
+    ]
+  },
+  "name": "react-olympus",
+  "private": true,
+  "scripts": {
+    "build": "react-scripts build",
+    "check-translations-lines-count": "node ./scripts/check-translations-lines-counts.js",
+    "eject": "react-scripts eject",
+    "lint": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx}'",
+    "lint:fix": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx}' --quiet --fix",
+    "sort-translations": "sort-json ./src/i18n/translations/*.json",
+    "start": "react-scripts start",
+    "test": "react-scripts test"
+  },
+  "version": "0.1.0"
 }

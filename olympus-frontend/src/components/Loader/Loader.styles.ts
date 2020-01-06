@@ -3,11 +3,17 @@ import posed from 'react-pose';
 import { Overlay } from './Loader';
 
 const PoseWrapper = posed.div({
-  enter: {
+  visible: {
     opacity: 1,
+    applyAtStart: {
+      display: 'flex',
+    },
   },
-  exit: {
+  hidden: {
     opacity: 0,
+    applyAtEnd: {
+      display: 'none',
+    },
   },
 });
 

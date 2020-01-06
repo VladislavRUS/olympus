@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, compose, Dispatch } from 'redux';
 import { updateProfileAvatar, updateProfileCover } from '../../../../../../store/profile/actions';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import { IconWrapper } from './Settings.styles';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
@@ -93,7 +94,9 @@ class Settings extends React.Component<TProps, TState> {
           attachToElement={false}
         >
           <ButtonColorCircle color={'#ff5e3a'} onClick={this.onOpenDropdown}>
-            <FiSettings color={'#fff'} size={22} />
+            <IconWrapper>
+              <FiSettings color={'#fff'} size={22} />
+            </IconWrapper>
           </ButtonColorCircle>
         </Dropdown>
         <FilePicker ref={this.avatarRef} onFilesSelect={this.onSelectAvatar} accept={FilePickerAccept.IMAGES} />

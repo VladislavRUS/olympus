@@ -11,8 +11,8 @@ export const Title = styled.div`
 export const Wrapper = styled.div<{ direction: 'horizontal' | 'vertical' }>`
   display: flex;
 
-  & + & {
-    margin-top: 15px;
+  &:not(:last-child) {
+    margin-bottom: 15px;
   }
 
   ${props =>
