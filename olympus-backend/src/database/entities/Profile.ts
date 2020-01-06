@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, Column, RelationId } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, Column, RelationId, OneToMany } from 'typeorm';
 import { PersonalInfo } from './PersonalInfo';
 import { Interests } from './Interests';
+import { WorkPlace } from './WorkPlace';
 
 @Entity()
 export class Profile {
@@ -39,4 +40,7 @@ export class Profile {
 
   @RelationId((profile: Profile) => profile.interests)
   interestsId: number;
+
+  @OneToMany(() => WorkPlace, workPlace => workPlace.profile)
+  workPlaces: WorkPlace[];
 }
