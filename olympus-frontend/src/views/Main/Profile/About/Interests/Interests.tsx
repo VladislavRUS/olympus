@@ -6,12 +6,11 @@ import { IApplicationState } from '../../../../../store';
 import { bindActionCreators, compose, Dispatch } from 'redux';
 import { closeEditModals, openInterestsEditModal, updateProfile } from '../../../../../store/profile/actions';
 import { InfoBlock } from '../../../../../components/InfoBlock';
-import { Empty } from '../PersonalInfo/PersonalInfo.styles';
 import { Loader } from '../../../../../components/Loader';
 import { Modal } from '../../../../../components/Modal';
 import { connect } from 'react-redux';
 import { InterestsForm } from './InterestsForm';
-import { BlocksWrapper } from './Interests.styles';
+import { BlocksWrapper, Empty } from './Interests.styles';
 
 interface IInterestsField {
   interestsKey: TInterestsKey;
